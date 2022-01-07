@@ -1,4 +1,4 @@
-# 첫 시작
+# 첫 시작(setting)
 [공식문서](https://reactnative.dev/)
 - 초기 세팅: [반드시 따라하기](https://reactnative.dev/docs/environment-setup)
 
@@ -168,7 +168,17 @@ export default App;
 - Screen options.headerShown로 헤더표시여부
 - Screen options.headerTitle로 커스텀 컴포넌트
 - Screen options.headerRight로 우측 버튼(useLayoutEffect)
+[옵션 목록](https://reactnavigation.org/docs/screen-options)
 
+## 실제 라우터 만들기 (ch1)
+```shell
+npm install @react-navigation/bottom-tabs
+```
+
+App.tsx
+```
+
+```
 ## 회원가입, 로그인
 - Input 사용
 - DismissKeyboardView 만들기(Keyboard, KeyboardAvoidingView)
