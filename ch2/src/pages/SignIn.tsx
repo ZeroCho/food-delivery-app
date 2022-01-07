@@ -1,7 +1,6 @@
 import React, {useCallback, useRef, useState} from 'react';
 import {
   Alert,
-  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -9,56 +8,63 @@ import {
   View,
 } from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../App';
 import DismissKeyboardView from '../components/DismissKeyboardView';
+import axios, {AxiosError} from 'axios';
+import Config from 'react-native-config';
+import {RootStackParamList} from '../../AppInner';
+import {useAppDispatch} from '../store';
+import userSlice from '../slices/user';
 
-type SignUpScreenProps = NativeStackScreenProps<RootStackParamList, 'SignUp'>;
+type SignInScreenProps = NativeStackScreenProps<RootStackParamList, 'SignIn'>;
 
-function SignUp({navigation}: SignUpScreenProps) {
+function SignIn({navigation}: SignInScreenProps) {
+  const dispatch = useAppDispatch();
   const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const emailRef = useRef<TextInput | null>(null);
-  const nameRef = useRef<TextInput | null>(null);
   const passwordRef = useRef<TextInput | null>(null);
 
   const onChangeEmail = useCallback(text => {
     setEmail(text.trim());
   }, []);
-  const onChangeName = useCallback(text => {
-    setName(text.trim());
-  }, []);
   const onChangePassword = useCallback(text => {
     setPassword(text.trim());
   }, []);
-  const onSubmit = useCallback(() => {
+  const onSubmit = useCallback(async () => {
     if (!email || !email.trim()) {
       return Alert.alert('알림', '이메일을 입력해주세요.');
-    }
-    if (!name || !name.trim()) {
-      return Alert.alert('알림', '이름을 입력해주세요.');
     }
     if (!password || !password.trim()) {
       return Alert.alert('알림', '비밀번호를 입력해주세요.');
     }
-    if (
-      !/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/.test(
+    try {
+      const response = await axios.post(`${Config.API_URL}/login`, {
         email,
-      )
-    ) {
-      return Alert.alert('알림', '올바른 이메일 주소가 아닙니다.');
-    }
-    if (!/^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@^!%*#?&]).{8,50}$/.test(password)) {
-      return Alert.alert(
-        '알림',
-        '비밀번호는 영문,숫자,특수문자($@^!%*#?&)를 모두 포함하여 8자 이상 입력해야합니다.',
+        password,
+      });
+      console.log(response.data);
+      Alert.alert('알림', '로그인 되었습니다.');
+      dispatch(
+        userSlice.actions.setUser({
+          name: response.data.data.name,
+          email: response.data.data.email,
+          accessToken: response.data.data.accessToken,
+          refreshToken: response.data.data.refreshToken,
+        }),
       );
+    } catch (error) {
+      const errorResponse = (error as AxiosError).response;
+      if (errorResponse) {
+        Alert.alert('알림', errorResponse.data.message);
+      }
     }
-    console.log(email, name, password);
-    Alert.alert('알림', '회원가입 되었습니다.');
-  }, [email, name, password]);
+  }, [dispatch, email, password]);
 
-  const canGoNext = email && name && password;
+  const toSignUp = useCallback(() => {
+    navigation.navigate('SignUp');
+  }, [navigation]);
+
+  const canGoNext = email && password;
   return (
     <DismissKeyboardView>
       <View style={styles.inputWrapper}>
@@ -68,27 +74,13 @@ function SignUp({navigation}: SignUpScreenProps) {
           onChangeText={onChangeEmail}
           placeholder="이메일을 입력해주세요"
           placeholderTextColor="#666"
+          importantForAutofill="yes"
+          autoComplete="email"
           textContentType="emailAddress"
           value={email}
           returnKeyType="next"
           clearButtonMode="while-editing"
           ref={emailRef}
-          onSubmitEditing={() => nameRef.current?.focus()}
-          blurOnSubmit={false}
-        />
-      </View>
-      <View style={styles.inputWrapper}>
-        <Text style={styles.label}>이름</Text>
-        <TextInput
-          style={styles.textInput}
-          placeholder="이름을 입력해주세요."
-          placeholderTextColor="#666"
-          onChangeText={onChangeName}
-          value={name}
-          textContentType="name"
-          returnKeyType="next"
-          clearButtonMode="while-editing"
-          ref={nameRef}
           onSubmitEditing={() => passwordRef.current?.focus()}
           blurOnSubmit={false}
         />
@@ -99,9 +91,10 @@ function SignUp({navigation}: SignUpScreenProps) {
           style={styles.textInput}
           placeholder="비밀번호를 입력해주세요(영문,숫자,특수문자)"
           placeholderTextColor="#666"
+          importantForAutofill="yes"
           onChangeText={onChangePassword}
           value={password}
-          keyboardType={Platform.OS === 'android' ? 'default' : 'ascii-capable'}
+          autoComplete="password"
           textContentType="password"
           secureTextEntry
           returnKeyType="send"
@@ -119,7 +112,10 @@ function SignUp({navigation}: SignUpScreenProps) {
           }
           disabled={!canGoNext}
           onPress={onSubmit}>
-          <Text style={styles.loginButtonText}>회원가입</Text>
+          <Text style={styles.loginButtonText}>로그인</Text>
+        </Pressable>
+        <Pressable onPress={toSignUp}>
+          <Text>회원가입하기</Text>
         </Pressable>
       </View>
     </DismissKeyboardView>
@@ -158,4 +154,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUp;
+export default SignIn;

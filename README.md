@@ -67,7 +67,11 @@ app.json의 displayName
 
 # 코딩 시작!
 ## App.tsx 분석
-css는 dp 단위(density-independent pixels, 다양한 화면 크기에 영향받지 않음)
+- View가 div, Text가 span이라고 생각하기(1대1 매칭은 아님)
+- css는 dp 단위(density-independent pixels, 다양한 화면 크기에 영향받지 않음)
+- [css 속성 리스트](https://github.com/vhpoet/react-native-styling-cheat-sheet): 좀 오래됨
+- flex에서는 flexDirection이 Column이 default
+
 ## React Navigation
 react-router-native도 대안임(웹에서 넘어온 개발자들에게 친숙, 웹처럼 주소 기반)
 ```shell
@@ -176,12 +180,72 @@ npm install @react-navigation/bottom-tabs
 ```
 
 App.tsx
-```
+```typescript jsx
 
 ```
+- Tab.Navigator 도입
+- isLoggedIn 분기처리
+- Drawer과 Tab.Group 사용처 소개
+
+src/components/DismissKeyBoardView.tsx
+```typescript jsx
+
+```
+인풋 바깥 클릭 시 키보드를 가리기 위함
+
 ## 회원가입, 로그인
-- Input 사용
+- src/pages/SignIn.tsx
+- src/pages/SignUp.tsx
+- src/components/DismissKeyboardView.tsx
+- TextInput, StyleSheet.compose 사용
 - DismissKeyboardView 만들기(Keyboard, KeyboardAvoidingView)
+
+## 서버 요청 보내기(ch2)
+서버 요청은 axios 사용(요즘 ky나 got으로 넘어가는 추세이나 react-native와 호환 여부 불투명)
+```shell
+npm i axios
+```
+back 서버 실행 필요
+```shell
+# 터미널 하나 더 켜서
+cd back
+npm start
+```
+
+액세스토큰/리프레시토큰을 받아서 다음 라이브러리로 저장
+```shell
+npm install react-native-encrypted-storage
+```
+리덕스 설정
+```shell
+npm i @reduxjs/toolkit react-redux redux-flipper
+```
+src/store/index.ts와 src/store/reducer.ts, src/slices/user.ts 작성
+
+AppInner.tsx 생성 및 isLoggedIn을 redux로 교체(AppInner 분리 이유는 App.tsx에서 useSelector를 못 씀)
+
+App.tsx
+```typescript jsx
+import * as React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {Provider} from 'react-redux';
+import store from './src/store';
+import AppInner from './AppInner';
+
+function App() {
+  return (
+    <Provider store={store}>
+      <NavigationContainer>
+        <AppInner />
+      </NavigationContainer>
+    </Provider>
+  );
+}
+
+export default App;
+```
+
+## 소켓IO 연결
 
 ## 이미지 선택하기
 - Native Module Patching
