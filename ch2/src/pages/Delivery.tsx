@@ -4,7 +4,7 @@ import {Text, View} from 'react-native';
 function Delivery() {
   return (
     <View>
-      <Text>주문 화면</Text>
+      <Text>배송 화면</Text>
     </View>
   );
 }

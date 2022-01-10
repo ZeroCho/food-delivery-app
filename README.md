@@ -193,7 +193,7 @@ src/components/DismissKeyBoardView.tsx
 ```
 인풋 바깥 클릭 시 키보드를 가리기 위함
 
-## 회원가입, 로그인
+## 회원가입, 로그인 화면 만들기
 - src/pages/SignIn.tsx
 - src/pages/SignUp.tsx
 - src/components/DismissKeyboardView.tsx
@@ -201,21 +201,14 @@ src/components/DismissKeyBoardView.tsx
 - DismissKeyboardView 만들기(Keyboard, KeyboardAvoidingView)
 
 ## 서버 요청 보내기(ch2)
-서버 요청은 axios 사용(요즘 ky나 got으로 넘어가는 추세이나 react-native와 호환 여부 불투명)
-```shell
-npm i axios
-```
-back 서버 실행 필요
+
+back 서버 실행 필요, DB 없이도 되게끔 만들어둠. 서버 재시작 시 데이터는 날아가니 주의
 ```shell
 # 터미널 하나 더 켜서
 cd back
 npm start
 ```
 
-액세스토큰/리프레시토큰을 받아서 다음 라이브러리로 저장
-```shell
-npm install react-native-encrypted-storage
-```
 리덕스 설정
 ```shell
 npm i @reduxjs/toolkit react-redux redux-flipper
@@ -244,8 +237,99 @@ function App() {
 
 export default App;
 ```
+## 회원가입, 로그인, 로그아웃
+액세스토큰/리프레시토큰을 받아서 다음 라이브러리로 저장
+```shell
+npm install react-native-encrypted-storage
+```
+서버 요청은 axios 사용(요즘 ky나 got으로 넘어가는 추세이나 react-native와 호환 여부 불투명)
+```shell
+npm i axios
+```
+환경변수, 키 값을 저장할 config 패키지 
+```shell
+npm i react-native-config
+```
+```typescript jsx
+import Config from 'react-native-config';
+```
+- .env에 키=값 저장해서(예를 들어 abc=def) Config.abc로 꺼내 씀
+
+암호화해서 저장할 데이터는 다음 패키지에
+```
+import EncryptedStorage from 'react-native-encrypted-storage';
+```
+```typescript jsx
+await EncryptedStorage.setItem('키', '값');
+await EncryptedStorage.removeItem('키', '값');
+const 값 = await EncryptedStorage.getItem('키', '값');
+```
+- 자주 바뀌는 값이거나 민감한 값은 encrypted-storage에
+- 개발 환경별로 달라지는 값은 react-native-config에 저장하면 좋음(암호화 안 됨)
 
 ## 소켓IO 연결
+웹소켓 기반 라이브러리
+- 요청-응답 방식이 아니라 실시간 양방향 통신 가능
+```shell
+npm i socket.io-client
+```
+src/hooks/useSocket.ts
+```typescript jsx
+import {useCallback} from 'react';
+import {io, Socket} from 'socket.io-client';
+import Config from 'react-native-config';
+
+let socket: Socket | undefined;
+const useSocket = (): [Socket | undefined, () => void] => {
+  const disconnect = useCallback(() => {
+    if (socket) {
+      socket.disconnect();
+      socket = undefined;
+    }
+  }, []);
+  if (!socket) {
+    socket = io(`${Config.API_URL}`, {
+      transports: ['websocket'],
+      path: '/socket-io',
+    });
+  }
+  return [socket, disconnect];
+};
+
+export default useSocket;
+```
+src/AppInner.tsx
+```typescript jsx
+  const [socket, disconnect] = useSocket();
+
+  useEffect(() => {
+    const helloCallback = (data: any) => {
+      console.log(data);
+    };
+    if (socket && isLoggedIn) {
+      console.log(socket);
+      socket.emit('login', 'hello');
+      socket.on('hello', helloCallback);
+    }
+    return () => {
+      if (socket) {
+        socket.off('hello', helloCallback);
+      }
+    };
+  }, [isLoggedIn, socket]);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      console.log('!isLoggedIn', !isLoggedIn);
+      disconnect();
+    }
+  }, [isLoggedIn, disconnect]);
+```
+*로그아웃 시에 disconnect해주는 것 잊지 말기
+
+## 앱 다시 켤 때 자동로그인되게[ch3]
+- encrypted-storage에서 토큰 불러오기
+- accessToken 만료시 자동으로 refresh되게 axios 설정
 
 ## 이미지 선택하기
 - Native Module Patching
@@ -263,6 +347,14 @@ react-native-nmap
 ## CodePush
 - 실시간으로 앱 수정 가능(JS코드, 이미지, 비디오만)
 - 노드모듈, 네이티브쪽은 앱 배포 필요
+```typescript jsx
+import codePush from "react-native-code-push";
+
+class MyApp extends Component {
+}
+
+MyApp = codePush(MyApp);
+```
 
 ## 배포 관련
 ### Android

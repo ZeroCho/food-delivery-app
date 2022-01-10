@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import EncryptedStorage from 'react-native-encrypted-storage';
 import DismissKeyboardView from '../components/DismissKeyboardView';
 import axios, {AxiosError} from 'axios';
 import Config from 'react-native-config';
@@ -51,6 +52,10 @@ function SignIn({navigation}: SignInScreenProps) {
           accessToken: response.data.data.accessToken,
           refreshToken: response.data.data.refreshToken,
         }),
+      );
+      await EncryptedStorage.setItem(
+        'refreshToken',
+        response.data.data.refreshToken,
       );
     } catch (error) {
       const errorResponse = (error as AxiosError).response;

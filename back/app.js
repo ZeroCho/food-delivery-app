@@ -13,6 +13,13 @@ const users = {};
 
 const verifyToken = (req, res, next) => {
   console.log(req.headers);
+  if (!req.headers.authorization) {
+    return res.status(401).json({ message: "토큰이 없습니다." });
+  }
+  try {
+    const data = jwt.verify(req.headers.authorization);
+    res.locals.email = data.email;
+  } catch (error) {}
   next();
 };
 
@@ -64,7 +71,8 @@ app.post("/login", (req, res, next) => {
   });
 });
 app.post("/logout", verifyToken, (req, res, next) => {
-  delete users[res.locals.user.email];
+  delete users[res.locals.email];
+  res.json({ message: "ok" });
 });
 
 app.post("/accept", verifyToken, (req, res, next) => {});
@@ -85,10 +93,19 @@ const io = SocketIO(server, {
 });
 app.set("io", io);
 
-io.on("connect", (socket) => {
+io.on("connection", (socket) => {
+  let id;
+  console.log(socket.id, "연결되었습니다.");
   socket.on("login", () => {
-    setInterval(() => {
-      socket.emit("hello", "emit");
+    console.log(socket.id, "로그인했습니다.");
+    id = setInterval(() => {
+      io.emit("hello", "emit");
     }, 1000);
+  });
+  socket.on("disconnect", () => {
+    console.log(socket.id, "연결 끊었습니다..");
+    if (id) {
+      clearInterval(id);
+    }
   });
 });
