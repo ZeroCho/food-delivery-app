@@ -328,25 +328,148 @@ src/AppInner.tsx
 *로그아웃 시에 disconnect해주는 것 잊지 말기
 
 ## 앱 다시 켤 때 자동로그인되게[ch3]
-- encrypted-storage에서 토큰 불러오기
-- accessToken 만료시 자동으로 refresh되게 axios 설정
+encrypted-storage에서 토큰 불러오기
+
+src/AppInner.tsx
+```typescript
+  // 앱 실행 시 토큰 있으면 로그인하는 코드
+  useEffect(() => {
+    const getTokenAndRefresh = async () => {
+      try {
+        const token = await EncryptedStorage.getItem('refreshToken');
+        if (!token) {
+          return;
+        }
+        const response = await axios.post(
+          `${Config.API_URL}/refreshToken`,
+          {},
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        dispatch(
+          userSlice.actions.setUser({
+            name: response.data.data.name,
+            email: response.data.data.email,
+            accessToken: response.data.data.accessToken,
+            refreshToken: token,
+          }),
+        );
+      } catch (error) {
+        console.error(error);
+        if ((error as AxiosError).response?.data.code === 'expired') {
+          Alert.alert('알림', '다시 로그인 해주세요.');
+        }
+      }
+    };
+    getTokenAndRefresh();
+  }, [dispatch]);
+```
+- 잠깐 로그인 화면이 보이는 것은 SplashScreen으로 숨김
+socket.io에서 주문 내역 받아서 store에 넣기
+
+src/AppInner.tsx
+```typescript
+  useEffect(() => {
+    const callback = (data: any) => {
+      console.log(data);
+    };
+    if (socket && isLoggedIn) {
+      socket.emit('acceptOrder', 'hello');
+      socket.on('order', callback);
+    }
+    return () => {
+      if (socket) {
+        socket.off('order', callback);
+      }
+    };
+  }, [isLoggedIn, socket]);
+```
+src/slices/order.ts
+```typescript
+
+```
+src/pages/Orders.tsx
+```typescript jsx
+
+```
+- ScrollView + map 조합은 좋지 않음
+- 반복되는 것은 컴포넌트로 빼는 것이 좋음
+- keyExtractor 반드시 설정하기
+src/components/EachOrder.tsx
+```typescript jsx
+
+```
+## 주문 수락/거절
+accessToken 만료시 자동으로 refresh되게 axios.interceptor 설정
+```typescript
+  useEffect(() => {
+    axios.interceptors.response.use(
+      response => {
+        return response;
+      },
+      async error => {
+        const {
+          config,
+          response: {status},
+        } = error;
+        if (status === 419) {
+          if (error.response.data.code === 'expired') {
+            const originalRequest = config;
+            const refreshToken = await EncryptedStorage.getItem('refreshToken');
+            // token refresh 요청
+            const {data} = await axios.post(
+              `${Config.API_URL}/refreshToken`, // token refresh api
+              {},
+              {headers: {authorization: `Bearer ${refreshToken}`}},
+            );
+            // 새로운 토큰 저장
+            dispatch(userSlice.actions.setAccessToken(data.data.accessToken));
+            originalRequest.headers.authorization = `Bearer ${data.data.accessToken}`;
+            // 419로 요청 실패했던 요청 새로운 토큰으로 재요청
+            return axios(originalRequest);
+          }
+        }
+        return Promise.reject(error);
+      },
+    );
+  }, [dispatch]);
+```
+## 네이버 지도 사용하기
+react-native-nmap
 
 ## 이미지 선택하기
 - Native Module Patching
 
-## 네이버 지도 사용하기
-react-native-nmap
-
-## Tmap 연결하기(Native Modules)
-
 ## 위치 정보 가져오기
+```shell
+npm i @react-native-community/geolocation
+```
+## Tmap 연결하기(Native Modules)
 
 ## FCM
 - 푸쉬알림 보내기
+```shell
+npm i @react-native-firebase/analytics @react-native-firebase/app @react-native-firebase/messaging
+npm i react-native-push-notification
+```
+## 배포 관련
+### Android
 
-## CodePush
+### iOS
+iOS 개발자 멤버쉽
+
+### fastlane
+
+### CodePush
 - 실시간으로 앱 수정 가능(JS코드, 이미지, 비디오만)
 - 노드모듈, 네이티브쪽은 앱 배포 필요
+```shell
+npm i react-native-code-push
+```
+src/App.tsx
 ```typescript jsx
 import codePush from "react-native-code-push";
 
@@ -356,15 +479,6 @@ class MyApp extends Component {
 MyApp = codePush(MyApp);
 ```
 
-## 배포 관련
-### Android
-
-### iOS
-iOS 개발자 멤버쉽
-
-### fastlane
-
-
 ## iOS Pod 관련
 [맥 전용]ios 폴더 안에서 pod 명령어 수행 가능, but npx pod-install은 프로젝트 폴더 어디서나 가능
 - Podfile: 설치할 Pod과 개별설정들 기록
@@ -373,8 +487,11 @@ iOS 개발자 멤버쉽
 - pod install: npx pod-install 역할 Podfile.lock에 따라 설치
 
 ## Hermes 켜기
+android/app/build.gradle
+```
 
+```
 # 꿀팁들
 - [patch-package](https://www.npmjs.com/package/patch-package): 노드모듈즈 직접 수정 가능, 유지보수 안 되는 패키지 업데이트 시 유용, 다만 patch-package한 패키지는 추후 버전 안 올리는 게 좋음
-- [react-native-upgrade helper](https://react-native-community.github.io/upgrade-helper/): 버전 업그레이드 방법 나옴
 - [Sentry](https://sentry.io/): 배포 시 React Native용으로 붙여서 에러 모니터링하면 좋음(무료 지원)
+- [react-native-upgrade helper](https://react-native-community.github.io/upgrade-helper/): 버전 업그레이드 방법 나옴

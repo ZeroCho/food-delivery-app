@@ -1,9 +1,13 @@
+// **절대 실무용으로 사용하지 마세요. 강좌를 위한 백엔드 더미 구현입니다.** //
+
 const express = require("express");
 const morgan = require("morgan");
 const jwt = require("jsonwebtoken");
-const app = express();
 const SocketIO = require("socket.io");
+const shortid = require("shortid");
 
+const orders = [];
+const app = express();
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -12,18 +16,70 @@ const jwtSecret = "JWT_SECRET";
 const users = {};
 
 const verifyToken = (req, res, next) => {
-  console.log(req.headers);
   if (!req.headers.authorization) {
     return res.status(401).json({ message: "토큰이 없습니다." });
   }
   try {
-    const data = jwt.verify(req.headers.authorization);
+    const data = jwt.verify(
+      req.headers.authorization.replace("Bearer ", ""),
+      jwtSecret
+    );
     res.locals.email = data.email;
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+    if (error.name === "TokenExpiredError") {
+      return res
+        .status(419)
+        .json({ message: "만료된 액세스 토큰입니다.", code: "expired" });
+    }
+    return res
+      .status(401)
+      .json({ message: "유효하지 않은 액세스 토큰입니다." });
+  }
   next();
 };
 
-app.post("/refreshToken", verifyToken, (req, res, next) => {});
+const verifyRefreshToken = (req, res, next) => {
+  if (!req.headers.authorization) {
+    return res.status(401).json({ message: "토큰이 없습니다." });
+  }
+  try {
+    const data = jwt.verify(
+      req.headers.authorization.replace("Bearer ", ""),
+      jwtSecret
+    );
+    res.locals.email = data.email;
+  } catch (error) {
+    console.error(error);
+    if (error.name === "TokenExpiredError") {
+      return res
+        .status(419)
+        .json({ message: "만료된 리프레시 토큰입니다.", code: "expired" });
+    }
+    return res
+      .status(401)
+      .json({ message: "유효하지 않은 리프레시 토큰입니다." });
+  }
+  next();
+};
+
+app.post("/refreshToken", verifyRefreshToken, (req, res, next) => {
+  const accessToken = jwt.sign(
+    { sub: "access", email: res.locals.email },
+    jwtSecret,
+    { expiresIn: "5m" }
+  );
+  if (!users[res.locals.email]) {
+    return res.status(404).json({ message: "가입되지 않은 회원입니다." });
+  }
+  res.json({
+    data: {
+      accessToken,
+      email: res.locals.email,
+      name: users[res.locals.email].name,
+    },
+  });
+});
 
 app.post("/user", (req, res, next) => {
   if (users[req.body.email]) {
@@ -75,9 +131,34 @@ app.post("/logout", verifyToken, (req, res, next) => {
   res.json({ message: "ok" });
 });
 
-app.post("/accept", verifyToken, (req, res, next) => {});
-app.post("/complete", verifyToken, (req, res, next) => {});
-app.get("/point", verifyToken, (req, res, next) => {});
+app.post("/accept", verifyToken, (req, res, next) => {
+  const order = orders.find((v) => v.orderId === req.body.orderId);
+  if (order.rider) {
+    return res
+      .status(400)
+      .json({ message: "다른 사람이 이미 수락한 주문건입니다. " });
+  }
+  order.rider = res.locals.email;
+  res.send("ok");
+});
+app.post("/complete", verifyToken, (req, res, next) => {
+  const order = orders.find(
+    (v) => v.orderId === req.body.orderId && order.rider === res.locals.email
+  );
+  order.completedAt = new Date();
+  res.send("ok");
+});
+app.get("/showmethemoney", verifyToken, (req, res, next) => {
+  const order = orders.filter(
+    (v) =>
+      v.orderId === req.body.orderId &&
+      order.rider === res.locals.email &&
+      !!order.completedAt
+  );
+  res.json({
+    data: orders.reduce((a, c) => a + c.price, 0) || 0,
+  });
+});
 
 app.use((err, req, res, next) => {
   console.error(err);
@@ -95,17 +176,46 @@ app.set("io", io);
 
 io.on("connection", (socket) => {
   let id;
+  let orderId;
   console.log(socket.id, "연결되었습니다.");
   socket.on("login", () => {
+    if (id) {
+      clearInterval(id);
+    }
     console.log(socket.id, "로그인했습니다.");
     id = setInterval(() => {
       io.emit("hello", "emit");
     }, 1000);
   });
+  socket.on("acceptOrder", () => {
+    if (orderId) {
+      clearInterval(orderId);
+    }
+    orderId = setInterval(() => {
+      const order = {
+        orderId: shortid(),
+        start: {
+          latitude: Math.floor(Math.random() * 200) * 0.001 + 37.4,
+          longitude: Math.floor(Math.random() * 300) * 0.001 + 126.8,
+        },
+        end: {
+          latitude: Math.floor(Math.random() * 200) * 0.001 + 37.4,
+          longitude: Math.floor(Math.random() * 300) * 0.001 + 126.8,
+        },
+        price: Math.floor(Math.random() * 6) * 1000 + 6000,
+        rider: Math.random() > 0.5 ? shortid() : undefined,
+      };
+      orders.push(order);
+      io.emit("order", order);
+    }, 10_000);
+  });
   socket.on("disconnect", () => {
     console.log(socket.id, "연결 끊었습니다..");
     if (id) {
       clearInterval(id);
+    }
+    if (orderId) {
+      clearInterval(orderId);
     }
   });
 });
