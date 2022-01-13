@@ -362,6 +362,9 @@ MyApp = codePush(MyApp);
 ### iOS
 iOS 개발자 멤버쉽
 
+### fastlane
+
+
 ## iOS Pod 관련
 [맥 전용]ios 폴더 안에서 pod 명령어 수행 가능, but npx pod-install은 프로젝트 폴더 어디서나 가능
 - Podfile: 설치할 Pod과 개별설정들 기록
