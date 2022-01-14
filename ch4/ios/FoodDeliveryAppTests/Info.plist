@@ -20,5 +20,7 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>NMFClientId</key>
+    <string>c5i0qvf959</string>
 </dict>
 </plist>
