@@ -241,6 +241,7 @@ export default App;
 액세스토큰/리프레시토큰을 받아서 다음 라이브러리로 저장
 ```shell
 npm install react-native-encrypted-storage
+npx pod-install # ios 전용
 ```
 서버 요청은 axios 사용(요즘 ky나 got으로 넘어가는 추세이나 react-native와 호환 여부 불투명)
 ```shell
@@ -437,12 +438,25 @@ accessToken 만료시 자동으로 refresh되게 axios.interceptor 설정
     );
   }, [dispatch]);
 ```
-## 네이버 지도 사용하기
-react-native-nmap
+## 수익금 확인하기
+src/pages/Settings.tsx
+```
+
+```
+## 네이버 지도 사용하기[ch4]
+```shell
+npm i react-native-nmap
+npx pod-install # ios 전용
+```
+[ios]git-lfs로 추가 설치 필요 [참고](https://github.com/navermaps/ios-map-sdk#%EB%8C%80%EC%9A%A9%EB%9F%89-%ED%8C%8C%EC%9D%BC%EC%9D%84-%EB%B0%9B%EA%B8%B0-%EC%9C%84%ED%95%B4-git-lfs-%EC%84%A4%EC%B9%98%EA%B0%80-%ED%95%84%EC%9A%94%ED%95%A9%EB%8B%88%EB%8B%A4)
+
 
 ## 이미지 선택하기
 - Native Module Patching
-
+```shell
+npm i react-native-image-crop-picker
+npx pod-install # ios 전용
+```
 ## 위치 정보 가져오기
 ```shell
 npm i @react-native-community/geolocation
