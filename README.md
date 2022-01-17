@@ -455,20 +455,89 @@ npx pod-install # ios 전용
 - iOS Bundle ID: com.[원하는이름].fooddeliveryapp(ex: com.zerocho.fooddeliveryapp)로 수정
 src/components/EachOrder.tsx
 ```typescript jsx
-```
-src/pages/Delivery.tsx
-```typescript jsx
-```
-## 이미지 선택하기
-- Native Module Patching
-```shell
-npm i react-native-image-crop-picker
-npx pod-install # ios 전용
+<View
+        style={{
+          width: Dimensions.get('window').width - 30,
+          height: 200,
+          marginTop: 10,
+        }}>
+  <NaverMapView
+          style={{width: '100%', height: '100%'}}
+          zoomControl={false}
+          center={{
+            zoom: 10,
+            tilt: 50,
+            latitude: (start.latitude + end.latitude) / 2,
+            longitude: (start.longitude + end.longitude) / 2,
+          }}>
+    <Marker
+            coordinate={{
+              latitude: start.latitude,
+              longitude: start.longitude,
+            }}
+            pinColor="blue"
+    />
+    <Path
+            coordinates={[
+              {
+                latitude: start.latitude,
+                longitude: start.longitude,
+              },
+              {latitude: end.latitude, longitude: end.longitude},
+            ]}
+    />
+    <Marker
+            coordinate={{latitude: end.latitude, longitude: end.longitude}}
+    />
+  </NaverMapView>
+</View>
 ```
 ## 위치 정보 가져오기
 ```shell
 npm i @react-native-community/geolocation
 ```
+AppInner.tsx
+```typescript jsx
+export type LoggedInParamList = {
+  Orders: undefined;
+  Settings: undefined;
+  Ing: undefined;
+  Complete: {orderId: string};
+};
+```
+src/pages/Delivery.tsx
+```typescript jsx
+```
+src/pages/Ing.tsx
+```
+```
+## 이미지 선택하기(주문 완료)
+src/pages/Complete.tsx
+```
+```
+이미지 선택 후 리사이징
+```shell
+npm i react-native-image-crop-picker
+npm i react-native-image-resizer
+npx pod-install # ios 전용
+```
+- 사진 찍을 때 이미지를 카메라롤/갤러리에 저장하고 싶음: Native Module Patching
+```shell
+npm i patch-package
+```
+package.json
+```json
+  "scripts": {
+    "postinstall": "patch-package",
+    "android": "react-native run-android",
+```
+- patch 후 적용하기
+```shell
+npx patch-package react-native-image-crop-picker
+```
+- 앞으로 npm i 할 때마다 자동으로 패치가 적용됨(postinstall 스크립트 덕분)
+- 이런 것 때문에 네이티브를 알아야함 ㅠ
+
 ## Tmap 연결하기(Native Modules)
 
 ## FCM
