@@ -1,11 +1,20 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Complete from './Complete';
+import Ing from './Ing';
+
+const Stack = createNativeStackNavigator();
 
 function Delivery() {
   return (
-    <View>
-      <Text>주문 화면</Text>
-    </View>
+    <Stack.Navigator>
+      <Stack.Screen name="Ing" component={Ing} options={{title: '내 오더'}} />
+      <Stack.Screen
+        name="Complete"
+        component={Complete}
+        options={{title: '완료하기'}}
+      />
+    </Stack.Navigator>
   );
 }
 

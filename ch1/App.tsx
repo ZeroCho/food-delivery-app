@@ -9,10 +9,16 @@ import {useState} from 'react';
 import SignIn from './src/pages/SignIn';
 import SignUp from './src/pages/SignUp';
 
+export type LoggedInParamList = {
+  Orders: undefined;
+  Settings: undefined;
+  Ing: undefined;
+  Complete: {orderId: string};
+};
+
 export type RootStackParamList = {
   SignIn: undefined;
   SignUp: undefined;
-  Details: {itemId: number; otherParam?: string};
 };
 
 const Tab = createBottomTabNavigator();
@@ -32,7 +38,7 @@ function App() {
           <Tab.Screen
             name="Delivery"
             component={Delivery}
-            options={{title: '내 오더'}}
+            options={{headerShown: false}}
           />
           <Tab.Screen
             name="Settings"

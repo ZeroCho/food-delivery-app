@@ -11,10 +11,16 @@ import {RootState} from './src/store/reducer';
 import useSocket from './src/hooks/useSocket';
 import {useEffect} from 'react';
 
+export type LoggedInParamList = {
+  Orders: undefined;
+  Settings: undefined;
+  Ing: undefined;
+  Complete: {orderId: string};
+};
+
 export type RootStackParamList = {
   SignIn: undefined;
   SignUp: undefined;
-  Details: {itemId: number; otherParam?: string};
 };
 
 const Tab = createBottomTabNavigator();

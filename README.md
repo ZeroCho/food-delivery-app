@@ -186,14 +186,17 @@ App.tsx
 - Tab.Navigator 도입
 - isLoggedIn 분기처리
 - Drawer과 Tab.Group 사용처 소개
+src/pages/Delivery.tsx
+```typescript jsx
 
+```
+- Navigator는 nesting 가능
+## 회원가입, 로그인 화면 만들기
 src/components/DismissKeyBoardView.tsx
 ```typescript jsx
 
 ```
 인풋 바깥 클릭 시 키보드를 가리기 위함
-
-## 회원가입, 로그인 화면 만들기
 - src/pages/SignIn.tsx
 - src/pages/SignUp.tsx
 - src/components/DismissKeyboardView.tsx
@@ -495,18 +498,6 @@ src/components/EachOrder.tsx
 ## 위치 정보 가져오기
 ```shell
 npm i @react-native-community/geolocation
-```
-AppInner.tsx
-```typescript jsx
-export type LoggedInParamList = {
-  Orders: undefined;
-  Settings: undefined;
-  Ing: undefined;
-  Complete: {orderId: string};
-};
-```
-src/pages/Delivery.tsx
-```typescript jsx
 ```
 src/pages/Ing.tsx
 ```
