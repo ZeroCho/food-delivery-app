@@ -675,7 +675,7 @@ npm i react-native-image-crop-picker
 npm i react-native-image-resizer
 npx pod-install # ios 전용
 ```
-- 사진 찍을 때 이미지를 카메라롤/갤러리에 저장하고 싶음: Native Module Patching
+## 사진 찍을 때 이미지를 카메라롤/갤러리에 저장하고 싶음: Native Module Patching[ch5]
 ```shell
 npm i patch-package
 ```
@@ -700,7 +700,7 @@ npx patch-package react-native-image-crop-picker
 npm i @react-native-firebase/analytics @react-native-firebase/app @react-native-firebase/messaging
 npm i react-native-push-notification
 ```
-## 배포 관련
+## 배포 관련[ch6]
 ### Android
 
 ### iOS

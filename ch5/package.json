@@ -1,0 +1,69 @@
+{
+  "name": "fooddeliveryapp",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "postinstall": "patch-package",
+    "android": "./node_modules/.bin/react-native run-android",
+    "ios": "./node_modules/.bin/react-native run-ios",
+    "start": "./node_modules/.bin/react-native start",
+    "test": "./node_modules/.bin/jest",
+    "lint": "./node_modules/.bin/eslint . --ext .js,.jsx,.ts,.tsx"
+  },
+  "dependencies": {
+    "@react-native-community/geolocation": "^2.0.2",
+    "@react-native-firebase/analytics": "^14.2.2",
+    "@react-native-firebase/app": "^14.2.2",
+    "@react-native-firebase/messaging": "^14.2.2",
+    "@react-navigation/bottom-tabs": "^6.0.9",
+    "@react-navigation/native": "^6.0.6",
+    "@react-navigation/native-stack": "^6.2.5",
+    "@reduxjs/toolkit": "^1.7.1",
+    "axios": "^0.24.0",
+    "react": "17.0.2",
+    "react-native": "0.66.4",
+    "react-native-config": "^1.4.5",
+    "react-native-encrypted-storage": "^4.0.2",
+    "react-native-flipper": "^0.128.4",
+    "react-native-image-crop-picker": "^0.37.2",
+    "react-native-image-resizer": "^1.4.5",
+    "react-native-nmap": "^0.0.66",
+    "react-native-permissions": "^3.2.0",
+    "react-native-push-notification": "^8.1.1",
+    "react-native-safe-area-context": "^3.3.2",
+    "react-native-screens": "^3.10.1",
+    "react-redux": "^7.2.6",
+    "redux-flipper": "^2.0.1",
+    "socket.io-client": "^4.4.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@babel/runtime": "^7.12.5",
+    "@react-native-community/eslint-config": "^2.0.0",
+    "@types/jest": "^26.0.23",
+    "@types/react-native": "^0.66.4",
+    "@types/react-test-renderer": "^17.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.7.0",
+    "@typescript-eslint/parser": "^5.7.0",
+    "babel-jest": "^26.6.3",
+    "eslint": "^7.14.0",
+    "jest": "^26.6.3",
+    "metro-react-native-babel-preset": "^0.66.2",
+    "react-test-renderer": "17.0.2",
+    "typescript": "^4.4.4"
+  },
+  "resolutions": {
+    "@types/react": "^17"
+  },
+  "jest": {
+    "preset": "react-native",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  }
+}

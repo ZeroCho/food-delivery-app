@@ -39,6 +39,12 @@ const orderSlice = createSlice({
       if (index > -1) {
         state.orders.splice(index, 1);
       }
+      const delivery = state.deliveries.findIndex(
+        v => v.orderId === action.payload,
+      );
+      if (delivery > -1) {
+        state.deliveries.splice(delivery, 1);
+      }
     },
   },
   extraReducers: builder => {},
