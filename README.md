@@ -14,7 +14,10 @@ react-native run-ios # 아이폰 실행 명령어
 ```
 
 서버가 하나 뜰 것임. Metro 서버. 여기서 소스 코드를 컴파일하고 앱으로 전송해줌. 기본 8081포트.
-
+메트로 서버가 꺼져있다면 터미널을 하나 더 열어
+```shell
+npm start
+```
 개발은 iOS 기준으로 하는 게 좋다(개인 경험). 그러나 강좌는 어쩔 수 없이 Windows로 한다.
 
 react-native@0.66 버전, 한 달에 0.1씩 올라가는데 요즘 개발 속도가 느려져서 규칙이 깨짐. 거의 완성 단계라 신규 기능은 npm에서 @react-native-community로부터 받아야 함. 버전 업그레이드 함부로 하지 말 것!
@@ -43,6 +46,10 @@ react-native@0.66 버전, 한 달에 0.1씩 올라가는데 요즘 개발 속도
 - Show Perf Monitor로 프레임 측정 가능
 
 [Flipper](https://fbflipper.com/) 페이스북이 만든 모바일앱 디버거도 좋음(다만 연결 시 에러나는 사람 다수 발견)
+```shell
+npm i react-native-flipper redux-flipper
+npx pod-install
+```
 - flipper-plugin-async-storage
 - flipper-plugin-redux-debugger
 - Layout, Network, Images, Database(sqlite), React Devtools, Hermes Debugger 사용 가능
@@ -257,8 +264,26 @@ npm i react-native-config
 ```typescript jsx
 import Config from 'react-native-config';
 ```
+android/app/proguard-rules.pro
+```
+-keep class com.zerocho.fooddeliveryapp.BuildConfig { *; }
+```
+android/app/build.gradle
+```
+apply plugin: "com.android.application"
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+...
+    defaultConfig {
+        ...
+        resValue "string", "build_config_package", "com.zerocho.fooddeliveryapp"
+    }
+```
 - .env에 키=값 저장해서(예를 들어 abc=def) Config.abc로 꺼내 씀
-
+.env
+```
+API_URL=http://10.0.2.2:3105
+```
+-10.0.2.2로 해야 함(localhost로 하면 안드로이드에서 안 됨)
 암호화해서 저장할 데이터는 다음 패키지에
 ```
 import EncryptedStorage from 'react-native-encrypted-storage';
@@ -270,7 +295,11 @@ const 값 = await EncryptedStorage.getItem('키', '값');
 ```
 - 자주 바뀌는 값이거나 민감한 값은 encrypted-storage에
 - 개발 환경별로 달라지는 값은 react-native-config에 저장하면 좋음(암호화 안 됨)
-
+src/pages/SignUp.tsx, src/pages/SignIn.tsx, src/pages/Settings.tsx
+```
+```
+android에서 http 요청이 안 보내지면
+- android/app/src/main/AndroidManifest.xml 에서 <application> 태그에 android:usesCleartextTraffic="true" 추가
 ## 소켓IO 연결
 웹소켓 기반 라이브러리
 - 요청-응답 방식이 아니라 실시간 양방향 통신 가능
@@ -302,7 +331,7 @@ const useSocket = (): [Socket | undefined, () => void] => {
 
 export default useSocket;
 ```
-src/AppInner.tsx
+AppInner.tsx
 ```typescript jsx
   const [socket, disconnect] = useSocket();
 
@@ -334,7 +363,7 @@ src/AppInner.tsx
 ## 앱 다시 켤 때 자동로그인되게[ch3]
 encrypted-storage에서 토큰 불러오기
 
-src/AppInner.tsx
+AppInner.tsx
 ```typescript
   // 앱 실행 시 토큰 있으면 로그인하는 코드
   useEffect(() => {
@@ -374,7 +403,7 @@ src/AppInner.tsx
 - 잠깐 로그인 화면이 보이는 것은 SplashScreen으로 숨김
 socket.io에서 주문 내역 받아서 store에 넣기
 
-src/AppInner.tsx
+AppInner.tsx
 ```typescript
   useEffect(() => {
     const callback = (data: any) => {
@@ -496,6 +525,140 @@ src/components/EachOrder.tsx
 </View>
 ```
 ## 위치 정보 가져오기
+권한 얻기(위치정보, 카메라, 갤러리)
+```
+npm i react-native-permissions
+```
+ios/Podfile
+```
+permissions_path = '../node_modules/react-native-permissions/ios'
+pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
+pod 'Permission-LocationAccuracy', :path => "#{permissions_path}/LocationAccuracy"
+pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications"
+pod 'Permission-PhotoLibrary', :path => "#{permissions_path}/PhotoLibrary"
+```
+ios/FoodDeliveryApp/Info.plist
+```
+<key>NSCameraUsageDescription</key>
+<string>배송완료 사진 촬영을 위해 카메라 권한이 필요합니다.</string>
+<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+<string>배송중 위치 확인을 위해서 위치 권한이 필요합니다.</string>
+<key>NSLocationAlwaysUsageDescription</key>
+<string>배송중 위치 확인을 위해서 위치 권한이 필요합니다.</string>
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>배송중 위치 확인을 위해서 위치 권한이 필요합니다.</string>
+<key>NSMotionUsageDescription</key>
+<string>배송중 위치 확인을 위해서 위치 권한이 필요합니다.</string>
+<key>NSPhotoLibraryAddUsageDescription</key>
+<string>배송완료 사진 선택을 위해 라이브러리 접근 권한이 필요합니다.</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>배송완료 사진 선택을 위해 라이브러리 접근 권한이 필요합니다.</string>
+```
+android/app/src/main/AndroidManifest.xml
+```
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.CAMERA"/>
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<uses-permission android:name="android.permission.VIBRATE"/>
+```
+```shell
+npx pod-install
+```
+src/hooks/usePermissions.ts
+```typescript jsx
+import {useEffect} from 'react';
+import {Alert, Linking, Platform} from 'react-native';
+import {check, PERMISSIONS, request, RESULTS} from 'react-native-permissions';
+
+function usePermissions() {
+  // 권한 관련
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
+        .then(result => {
+          console.log('check location', result);
+          if (result === RESULTS.BLOCKED || result === RESULTS.DENIED) {
+            Alert.alert(
+              '이 앱은 위치 권한 허용이 필요합니다.',
+              '앱 설정 화면을 열어서 항상 허용으로 바꿔주세요.',
+              [
+                {
+                  text: '네',
+                  onPress: () => Linking.openSettings(),
+                },
+                {
+                  text: '아니오',
+                  onPress: () => console.log('No Pressed'),
+                  style: 'cancel',
+                },
+              ],
+            );
+          }
+        })
+        .catch(console.error);
+    } else if (Platform.OS === 'ios') {
+      check(PERMISSIONS.IOS.LOCATION_ALWAYS)
+        .then(result => {
+          if (result === RESULTS.BLOCKED || result === RESULTS.DENIED) {
+            Alert.alert(
+              '이 앱은 백그라운드 위치 권한 허용이 필요합니다.',
+              '앱 설정 화면을 열어서 항상 허용으로 바꿔주세요.',
+              [
+                {
+                  text: '네',
+                  onPress: () => Linking.openSettings(),
+                },
+                {
+                  text: '아니오',
+                  onPress: () => console.log('No Pressed'),
+                  style: 'cancel',
+                },
+              ],
+            );
+          }
+        })
+        .catch(console.error);
+    }
+    if (Platform.OS === 'android') {
+      check(PERMISSIONS.ANDROID.CAMERA)
+        .then(result => {
+          if (result === RESULTS.DENIED || result === RESULTS.GRANTED) {
+            return request(PERMISSIONS.ANDROID.CAMERA);
+          } else {
+            console.log(result);
+            throw new Error('카메라 지원 안 함');
+          }
+        })
+        .catch(console.error);
+    } else {
+      check(PERMISSIONS.IOS.CAMERA)
+        .then(result => {
+          if (
+            result === RESULTS.DENIED ||
+            result === RESULTS.LIMITED ||
+            result === RESULTS.GRANTED
+          ) {
+            return request(PERMISSIONS.IOS.CAMERA);
+          } else {
+            console.log(result);
+            throw new Error('카메라 지원 안 함');
+          }
+        })
+        .catch(console.error);
+    }
+  }, []);
+}
+
+export default usePermissions;
+```
+- Platform으로 운영체제 구별
+- Linking으로 다른 서비스 열기 가능
+위치 정보 가져오기
 ```shell
 npm i @react-native-community/geolocation
 ```
@@ -551,7 +714,7 @@ iOS 개발자 멤버쉽
 ```shell
 npm i react-native-code-push
 ```
-src/App.tsx
+App.tsx
 ```typescript jsx
 import codePush from "react-native-code-push";
 
@@ -577,3 +740,30 @@ android/app/build.gradle
 - [patch-package](https://www.npmjs.com/package/patch-package): 노드모듈즈 직접 수정 가능, 유지보수 안 되는 패키지 업데이트 시 유용, 다만 patch-package한 패키지는 추후 버전 안 올리는 게 좋음
 - [Sentry](https://sentry.io/): 배포 시 React Native용으로 붙여서 에러 모니터링하면 좋음(무료 지원)
 - [react-native-upgrade helper](https://react-native-community.github.io/upgrade-helper/): 버전 업그레이드 방법 나옴
+
+# 에러들
+## Error: listen EADDRINUSE: address already in use :::8081
+이미 메트로 서버가 다른 데서 켜져 있는 것임. 메트로 서버를 실행하고 있는 터미널 종료하기
+## java.lang.RuntimeException: Unable to load script. Make sure you're either running Metro (run 'npx react-native start') or that your bundle 'index.android.bundle' is packaged correctly for release.
+- android/app/src/main/assets 폴더 만들기
+```shell
+cd android
+./gradlew clean
+cd ..
+npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle
+```
+## Execution failed for task ':app:packageDebug'. > java.lang.OutOfMemoryError (no error message)
+android/gradle.properties에 다음 줄 추가
+```
+org.gradle.jvmargs=-XX\:MaxHeapSize\=1024m -Xmx1024m
+```
+또는
+
+android/app/src/main/AndroidManifest.xml 에서 <application> 태그에 android:largeHeap="true" 추가
+## warn No apps connected. Sending "reload" to all React Native apps failed. Make sure your app is running in the simulator or on a phone connected via USB.
+```
+npx react-native start --reset-cache
+cd android && ./gradlew clean
+cd ..
+npx react-native run-android
+```

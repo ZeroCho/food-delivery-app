@@ -8,7 +8,12 @@ import {
   Text,
   View,
 } from 'react-native';
-import {RouteProp, useRoute} from '@react-navigation/native';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
 import ImagePicker from 'react-native-image-crop-picker';
 import ImageResizer from 'react-native-image-resizer';
@@ -16,9 +21,13 @@ import axios, {AxiosError} from 'axios';
 import Config from 'react-native-config';
 import {useSelector} from 'react-redux';
 import {RootState} from '../store/reducer';
+import orderSlice from '../slices/order';
+import {useAppDispatch} from '../store';
 
 function Complete() {
+  const dispatch = useAppDispatch();
   const route = useRoute<RouteProp<LoggedInParamList>>();
+  const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [image, setImage] =
     useState<{uri: string; filename: string; type: string}>();
   const [preview, setPreview] = useState<{uri: string}>();
@@ -73,6 +82,10 @@ function Complete() {
       Alert.alert('알림', '파일을 업로드해주세요.');
       return;
     }
+    if (!orderId) {
+      Alert.alert('알림', '유효하지 않은 주문입니다.');
+      return;
+    }
     const formData = new FormData();
     formData.append('image', image);
     formData.append('orderId', orderId);
@@ -83,13 +96,16 @@ function Complete() {
         },
       });
       Alert.alert('알림', '완료처리 되었습니다.');
+      navigation.goBack();
+      navigation.navigate('Settings');
+      dispatch(orderSlice.actions.rejectOrder(orderId));
     } catch (error) {
       const errorResponse = (error as AxiosError).response;
       if (errorResponse) {
         Alert.alert('알림', errorResponse.data.message);
       }
     }
-  }, [image, orderId, accessToken]);
+  }, [dispatch, navigation, image, orderId, accessToken]);
 
   return (
     <View>
@@ -99,7 +115,7 @@ function Complete() {
       <View style={styles.preview}>
         {preview && <Image style={styles.previewImage} source={preview} />}
       </View>
-      <View style={{flexDirection: 'row'}}>
+      <View style={styles.buttonWrapper}>
         <Pressable style={styles.button} onPress={onTakePhoto}>
           <Text style={styles.buttonText}>이미지 촬영</Text>
         </Pressable>
@@ -135,6 +151,7 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height / 3,
     resizeMode: 'contain',
   },
+  buttonWrapper: {flexDirection: 'row', justifyContent: 'center'},
   button: {
     paddingHorizontal: 20,
     paddingVertical: 10,

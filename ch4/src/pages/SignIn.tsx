@@ -39,6 +39,7 @@ function SignIn({navigation}: SignInScreenProps) {
       return Alert.alert('알림', '비밀번호를 입력해주세요.');
     }
     try {
+      console.log('here2', Config);
       const response = await axios.post(`${Config.API_URL}/login`, {
         email,
         password,

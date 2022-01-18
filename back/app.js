@@ -1,10 +1,11 @@
 // **절대 실무용으로 사용하지 마세요. 강좌를 위한 백엔드 더미 구현입니다.** //
-
+const fs = require("fs");
 const express = require("express");
 const morgan = require("morgan");
 const jwt = require("jsonwebtoken");
 const SocketIO = require("socket.io");
 const shortid = require("shortid");
+const multer = require("multer");
 
 const orders = [];
 const app = express();
@@ -133,30 +134,53 @@ app.post("/logout", verifyToken, (req, res, next) => {
 
 app.post("/accept", verifyToken, (req, res, next) => {
   const order = orders.find((v) => v.orderId === req.body.orderId);
+  if (!order) {
+    return res.status(400).json({ message: "유효하지 않은 주문입니다." });
+  }
   if (order.rider) {
     return res
       .status(400)
       .json({ message: "다른 사람이 이미 수락한 주문건입니다. " });
   }
   order.rider = res.locals.email;
+  console.log(order);
   res.send("ok");
 });
-app.post("/complete", verifyToken, (req, res, next) => {
+
+try {
+  fs.readdirSync("uploads");
+} catch (error) {
+  console.error("uploads 폴더가 없어 uploads 폴더를 생성합니다.");
+  fs.mkdirSync("uploads");
+}
+const upload = multer({
+  storage: multer.diskStorage({
+    destination(req, file, cb) {
+      cb(null, "uploads/");
+    },
+    filename(req, file, cb) {
+      const ext = path.extname(file.originalname);
+      cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
+    },
+  }),
+  limits: { fileSize: 5 * 1024 * 1024 },
+});
+app.post("/complete", verifyToken, upload.single("image"), (req, res, next) => {
   const order = orders.find(
-    (v) => v.orderId === req.body.orderId && order.rider === res.locals.email
+    (v) => v.orderId === req.body.orderId && v.rider === res.locals.email
   );
+  if (!order) {
+    return res.status(400).json({ message: "유효하지 않은 주문입니다." });
+  }
   order.completedAt = new Date();
   res.send("ok");
 });
 app.get("/showmethemoney", verifyToken, (req, res, next) => {
   const order = orders.filter(
-    (v) =>
-      v.orderId === req.body.orderId &&
-      order.rider === res.locals.email &&
-      !!order.completedAt
+    (v) => v.rider === res.locals.email && !!v.completedAt
   );
   res.json({
-    data: orders.reduce((a, c) => a + c.price, 0) || 0,
+    data: order.reduce((a, c) => a + c.price, 0) || 0,
   });
 });
 

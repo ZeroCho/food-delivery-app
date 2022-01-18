@@ -21,7 +21,7 @@ import orderSlice from './src/slices/order';
 export type LoggedInParamList = {
   Orders: undefined;
   Settings: undefined;
-  Ing: undefined;
+  Delivery: undefined;
   Complete: {orderId: string};
 };
 

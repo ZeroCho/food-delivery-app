@@ -14,7 +14,7 @@ import {useEffect} from 'react';
 export type LoggedInParamList = {
   Orders: undefined;
   Settings: undefined;
-  Ing: undefined;
+  Delivery: undefined;
   Complete: {orderId: string};
 };
 

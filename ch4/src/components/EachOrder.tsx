@@ -38,7 +38,7 @@ function EachOrder({item}: Props) {
         {headers: {authorization: `Bearer ${accessToken}`}},
       );
       dispatch(orderSlice.actions.acceptOrder(item.orderId));
-      navigation.navigate('Ing');
+      navigation.navigate('Delivery');
     } catch (error) {
       let errorResponse = (error as AxiosError).response;
       if (errorResponse?.status === 400) {

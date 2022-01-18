@@ -7,7 +7,7 @@ import Geolocation from '@react-native-community/geolocation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {LoggedInParamList} from '../../AppInner';
 
-type IngScreenProps = NativeStackScreenProps<LoggedInParamList, 'Ing'>;
+type IngScreenProps = NativeStackScreenProps<LoggedInParamList, 'Delivery'>;
 
 function Ing({navigation}: IngScreenProps) {
   console.dir(navigation);
@@ -18,12 +18,19 @@ function Ing({navigation}: IngScreenProps) {
   } | null>(null);
 
   useEffect(() => {
-    Geolocation.getCurrentPosition(info => {
-      setMyPosition({
-        latitude: info.coords.latitude,
-        longitude: info.coords.longitude,
-      });
-    });
+    Geolocation.getCurrentPosition(
+      info => {
+        setMyPosition({
+          latitude: info.coords.latitude,
+          longitude: info.coords.longitude,
+        });
+      },
+      console.error,
+      {
+        enableHighAccuracy: true,
+        timeout: 20000,
+      },
+    );
   }, []);
 
   if (!deliveries?.[0]) {
