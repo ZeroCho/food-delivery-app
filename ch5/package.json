@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "postinstall": "patch-package",
-    "android": "./node_modules/.bin/react-native run-android",
-    "ios": "./node_modules/.bin/react-native run-ios",
-    "start": "./node_modules/.bin/react-native start",
-    "test": "./node_modules/.bin/jest",
-    "lint": "./node_modules/.bin/eslint . --ext .js,.jsx,.ts,.tsx"
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
     "@react-native-community/geolocation": "^2.0.2",
@@ -20,6 +20,9 @@
     "@react-navigation/native-stack": "^6.2.5",
     "@reduxjs/toolkit": "^1.7.1",
     "axios": "^0.24.0",
+    "i": "^0.3.7",
+    "npm": "^8.3.2",
+    "patch-package": "^6.4.7",
     "react": "17.0.2",
     "react-native": "0.66.4",
     "react-native-config": "^1.4.5",

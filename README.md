@@ -1,7 +1,9 @@
 # 첫 시작(setting)
 [공식문서](https://reactnative.dev/)
 - 초기 세팅: [반드시 따라하기](https://reactnative.dev/docs/environment-setup)
-
+- java 17 버전 설치하면 안 됨(11버전 설치할 것), 환경 변수 설정도 잘 해 놓을 것(JAVA_HOME)
+- Android SDK 30이 있어야 함. 가상기기는 Nexus 5로 받을 것
+- [adb](https://developer.android.com/studio/releases/platform-tools) 설치 필요, ANDROID_HOME 환경변수도
 ```shell
 npx react-native init FoodDeliveryApp --template react-native-template-typescript
 ```
@@ -46,8 +48,9 @@ react-native@0.66 버전, 한 달에 0.1씩 올라가는데 요즘 개발 속도
 - Show Perf Monitor로 프레임 측정 가능
 
 [Flipper](https://fbflipper.com/) 페이스북이 만든 모바일앱 디버거도 좋음(다만 연결 시 에러나는 사람 다수 발견)
+- setup doctor 문제 해결할 것
 ```shell
-npm i react-native-flipper redux-flipper
+npm i react-native-flipper redux-flipper rn-async-storage-flipper
 npx pod-install
 ```
 - flipper-plugin-async-storage
