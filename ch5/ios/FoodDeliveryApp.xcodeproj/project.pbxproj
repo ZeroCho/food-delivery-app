@@ -14,6 +14,8 @@
 		2A088FBA5F09519664B768DD /* libPods-FoodDeliveryApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF44F3AFEE1C1BB84EA4E2CC /* libPods-FoodDeliveryApp.a */; };
 		54B3BEFF526BBF0E72CA6244 /* libPods-FoodDeliveryApp-FoodDeliveryAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E5C7488EC565F2385B7D40D /* libPods-FoodDeliveryApp-FoodDeliveryAppTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		E1E3F191279E83DB0045202A /* TopLib_Op.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E3F18E279E83DB0045202A /* TopLib_Op.a */; };
+		E1E3F194279E87330045202A /* RCTTMap.m in Sources */ = {isa = PBXBuildFile; fileRef = E1E3F192279E87330045202A /* RCTTMap.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +45,29 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = FoodDeliveryApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BF44F3AFEE1C1BB84EA4E2CC /* libPods-FoodDeliveryApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FoodDeliveryApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDF4945DE17FD2E0180D31F6 /* Pods-FoodDeliveryApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodDeliveryApp.release.xcconfig"; path = "Target Support Files/Pods-FoodDeliveryApp/Pods-FoodDeliveryApp.release.xcconfig"; sourceTree = "<group>"; };
+		E1E3F18E279E83DB0045202A /* TopLib_Op.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = TopLib_Op.a; sourceTree = "<group>"; };
+		E1E3F192279E87330045202A /* RCTTMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RCTTMap.m; path = FoodDeliveryApp/RCTTMap.m; sourceTree = "<group>"; };
+		E1E3F193279E87330045202A /* RCTTMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCTTMap.h; path = FoodDeliveryApp/RCTTMap.h; sourceTree = "<group>"; };
+		E1E3F195279E87CA0045202A /* FoodDeliveryApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FoodDeliveryApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		E1E3F19C279E8D690045202A /* TMapGpsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMapGpsManager.h; sourceTree = "<group>"; };
+		E1E3F19D279E8D690045202A /* TMapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMapAnnotation.h; sourceTree = "<group>"; };
+		E1E3F19E279E8D690045202A /* TMapPathData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMapPathData.h; sourceTree = "<group>"; };
+		E1E3F19F279E8D690045202A /* TMapObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMapObject.h; sourceTree = "<group>"; };
+		E1E3F1A0279E8D690045202A /* TMapPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMapPoint.h; sourceTree = "<group>"; };
+		E1E3F1A1279E8D690045202A /* TMapPolyLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMapPolyLine.h; sourceTree = "<group>"; };
+		E1E3F1A2279E8D6A0045202A /* TMapMarkerItem2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMapMarkerItem2.h; sourceTree = "<group>"; };
+		E1E3F1A3279E8D6A0045202A /* TMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMap.h; sourceTree = "<group>"; };
+		E1E3F1A4279E8D6A0045202A /* TMapMarkerItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMapMarkerItem.h; sourceTree = "<group>"; };
+		E1E3F1A5279E8D6A0045202A /* TMapPolygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMapPolygon.h; sourceTree = "<group>"; };
+		E1E3F1A6279E8D6A0045202A /* TMapTapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMapTapi.h; sourceTree = "<group>"; };
+		E1E3F1A7279E8D6A0045202A /* TMapType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMapType.h; sourceTree = "<group>"; };
+		E1E3F1A8279E8D6A0045202A /* TMapPOIItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMapPOIItem.h; sourceTree = "<group>"; };
+		E1E3F1A9279E8D6A0045202A /* TMapOverlayItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMapOverlayItem.h; sourceTree = "<group>"; };
+		E1E3F1AA279E8D6A0045202A /* TMapBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMapBaseView.h; sourceTree = "<group>"; };
+		E1E3F1AB279E8D6A0045202A /* TMapKatec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMapKatec.h; sourceTree = "<group>"; };
+		E1E3F1AC279E8D6A0045202A /* BizCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BizCategory.h; sourceTree = "<group>"; };
+		E1E3F1AD279E8D6A0045202A /* TMapCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMapCircle.h; sourceTree = "<group>"; };
+		E1E3F1AE279E8D6A0045202A /* TMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMapView.h; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -59,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1E3F191279E83DB0045202A /* TopLib_Op.a in Frameworks */,
 				2A088FBA5F09519664B768DD /* libPods-FoodDeliveryApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -86,12 +112,15 @@
 		13B07FAE1A68108700A75B9A /* FoodDeliveryApp */ = {
 			isa = PBXGroup;
 			children = (
+				E1E3F193279E87330045202A /* RCTTMap.h */,
+				E1E3F192279E87330045202A /* RCTTMap.m */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				E1E3F195279E87CA0045202A /* FoodDeliveryApp-Bridging-Header.h */,
 			);
 			name = FoodDeliveryApp;
 			sourceTree = "<group>";
@@ -116,6 +145,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				E1E3F1B0279E8D950045202A /* New Group */,
+				E1E3F18E279E83DB0045202A /* TopLib_Op.a */,
 				13B07FAE1A68108700A75B9A /* FoodDeliveryApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* FoodDeliveryAppTests */,
@@ -146,6 +177,32 @@
 				67F2719E80E42A9FF08935F8 /* Pods-FoodDeliveryApp-FoodDeliveryAppTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		E1E3F1B0279E8D950045202A /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				E1E3F1AC279E8D6A0045202A /* BizCategory.h */,
+				E1E3F1A3279E8D6A0045202A /* TMap.h */,
+				E1E3F19D279E8D690045202A /* TMapAnnotation.h */,
+				E1E3F1AA279E8D6A0045202A /* TMapBaseView.h */,
+				E1E3F1AD279E8D6A0045202A /* TMapCircle.h */,
+				E1E3F19C279E8D690045202A /* TMapGpsManager.h */,
+				E1E3F1AB279E8D6A0045202A /* TMapKatec.h */,
+				E1E3F1A4279E8D6A0045202A /* TMapMarkerItem.h */,
+				E1E3F1A2279E8D6A0045202A /* TMapMarkerItem2.h */,
+				E1E3F19F279E8D690045202A /* TMapObject.h */,
+				E1E3F1A9279E8D6A0045202A /* TMapOverlayItem.h */,
+				E1E3F19E279E8D690045202A /* TMapPathData.h */,
+				E1E3F1A8279E8D6A0045202A /* TMapPOIItem.h */,
+				E1E3F1A0279E8D690045202A /* TMapPoint.h */,
+				E1E3F1A5279E8D6A0045202A /* TMapPolygon.h */,
+				E1E3F1A1279E8D690045202A /* TMapPolyLine.h */,
+				E1E3F1A6279E8D6A0045202A /* TMapTapi.h */,
+				E1E3F1A7279E8D6A0045202A /* TMapType.h */,
+				E1E3F1AE279E8D6A0045202A /* TMapView.h */,
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -424,6 +481,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1E3F194279E87330045202A /* RCTTMap.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);

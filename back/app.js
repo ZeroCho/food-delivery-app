@@ -87,7 +87,7 @@ app.post("/user", (req, res, next) => {
     return res.status(401).json({ message: "이미 가입한 회원입니다." });
   }
   users[req.body.email] = {
-    email: req.body.email,
+    email: req.body.email.toLowerCase(),
     password: req.body.password,
     name: req.body.name,
   };

@@ -733,10 +733,36 @@ npx patch-package react-native-image-crop-picker
 - 이런 것 때문에 네이티브를 알아야함 ㅠ
 
 ## Tmap 연결하기(Native Modules)
-
-
+[가입](https://openapi.sk.com/)
+- My Project - 프로젝트 생성 - TMap API 신청(무료)
+- [sdk](https://openapi.sk.com/resource/sdk/indexView)
+- [안드로이드 연동](http://tmapapi.sktelecom.com/main.html#android/guide/androidGuide.sample1)
+- [iOS 연동](http://tmapapi.sktelecom.com/main.html#ios/guide/iosGuide.sample1)
+- android/app/src/java/com/zerocho/fooddeliveryapp/TMapModule.java 생성
+- android/app/src/java/com/zerocho/fooddeliveryapp/TMapPackage.java 생성
+- android/app/src/java/com/zerocho/fooddeliveryapp/MainApplication에 TMapPackage 연결
+- ios/FoodDeliveryApp/RCTTMap.h
+- ios/FoodDeliveryApp/RCTTMap.m
+- ios/FoodDeliveryApp-Bridging-Header.h
+- src/modules/TMap.ts
+src/pages/Ing.tsx
+```typescript jsx
+TMap.openNavi(
+  '도착지',
+  end.longitude.toString(),
+  end.latitude.toString(),
+  'MOTORCYCLE',
+).then(data => {
+  console.log('TMap callback', data);
+  if (!data) {
+    Alert.alert('알림', '티맵을 설치하세요.');
+  }
+});
+```
 ## react-native-splash-screen
-
+```shell
+npm i react-native-splash-screen
+```
 
 ## FCM
 - 푸쉬알림 보내기
