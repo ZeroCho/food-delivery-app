@@ -204,7 +204,33 @@ src/pages/Delivery.tsx
 ## 회원가입, 로그인 화면 만들기
 src/components/DismissKeyBoardView.tsx
 ```typescript jsx
+import React from 'react';
+import {
+  TouchableWithoutFeedback,
+  Keyboard,
+  StyleProp,
+  ViewStyle,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 
+const DismissKeyboardHOC = (
+  Comp: typeof KeyboardAvoidingView,
+): React.FC<{style?: StyleProp<ViewStyle>}> => {
+  return ({children, ...props}) => (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <Comp
+        {...props}
+        style={props.style}
+        behavior={Platform.OS === 'android' ? undefined : 'padding'}>
+        {children}
+      </Comp>
+    </TouchableWithoutFeedback>
+  );
+};
+const DismissKeyboardView = DismissKeyboardHOC(KeyboardAvoidingView);
+
+export default DismissKeyboardView;
 ```
 인풋 바깥 클릭 시 키보드를 가리기 위함
 - src/pages/SignIn.tsx
@@ -212,7 +238,14 @@ src/components/DismissKeyBoardView.tsx
 - src/components/DismissKeyboardView.tsx
 - TextInput, StyleSheet.compose 사용
 - DismissKeyboardView 만들기(Keyboard, KeyboardAvoidingView)
+- react-native-keyboard-aware-scrollview
+``` shell
+npm i react-native-keyboard-avoiding-view  
+```
+src/components/DismissKeyBoardView.tsx
+```typescript jsx
 
+```
 ## 서버 요청 보내기(ch2)
 
 back 서버 실행 필요, DB 없이도 되게끔 만들어둠. 서버 재시작 시 데이터는 날아가니 주의
@@ -572,6 +605,8 @@ android/app/src/main/AndroidManifest.xml
 ```shell
 npx pod-install
 ```
+- [플로우](https://github.com/zoontek/react-native-permissions)를 잘 볼 것
+
 src/hooks/usePermissions.ts
 ```typescript jsx
 import {useEffect} from 'react';
@@ -678,6 +713,8 @@ npm i react-native-image-crop-picker
 npm i react-native-image-resizer
 npx pod-install # ios 전용
 ```
+- 이미지 업로드에는 multipart/formData를 사용함
+- 이미지는 { uri: 주소, filename: 파일명, type: 확장자 } 꼴
 ## 사진 찍을 때 이미지를 카메라롤/갤러리에 저장하고 싶음: Native Module Patching[ch5]
 ```shell
 npm i patch-package
@@ -697,6 +734,10 @@ npx patch-package react-native-image-crop-picker
 
 ## Tmap 연결하기(Native Modules)
 
+
+## react-native-splash-screen
+
+
 ## FCM
 - 푸쉬알림 보내기
 ```shell
@@ -710,6 +751,7 @@ npm i react-native-push-notification
 iOS 개발자 멤버쉽
 
 ### fastlane
+버저닝, 배포 자동화 가능
 
 ### CodePush
 - 실시간으로 앱 수정 가능(JS코드, 이미지, 비디오만)
