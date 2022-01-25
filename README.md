@@ -11,8 +11,8 @@ npx react-native init FoodDeliveryApp --template react-native-template-typescrip
 
 ```shell
 cd FoodDeliveryApp # 폴더로 이동
-react-native run-android # 안드로이드 실행 명령어
-react-native run-ios # 아이폰 실행 명령어
+npm run android # 안드로이드 실행 명령어
+npm run ios # 아이폰 실행 명령어
 ```
 
 서버가 하나 뜰 것임. Metro 서버. 여기서 소스 코드를 컴파일하고 앱으로 전송해줌. 기본 8081포트.
@@ -51,7 +51,7 @@ react-native@0.66 버전, 한 달에 0.1씩 올라가는데 요즘 개발 속도
 - setup doctor 문제 해결할 것
 ```shell
 npm i react-native-flipper redux-flipper rn-async-storage-flipper
-npx pod-install
+npx pod-install # 아이폰 전용
 ```
 - flipper-plugin-async-storage
 - flipper-plugin-redux-debugger
@@ -119,7 +119,7 @@ type DetailsScreenProps = NativeStackScreenProps<ParamListBase, 'Details'>;
 
 function HomeScreen({navigation}: HomeScreenProps) {
   const onClick = useCallback(() => {
-    navigation.navigate({key: 'Detail'});
+    navigation.navigate('Details');
   }, [navigation]);
 
   return (
@@ -133,7 +133,7 @@ function HomeScreen({navigation}: HomeScreenProps) {
 
 function DetailsScreen({navigation}: DetailsScreenProps) {
   const onClick = useCallback(() => {
-    navigation.navigate({key: 'Home'});
+    navigation.navigate('Home');
   }, [navigation]);
 
   return (
@@ -738,6 +738,7 @@ npx patch-package react-native-image-crop-picker
 - [sdk](https://openapi.sk.com/resource/sdk/indexView)
 - [안드로이드 연동](http://tmapapi.sktelecom.com/main.html#android/guide/androidGuide.sample1)
 - [iOS 연동](http://tmapapi.sktelecom.com/main.html#ios/guide/iosGuide.sample1)
+- iOS 연동시 Header 파일들이 project.pbxproj에 등록되었나 확인(다른 것도 당연히)
 - android/app/src/java/com/zerocho/fooddeliveryapp/TMapModule.java 생성
 - android/app/src/java/com/zerocho/fooddeliveryapp/TMapPackage.java 생성
 - android/app/src/java/com/zerocho/fooddeliveryapp/MainApplication에 TMapPackage 연결
