@@ -174,7 +174,7 @@ export default App;
 - navigation.navigate로 이동 가능
 - navigation.push로 쌓기 가능
 - navigation.goBack으로 이전으로 이동
-- params 추가 가능(객체 넣지 말기, 글로벌 스토어에 넣기)
+- params 추가 가능(params에 user같은 객체를 통째로 넣지 말기, id를 넣고 user는 글로벌 스토어에 넣기)
 - Screen options.title: 제목
 - Screen options에 함수를 넣어 route.params로 params 접근 가능
 - navigation.setOptions로 옵션 변경 가능
@@ -214,21 +214,16 @@ import {
   Platform,
 } from 'react-native';
 
-const DismissKeyboardHOC = (
-  Comp: typeof KeyboardAvoidingView,
-): React.FC<{style?: StyleProp<ViewStyle>}> => {
-  return ({children, ...props}) => (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <Comp
-        {...props}
-        style={props.style}
-        behavior={Platform.OS === 'android' ? undefined : 'padding'}>
-        {children}
-      </Comp>
-    </TouchableWithoutFeedback>
-  );
-};
-const DismissKeyboardView = DismissKeyboardHOC(KeyboardAvoidingView);
+const DismissKeyboardView: React.FC<{ style: StyleProp<ViewStyle> }> = ({children, ...props}) => (
+  <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+    <KeyboardAvoidingView
+      {...props}
+      style={props.style}
+      behavior={Platform.OS === 'android' ? undefined : 'padding'}>
+      {children}
+    </KeyboardAvoidingView>
+  </TouchableWithoutFeedback>
+);
 
 export default DismissKeyboardView;
 ```
@@ -238,6 +233,7 @@ export default DismissKeyboardView;
 - src/components/DismissKeyboardView.tsx
 - TextInput, StyleSheet.compose 사용
 - DismissKeyboardView 만들기(Keyboard, KeyboardAvoidingView)
+- KeyboardAvoidingView는 불편함
 - react-native-keyboard-aware-scrollview
 ``` shell
 npm i react-native-keyboard-avoiding-view  
@@ -336,6 +332,9 @@ src/pages/SignUp.tsx, src/pages/SignIn.tsx, src/pages/Settings.tsx
 ```
 android에서 http 요청이 안 보내지면
 - android/app/src/main/AndroidManifest.xml 에서 <application> 태그에 android:usesCleartextTraffic="true" 추가
+
+ActivityIndicator로 로딩창 꾸미기
+
 ## 소켓IO 연결
 웹소켓 기반 라이브러리
 - 요청-응답 방식이 아니라 실시간 양방향 통신 가능

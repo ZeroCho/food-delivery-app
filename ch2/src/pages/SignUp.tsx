@@ -1,5 +1,6 @@
 import React, {useCallback, useRef, useState} from 'react';
 import {
+  ActivityIndicator,
   Alert,
   Platform,
   Pressable,
@@ -17,6 +18,7 @@ import {RootStackParamList} from '../../AppInner';
 type SignUpScreenProps = NativeStackScreenProps<RootStackParamList, 'SignUp'>;
 
 function SignUp({navigation}: SignUpScreenProps) {
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
@@ -58,6 +60,7 @@ function SignUp({navigation}: SignUpScreenProps) {
     }
     console.log(email, name, password);
     try {
+      setLoading(true);
       const response = await axios.post(`${Config.API_URL}/user`, {
         email,
         name,
@@ -72,6 +75,8 @@ function SignUp({navigation}: SignUpScreenProps) {
       if (errorResponse) {
         Alert.alert('알림', errorResponse.data.message);
       }
+    } finally {
+      setLoading(false);
     }
   }, [navigation, email, name, password]);
 
@@ -134,9 +139,13 @@ function SignUp({navigation}: SignUpScreenProps) {
               ? StyleSheet.compose(styles.loginButton, styles.loginButtonActive)
               : styles.loginButton
           }
-          disabled={!canGoNext}
+          disabled={!canGoNext || loading}
           onPress={onSubmit}>
-          <Text style={styles.loginButtonText}>회원가입</Text>
+          {loading ? (
+            <ActivityIndicator color="blue" />
+          ) : (
+            <Text style={styles.loginButtonText}>회원가입</Text>
+          )}
         </Pressable>
       </View>
     </DismissKeyboardView>
