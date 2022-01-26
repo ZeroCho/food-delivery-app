@@ -34,6 +34,9 @@ function SignIn({navigation}: SignInScreenProps) {
     setPassword(text.trim());
   }, []);
   const onSubmit = useCallback(async () => {
+    if (loading) {
+      return;
+    }
     if (!email || !email.trim()) {
       return Alert.alert('알림', '이메일을 입력해주세요.');
     }
@@ -68,7 +71,7 @@ function SignIn({navigation}: SignInScreenProps) {
     } finally {
       setLoading(false);
     }
-  }, [dispatch, email, password]);
+  }, [loading, dispatch, email, password]);
 
   const toSignUp = useCallback(() => {
     navigation.navigate('SignUp');
@@ -123,7 +126,7 @@ function SignIn({navigation}: SignInScreenProps) {
           disabled={!canGoNext || loading}
           onPress={onSubmit}>
           {loading ? (
-            <ActivityIndicator color="blue" />
+            <ActivityIndicator color="white" />
           ) : (
             <Text style={styles.loginButtonText}>로그인</Text>
           )}

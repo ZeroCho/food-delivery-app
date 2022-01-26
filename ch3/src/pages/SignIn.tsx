@@ -6,6 +6,7 @@ import {
   Text,
   TextInput,
   View,
+  ActivityIndicator,
 } from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import EncryptedStorage from 'react-native-encrypted-storage';
@@ -20,6 +21,7 @@ type SignInScreenProps = NativeStackScreenProps<RootStackParamList, 'SignIn'>;
 
 function SignIn({navigation}: SignInScreenProps) {
   const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const emailRef = useRef<TextInput | null>(null);
@@ -32,6 +34,9 @@ function SignIn({navigation}: SignInScreenProps) {
     setPassword(text.trim());
   }, []);
   const onSubmit = useCallback(async () => {
+    if (loading) {
+      return;
+    }
     if (!email || !email.trim()) {
       return Alert.alert('알림', '이메일을 입력해주세요.');
     }
@@ -39,6 +44,7 @@ function SignIn({navigation}: SignInScreenProps) {
       return Alert.alert('알림', '비밀번호를 입력해주세요.');
     }
     try {
+      setLoading(true);
       const response = await axios.post(`${Config.API_URL}/login`, {
         email,
         password,
@@ -62,8 +68,10 @@ function SignIn({navigation}: SignInScreenProps) {
       if (errorResponse) {
         Alert.alert('알림', errorResponse.data.message);
       }
+    } finally {
+      setLoading(false);
     }
-  }, [dispatch, email, password]);
+  }, [loading, dispatch, email, password]);
 
   const toSignUp = useCallback(() => {
     navigation.navigate('SignUp');
@@ -115,9 +123,13 @@ function SignIn({navigation}: SignInScreenProps) {
               ? StyleSheet.compose(styles.loginButton, styles.loginButtonActive)
               : styles.loginButton
           }
-          disabled={!canGoNext}
+          disabled={!canGoNext || loading}
           onPress={onSubmit}>
-          <Text style={styles.loginButtonText}>로그인</Text>
+          {loading ? (
+            <ActivityIndicator color="white" />
+          ) : (
+            <Text style={styles.loginButtonText}>로그인</Text>
+          )}
         </Pressable>
         <Pressable onPress={toSignUp}>
           <Text>회원가입하기</Text>

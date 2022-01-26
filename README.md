@@ -296,6 +296,8 @@ npm i react-native-config
 ```typescript jsx
 import Config from 'react-native-config';
 ```
+-Config가 적용이 안 되면 다음 추가해야함
+
 android/app/proguard-rules.pro
 ```
 -keep class com.zerocho.fooddeliveryapp.BuildConfig { *; }
@@ -325,8 +327,11 @@ await EncryptedStorage.setItem('키', '값');
 await EncryptedStorage.removeItem('키', '값');
 const 값 = await EncryptedStorage.getItem('키', '값');
 ```
-- 자주 바뀌는 값이거나 민감한 값은 encrypted-storage에
+- redux에 넣은 데이터는 앱을 끄면 날아감
+- 앱을 꺼도 저장되어야 하고 민감한 값은 encrypted-storage에
 - 개발 환경별로 달라지는 값은 react-native-config에 저장하면 좋음(암호화 안 됨)
+- 그 외에 유지만 되면 데이터들은 async-storage에 저장(npm install @react-native-async-storage/async-storage)
+
 src/pages/SignUp.tsx, src/pages/SignIn.tsx, src/pages/Settings.tsx
 ```
 ```
