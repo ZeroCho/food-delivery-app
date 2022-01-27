@@ -28,7 +28,6 @@ function Settings() {
           name: '',
           email: '',
           accessToken: '',
-          refreshToken: '',
         }),
       );
       await EncryptedStorage.removeItem('refreshToken');

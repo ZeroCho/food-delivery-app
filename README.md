@@ -324,8 +324,8 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 ```
 ```typescript jsx
 await EncryptedStorage.setItem('키', '값');
-await EncryptedStorage.removeItem('키', '값');
-const 값 = await EncryptedStorage.getItem('키', '값');
+await EncryptedStorage.removeItem('키');
+const 값 = await EncryptedStorage.getItem('키');
 ```
 - redux에 넣은 데이터는 앱을 끄면 날아감
 - 앱을 꺼도 저장되어야 하고 민감한 값은 encrypted-storage에
@@ -363,7 +363,6 @@ const useSocket = (): [Socket | undefined, () => void] => {
   if (!socket) {
     socket = io(`${Config.API_URL}`, {
       transports: ['websocket'],
-      path: '/socket-io',
     });
   }
   return [socket, disconnect];
@@ -398,6 +397,7 @@ AppInner.tsx
     }
   }, [isLoggedIn, disconnect]);
 ```
+- login을 emit하면 그때부터 서버가 hello로 데이터를 보내줌
 *로그아웃 시에 disconnect해주는 것 잊지 말기
 
 ## 앱 다시 켤 때 자동로그인되게[ch3]
