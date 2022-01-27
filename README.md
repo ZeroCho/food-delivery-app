@@ -300,7 +300,7 @@ import Config from 'react-native-config';
 
 android/app/proguard-rules.pro
 ```
--keep class com.zerocho.fooddeliveryapp.BuildConfig { *; }
+-keep class com.fooddeliveryapp.BuildConfig { *; }
 ```
 android/app/build.gradle
 ```
@@ -309,7 +309,7 @@ apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.grad
 ...
     defaultConfig {
         ...
-        resValue "string", "build_config_package", "com.zerocho.fooddeliveryapp"
+        resValue "string", "build_config_package", "com.fooddeliveryapp"
     }
 ```
 - .env에 키=값 저장해서(예를 들어 abc=def) Config.abc로 꺼내 씀
@@ -427,7 +427,6 @@ AppInner.tsx
             name: response.data.data.name,
             email: response.data.data.email,
             accessToken: response.data.data.accessToken,
-            refreshToken: token,
           }),
         );
       } catch (error) {
