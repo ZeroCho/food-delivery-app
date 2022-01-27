@@ -62,7 +62,6 @@ function AppInner() {
             name: response.data.data.name,
             email: response.data.data.email,
             accessToken: response.data.data.accessToken,
-            refreshToken: token,
           }),
         );
       } catch (error) {
