@@ -18,6 +18,7 @@ import {useAppDispatch} from './src/store';
 import Config from 'react-native-config';
 import orderSlice from './src/slices/order';
 import usePermissions from './src/hooks/usePermissions';
+import SplashScreen from 'react-native-splash-screen';
 
 export type LoggedInParamList = {
   Orders: undefined;
@@ -36,7 +37,6 @@ const Stack = createNativeStackNavigator();
 function AppInner() {
   const dispatch = useAppDispatch();
   const isLoggedIn = useSelector((state: RootState) => !!state.user.email);
-  console.log('isLoggedIn', isLoggedIn);
 
   const [socket, disconnect] = useSocket();
 
@@ -48,6 +48,7 @@ function AppInner() {
       try {
         const token = await EncryptedStorage.getItem('refreshToken');
         if (!token) {
+          SplashScreen.hide();
           return;
         }
         const response = await axios.post(
@@ -71,6 +72,8 @@ function AppInner() {
         if ((error as AxiosError).response?.data.code === 'expired') {
           Alert.alert('알림', '다시 로그인 해주세요.');
         }
+      } finally {
+        SplashScreen.hide();
       }
     };
     getTokenAndRefresh();

@@ -1,3 +1,5 @@
+[Delivery icons created by dreamicons - Flaticon](https://www.flaticon.com/free-icons/delivery)
+
 # 첫 시작(setting)
 [공식문서](https://reactnative.dev/)
 - 초기 세팅: [반드시 따라하기](https://reactnative.dev/docs/environment-setup)
@@ -767,6 +769,29 @@ TMap.openNavi(
 ```shell
 npm i react-native-splash-screen
 ```
+- [여기서](https://github.com/crazycodeboy/react-native-splash-screen) Third step과 Getting Started 따라하기
+- android/app/src/main/res/drawable 폴더 만들고 그 안에 launch_screen.png 넣기
+AppInner.tsx
+```
+...
+        const token = await EncryptedStorage.getItem('refreshToken');
+        if (!token) {
+          SplashScreen.hide();
+          return;
+        }
+        ...
+      } finally {
+        SplashScreen.hide();
+      }
+    };
+    getTokenAndRefresh();
+  }, [dispatch]);
+```
+
+## 앱 icon 변경
+- [Android](http://romannurik.github.io/AndroidAssetStudio/icons-launcher.html#foreground.type=image&foreground.space.trim=1&foreground.space.pad=0.25&foreColor=rgba(96%2C%20125%2C%20139%2C%200)&backColor=rgb(255%2C%20255%2C%20255)&crop=0&backgroundShape=square&effects=none&name=ic_launcher) 다운받은 후 android/app/src/main 아래에 넣기
+- [ios](https://appicon.co/)에서 다운로드된 Assets.xcassets를 ios/FoodDeliveryApp 내부에 넣기
+- [ios]Xcode에서 아이콘 연결 필요
 
 ## FCM
 - 푸쉬알림 보내기
@@ -793,10 +818,19 @@ App.tsx
 ```typescript jsx
 import codePush from "react-native-code-push";
 
-class MyApp extends Component {
+const codePushOptions: CodePushOptions = {
+  checkFrequency: CodePush.CheckFrequency.MANUAL,
+  // 언제 업데이트를 체크하고 반영할지를 정한다.
+  // ON_APP_RESUME은 Background에서 Foreground로 오는 것을 의미
+  // ON_APP_START은 앱이 실행되는(켜지는) 순간을 의미
+  installMode: CodePush.InstallMode.IMMEDIATE,
+  mandatoryInstallMode: CodePush.InstallMode.IMMEDIATE,
+  // 업데이트를 어떻게 설치할 것인지 (IMMEDIATE는 강제설치를 의미)
+};
+function App() {
 }
 
-MyApp = codePush(MyApp);
+export default codePush(codePushOptions)(App);
 ```
 
 ## iOS Pod 관련
