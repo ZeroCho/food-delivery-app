@@ -720,6 +720,7 @@ npx pod-install # ios 전용
 ```
 - 이미지 업로드에는 multipart/formData를 사용함
 - 이미지는 { uri: 주소, filename: 파일명, type: 확장자 } 꼴
+
 ## 사진 찍을 때 이미지를 카메라롤/갤러리에 저장하고 싶음: Native Module Patching[ch5]
 ```shell
 npm i patch-package
@@ -793,6 +794,14 @@ AppInner.tsx
 - [ios](https://appicon.co/)에서 다운로드된 Assets.xcassets를 ios/FoodDeliveryApp 내부에 넣기
 - [ios]Xcode에서 아이콘 연결 필요
 
+## 주문완료 사진들 보여주기
+```shell
+npm i react-native-fast-image react-native-vector-icons
+```
+[링크](https://github.com/DylanVann/react-native-fast-image)
+- android/app/src/main/assets/font에 node_modules/react-native-vector-icons/Fonts 폴더 복사
+- [ios]Xcode에서 New Group으로 메뉴를 생성하고 Fonts 그룹에 node_modules/react-native-vector-icons/Fonts 폰트들을 추가
+
 ## FCM
 - 푸쉬알림 보내기
 ```shell
@@ -801,11 +810,31 @@ npm i react-native-push-notification
 ```
 ## 배포 관련[ch6]
 ### Android
+android/app/build.gradle
+```
+def enableSeparateBuildPerCPUArchitecture = true
 
+/**
+* Run Proguard to shrink the Java bytecode in release builds.
+*/ 
+def enableProguardInReleaseBuilds = true
+```
+package.json
+```json
+  "scripts": {
+    ...
+    "build:android": "npm ci && cd android && ./gradlew bundleRelease && cd .. && open android/app/build/outputs/bundle/release",
+    "apk:android": "npm ci && cd android && ./gradlew assembleRelease && cd .. && open android/app/build/outputs/apk/release",
+```
+
+[출시 과정](https://reactnative.dev/docs/signed-apk-android)
 ### iOS
-iOS 개발자 멤버쉽
+iOS 개발자 멤버쉽 가입 필요
 
-### fastlane
+[출시 과정](https://reactnative.dev/docs/publishing-to-app-store)
+- Xcode로 Archive(이 때 simulator를 선택한 상태이면 안 됨)
+
+### [ios]fastlane
 버저닝, 배포 자동화 가능
 
 ### CodePush
@@ -841,10 +870,10 @@ export default codePush(codePushOptions)(App);
 - pod install: npx pod-install 역할 Podfile.lock에 따라 설치
 
 ## Hermes 켜기
-android/app/build.gradle
-```
+시작 성능 빨라지고, 메모리 사용량 적고, 앱 사이즈 작아짐
 
-```
+[헤르메스 켜기](https://reactnative.dev/docs/hermes)
+
 # 꿀팁들
 - [patch-package](https://www.npmjs.com/package/patch-package): 노드모듈즈 직접 수정 가능, 유지보수 안 되는 패키지 업데이트 시 유용, 다만 patch-package한 패키지는 추후 버전 안 올리는 게 좋음
 - [Sentry](https://sentry.io/): 배포 시 React Native용으로 붙여서 에러 모니터링하면 좋음(무료 지원)
