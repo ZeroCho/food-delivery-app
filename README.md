@@ -172,7 +172,7 @@ export default App;
 - Navigator 안에 Screen들 배치
 - Screen name 대소문자 상관 없음, component는 보통 두 가지 방식 사용(컴포넌트 그 자체 vs Render Callback)
 - props로 navigation과 route가 전달됨
-- Pressable, Button, TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback
+- Pressable, Button, TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback, TouchableNativeFeedback
 - navigation.navigate로 이동 가능
 - navigation.push로 쌓기 가능
 - navigation.goBack으로 이전으로 이동
