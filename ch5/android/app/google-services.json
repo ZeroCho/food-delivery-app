@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "718203401940",
+    "project_id": "fooddeliveryapp-6609a",
+    "storage_bucket": "fooddeliveryapp-6609a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:718203401940:android:399d9b8d1936a9c6936d41",
+        "android_client_info": {
+          "package_name": "com.zerocho.fooddeliveryapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "718203401940-mefi5cqv6mmo13g8tctpamscupi570ao.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQEiUjA0Dl0RRjXOLeAWW-EtT1ruwRBXw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "718203401940-mefi5cqv6mmo13g8tctpamscupi570ao.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

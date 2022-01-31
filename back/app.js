@@ -7,7 +7,16 @@ const jwt = require("jsonwebtoken");
 const SocketIO = require("socket.io");
 const shortid = require("shortid");
 const multer = require("multer");
+const admin = require("firebase-admin");
 
+let phoneToken;
+process.env.GOOGLE_APPLICATION_CREDENTIALS =
+  "./fooddeliveryapp-6609a-firebase-adminsdk-nev9a-603a8b9ae6.json";
+
+admin.initializeApp({
+  credential: admin.credential.applicationDefault(),
+  databaseURL: "https://todaypickup-470fc.firebaseio.com",
+});
 const orders = [];
 const app = express();
 app.use("/", express.static(path.join(__dirname, "uploads")));
@@ -175,9 +184,37 @@ app.post("/complete", verifyToken, upload.single("image"), (req, res, next) => {
   }
   order.image = req.file.filename;
   order.completedAt = new Date();
+  if (phoneToken) {
+    admin.messaging().send({
+      token: phoneToken,
+      notification: {
+        title: "channelId",
+        body: "local test test local test test local test test local test test local test test local test test local test test local test test local test test",
+      },
+      android: {
+        notification: {
+          channelId: "riders",
+          vibrateTimingsMillis: [0, 500, 500, 500],
+          priority: "high",
+          defaultVibrateTimings: false,
+        },
+      },
+      apns: {
+        payload: {
+          aps: {
+            sound: "default",
+            category: "riders",
+          },
+        },
+      },
+    });
+  }
   res.send("ok");
 });
-
+app.post("/phonetoken", (req, res, next) => {
+  phoneToken = req.body.token;
+  res.send("ok");
+});
 app.get("/showmethemoney", verifyToken, (req, res, next) => {
   const order = orders.filter(
     (v) => v.rider === res.locals.email && !!v.completedAt

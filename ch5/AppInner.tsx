@@ -1,3 +1,4 @@
+import messaging from '@react-native-firebase/messaging';
 import SignIn from './src/pages/SignIn';
 import SignUp from './src/pages/SignUp';
 import Orders from './src/pages/Orders';
@@ -136,6 +137,18 @@ function AppInner() {
     );
   }, [dispatch]);
 
+  // 토큰 설정
+  useEffect(() => {
+    messaging()
+      .getToken()
+      .then(token => {
+        console.log('phone token', token);
+        dispatch(userSlice.actions.setPhoneToken(token));
+        return axios.post(Config.API_URL, {token});
+      })
+      .catch(console.error);
+  }, [dispatch]);
+
   return isLoggedIn ? (
     <Tab.Navigator>
       <Tab.Screen
@@ -161,6 +174,7 @@ function AppInner() {
         options={{
           title: '내 정보',
           tabBarIcon: () => <FontAwesome name="gear" size={20} />,
+          unmountOnBlur: true,
         }}
       />
     </Tab.Navigator>

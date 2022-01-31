@@ -81,7 +81,7 @@ function Settings() {
   const renderItem = useCallback(({item}: {item: Order}) => {
     return (
       <FastImage
-        source={{uri: item.image}}
+        source={{uri: `${Config.API_URL}/${item.image}`}}
         resizeMode="contain"
         style={{
           height: Dimensions.get('window').width / 3,

@@ -822,7 +822,8 @@ AppInner.tsx
 
 ## 앱 하단 메뉴 아이콘
 ```shell
-npm i react-native-vector-icons @types/react-native-vector-icons
+npm i react-native-vector-icons
+npm i -D @types/react-native-vector-icons
 ```
 [목록](https://oblador.github.io/react-native-vector-icons/)
 - android/app/src/main/assets/fonts에 node_modules/react-native-vector-icons/Fonts 폴더 복사
@@ -853,14 +854,29 @@ src/pages/Settings.tsx
 ```typescript jsx
 ```
 
-## FCM
+## FCM[ch6]
 푸쉬알림 보내기
-- 배송 완료시 push 알림이 올 것임
+- [링크](https://console.firebase.google.com/)에서 앱 만들기
 ```shell
 npm i @react-native-firebase/analytics @react-native-firebase/app @react-native-firebase/messaging
-npm i react-native-push-notification
+npm i react-native-push-notification @react-native-community/push-notification-ios
+npm i -D @types/react-native-push-notification
+npx pod-install
 ```
-## 배포 관련[ch6]
+[ios] [따라할 것](https://github.com/react-native-push-notification/ios)
+- 프로젝트 설정 - Admin SDK - Node.js - 새 비공개키 생성 - back 폴더 안에 넣고 app.js 소스 수정
+- 안드로이드 앱 설정 후 google-services.json을 android/app에 넣기
+- [ios]
+- 배송 완료시 push 알림이 올 것임
+
+App.tsx
+```
+```
+AppInner.tsx
+```typescript jsx
+
+```
+## 배포 관련
 ### Android
 android/app/build.gradle
 ```

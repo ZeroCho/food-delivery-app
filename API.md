@@ -26,6 +26,9 @@
 - header: { authorization: 'Bearer 액세스토큰', content-type: 'multipart/form-data' }
 - data: { orderId: string, image: 폼데이터 }
 - error: { status: 419, data: { code: 'expired', message: '만료된 액세스 토큰입니다.' } }
+### POST /phonetoken
+- 폰토큰을 서버로 보냄
+- data: { token: string }
 ### GET /showmethemoney
 - header: { authorization: 'Bearer 액세스토큰' }
 - responseData: { data: number }
