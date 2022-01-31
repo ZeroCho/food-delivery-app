@@ -57,3 +57,7 @@ export interface Order {
   price: number;
 }
 ```
+### socket.on('acceptOrder')
+지금부터 주문을 받기 시작합니다.
+### socket.on('ignoreOrder')
+지금부터 주문을 무시합니다.
