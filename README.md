@@ -402,7 +402,35 @@ AppInner.tsx
 - login을 emit하면 그때부터 서버가 hello로 데이터를 보내줌
 *로그아웃 시에 disconnect해주는 것 잊지 말기
 
-## 앱 다시 켤 때 자동로그인되게[ch3]
+## 수익금 확인하기
+src/pages/Settings.tsx
+```
+
+```
+
+## 실제 주문 받기[ch3]
+socket.io에서 주문 내역 받아서 store에 넣기
+
+AppInner.tsx
+```typescript
+  useEffect(() => {
+    const callback = (data: any) => {
+      console.log(data);
+      dispatch(orderSlice.actions.addOrder(data));
+    };
+    if (socket && isLoggedIn) {
+      socket.emit('acceptOrder', 'hello');
+      socket.on('order', callback);
+    }
+    return () => {
+      if (socket) {
+        socket.off('order', callback);
+      }
+    };
+  }, [isLoggedIn, socket]);
+```
+
+## 앱 다시 켤 때 자동로그인되게
 encrypted-storage에서 토큰 불러오기
 
 AppInner.tsx
@@ -442,25 +470,7 @@ AppInner.tsx
   }, [dispatch]);
 ```
 - 잠깐 로그인 화면이 보이는 것은 SplashScreen으로 숨김
-socket.io에서 주문 내역 받아서 store에 넣기
 
-AppInner.tsx
-```typescript
-  useEffect(() => {
-    const callback = (data: any) => {
-      console.log(data);
-    };
-    if (socket && isLoggedIn) {
-      socket.emit('acceptOrder', 'hello');
-      socket.on('order', callback);
-    }
-    return () => {
-      if (socket) {
-        socket.off('order', callback);
-      }
-    };
-  }, [isLoggedIn, socket]);
-```
 src/slices/order.ts
 ```typescript
 
@@ -511,11 +521,7 @@ accessToken 만료시 자동으로 refresh되게 axios.interceptor 설정
     );
   }, [dispatch]);
 ```
-## 수익금 확인하기
-src/pages/Settings.tsx
-```
 
-```
 ## 네이버 지도 사용하기[ch4]
 ```shell
 npm i react-native-nmap --force
