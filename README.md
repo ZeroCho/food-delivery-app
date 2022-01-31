@@ -281,7 +281,7 @@ function App() {
 
 export default App;
 ```
-## 회원가입, 로그인, 로그아웃
+## 회원가입, 로그인
 액세스토큰/리프레시토큰을 받아서 다음 라이브러리로 저장
 ```shell
 npm install react-native-encrypted-storage
@@ -810,13 +810,38 @@ AppInner.tsx
 - [ios](https://appicon.co/)에서 다운로드된 Assets.xcassets를 ios/FoodDeliveryApp 내부에 넣기
 - [ios]Xcode에서 아이콘 연결 필요
 
+## 앱 하단 메뉴 아이콘
+```shell
+npm i react-native-vector-icons @types/react-native-vector-icons
+```
+[목록](https://oblador.github.io/react-native-vector-icons/)
+- android/app/src/main/assets/fonts에 node_modules/react-native-vector-icons/Fonts 폴더 복사
+- [ios]Xcode에서 New Group으로 메뉴를 생성하고 Fonts 그룹에 node_modules/react-native-vector-icons/Fonts 폰트들을 추가
+
+
 ## 주문완료 사진들 보여주기
 ```shell
-npm i react-native-fast-image react-native-vector-icons
+npm i react-native-fast-image
 ```
 [링크](https://github.com/DylanVann/react-native-fast-image)
-- android/app/src/main/assets/font에 node_modules/react-native-vector-icons/Fonts 폴더 복사
-- [ios]Xcode에서 New Group으로 메뉴를 생성하고 Fonts 그룹에 node_modules/react-native-vector-icons/Fonts 폰트들을 추가
+src/slices/order.ts
+```typescript
+interface InitialState {
+  ...
+  completes: Order[];
+}
+const initialState: InitialState = {
+  ...
+  completes: [],
+};
+...
+    setCompletes(state, action) {
+      state.completes = action.payload;
+    },
+```
+src/pages/Settings.tsx
+```typescript jsx
+```
 
 ## FCM
 - 푸쉬알림 보내기

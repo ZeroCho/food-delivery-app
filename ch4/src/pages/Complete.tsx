@@ -29,7 +29,7 @@ function Complete() {
   const route = useRoute<RouteProp<LoggedInParamList>>();
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
   const [image, setImage] =
-    useState<{uri: string; filename: string; type: string}>();
+    useState<{uri: string; name: string; type: string}>();
   const [preview, setPreview] = useState<{uri: string}>();
   const accessToken = useSelector((state: RootState) => state.user.accessToken);
 
@@ -50,7 +50,7 @@ function Complete() {
 
       setImage({
         uri: r.uri,
-        filename: r.name,
+        name: r.name,
         type: response.mime,
       });
     });
