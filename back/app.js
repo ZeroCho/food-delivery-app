@@ -165,14 +165,8 @@ const upload = multer({
     },
   }),
 });
-app.post("/complete", upload.single("image"), (req, res, next) => {
-  console.log(
-    req.file,
-    req.body,
-    req.body._parts?.[0]?.[1]?.[1],
-    res.locals.email,
-    req.headers
-  );
+app.post("/complete", verifyToken, upload.single("image"), (req, res, next) => {
+  console.log(req.file, req.body, res.locals.email, req.headers);
   const order = orders.find(
     (v) => v.orderId === req.body.orderId && v.rider === res.locals.email
   );

@@ -236,9 +236,15 @@ export default DismissKeyboardView;
 - TextInput, StyleSheet.compose 사용
 - DismissKeyboardView 만들기(Keyboard, KeyboardAvoidingView)
 - KeyboardAvoidingView는 불편함
-- react-native-keyboard-aware-scrollview
+- react-native-keyboard-aware-scrollview를 대안으로 사용
 ``` shell
-npm i react-native-keyboard-avoiding-view  
+npm i react-native-keyboard-aware-scrollview  
+```
+- 타이핑이 없으므로 직접 타입 추가해야 함
+- react-native-keyboard-aware-scroll-view 라이브러리는 타입이 있음
+
+types/react-native-keyboard-aware-scroll-view
+```
 ```
 src/components/DismissKeyBoardView.tsx
 ```typescript jsx
@@ -905,6 +911,7 @@ export default codePush(codePushOptions)(App);
 이미 메트로 서버가 다른 데서 켜져 있는 것임. 메트로 서버를 실행하고 있는 터미널 종료하기
 ## 완료처리 시 "유효하지 않은 주문입니다."
 axios@0.24 설치(axios@0.25.0에 문제 있음)
+[링크](https://github.com/axios/axios/issues/4406)
 ## java.lang.RuntimeException: Unable to load script. Make sure you're either running Metro (run 'npx react-native start') or that your bundle 'index.android.bundle' is packaged correctly for release.
 - android/app/src/main/assets 폴더 만들기
 ```shell
