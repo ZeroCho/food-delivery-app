@@ -15,7 +15,7 @@ process.env.GOOGLE_APPLICATION_CREDENTIALS =
 
 admin.initializeApp({
   credential: admin.credential.applicationDefault(),
-  databaseURL: "https://todaypickup-470fc.firebaseio.com",
+  databaseURL: "https://fooddeliveryapp-6609a.firebaseio.com",
 });
 const orders = [];
 const app = express();
@@ -184,30 +184,35 @@ app.post("/complete", verifyToken, upload.single("image"), (req, res, next) => {
   }
   order.image = req.file.filename;
   order.completedAt = new Date();
+  console.log("phonetoken", phoneToken);
   if (phoneToken) {
-    admin.messaging().send({
-      token: phoneToken,
-      notification: {
-        title: "channelId",
-        body: "local test test local test test local test test local test test local test test local test test local test test local test test local test test",
-      },
-      android: {
+    admin
+      .messaging()
+      .send({
+        token: phoneToken,
         notification: {
-          channelId: "riders",
-          vibrateTimingsMillis: [0, 500, 500, 500],
-          priority: "high",
-          defaultVibrateTimings: false,
+          title: "channelId",
+          body: "local test test local test test local test test local test test local test test local test test local test test local test test local test test",
         },
-      },
-      apns: {
-        payload: {
-          aps: {
-            sound: "default",
-            category: "riders",
+        android: {
+          notification: {
+            channelId: "riders",
+            vibrateTimingsMillis: [0, 500, 500, 500],
+            priority: "high",
+            defaultVibrateTimings: false,
           },
         },
-      },
-    });
+        apns: {
+          payload: {
+            aps: {
+              sound: "default",
+              category: "riders",
+            },
+          },
+        },
+      })
+      .then(console.log)
+      .catch(console.error);
   }
   res.send("ok");
 });

@@ -139,14 +139,20 @@ function AppInner() {
 
   // 토큰 설정
   useEffect(() => {
-    messaging()
-      .getToken()
-      .then(token => {
+    async function getToken() {
+      try {
+        if (!messaging().isDeviceRegisteredForRemoteMessages) {
+          await messaging().registerDeviceForRemoteMessages();
+        }
+        const token = await messaging().getToken();
         console.log('phone token', token);
         dispatch(userSlice.actions.setPhoneToken(token));
-        return axios.post(Config.API_URL, {token});
-      })
-      .catch(console.error);
+        return axios.post(`${Config.API_URL}/phonetoken`, {token});
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getToken();
   }, [dispatch]);
 
   return isLoggedIn ? (
