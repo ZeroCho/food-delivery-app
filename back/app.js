@@ -157,25 +157,29 @@ try {
 }
 const upload = multer({
   storage: multer.diskStorage({
-    destination(req, file, cb) {
-      cb(null, "uploads/");
+    destination: function (req, file, cb) {
+      cb(null, path.join(__dirname, "uploads"));
     },
-    filename(req, file, cb) {
-      const ext = path.extname(file.originalname);
-      cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
+    filename: function (req, file, cb) {
+      cb(null, file.originalname);
     },
   }),
-  limits: { fileSize: 5 * 1024 * 1024 },
 });
-
-app.post("/complete", verifyToken, upload.single("image"), (req, res, next) => {
+app.post("/complete", upload.single("image"), (req, res, next) => {
+  console.log(
+    req.file,
+    req.body,
+    req.body._parts?.[0]?.[1]?.[1],
+    res.locals.email,
+    req.headers
+  );
   const order = orders.find(
     (v) => v.orderId === req.body.orderId && v.rider === res.locals.email
   );
   if (!order) {
     return res.status(400).json({ message: "유효하지 않은 주문입니다." });
   }
-  order.image = req.file.path;
+  order.image = req.file.filename;
   order.completedAt = new Date();
   res.send("ok");
 });
@@ -224,6 +228,11 @@ io.on("connection", (socket) => {
     id = setInterval(() => {
       io.emit("hello", "emit");
     }, 1000);
+  });
+  socket.on("ignoreOrder", () => {
+    if (orderId) {
+      clearInterval(orderId);
+    }
   });
   socket.on("acceptOrder", () => {
     if (orderId) {

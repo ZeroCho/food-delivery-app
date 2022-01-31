@@ -489,6 +489,7 @@ src/pages/Orders.tsx
 
 ```
 - ScrollView + map 조합은 좋지 않음
+- FlatList를 쓰기
 - 반복되는 것은 컴포넌트로 빼는 것이 좋음
 - keyExtractor 반드시 설정하기
 
@@ -540,8 +541,8 @@ npx pod-install # ios 전용
 [ios]git-lfs로 추가 설치 필요 [참고](https://github.com/navermaps/ios-map-sdk#%EB%8C%80%EC%9A%A9%EB%9F%89-%ED%8C%8C%EC%9D%BC%EC%9D%84-%EB%B0%9B%EA%B8%B0-%EC%9C%84%ED%95%B4-git-lfs-%EC%84%A4%EC%B9%98%EA%B0%80-%ED%95%84%EC%9A%94%ED%95%A9%EB%8B%88%EB%8B%A4)
 - 안드로이드 앱 패키지 이름: com.[원하는이름].fooddeliveryapp (ex: com.zerocho.fooddeliveryapp)
 - [커밋 참조](https://github.com/ZeroCho/food-delivery-app/commit/36295cabf2cdab4ed68fa3b907c7b467101a02a5) (폴더 등 변경할 게 많음)
-- [iOS]Xcode로는 xcworkspace 파일을 열어야함(xcodeproj 열면 안됨)
-- iOS Bundle ID: com.[원하는이름].fooddeliveryapp(ex: com.zerocho.fooddeliveryapp)로 수정
+- [ios]Xcode로는 xcworkspace 파일을 열어야함(xcodeproj 열면 안됨)
+- [ios]iOS Bundle ID: com.[원하는이름].fooddeliveryapp(ex: com.zerocho.fooddeliveryapp)로 수정
 src/components/EachOrder.tsx
 ```typescript jsx
 <View
@@ -583,11 +584,11 @@ src/components/EachOrder.tsx
 ```
 ## 위치 정보 가져오기
 권한 얻기(위치정보, 카메라, 갤러리)
-```
+```shell
 npm i react-native-permissions
 ```
 ios/Podfile
-```
+```1
 permissions_path = '../node_modules/react-native-permissions/ios'
 pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
 pod 'Permission-LocationAccuracy', :path => "#{permissions_path}/LocationAccuracy"
@@ -736,8 +737,11 @@ npx pod-install # ios 전용
 ```
 - 이미지 업로드에는 multipart/formData를 사용함
 - 이미지는 { uri: 주소, filename: 파일명, type: 확장자 } 꼴
+- base64로 이미지를 텍스트꼴로 표현 가능(용량 33% 증가)
+- resizeMode: cover(꽉 차게), contain(딱 맞게), stretch(비율 무시하고 딱 맞게), repeat(반복되게), center(중앙 정렬)
 
-## 사진 찍을 때 이미지를 카메라롤/갤러리에 저장하고 싶음: Native Module Patching[ch5]
+## 사진 찍을 때 이미지를 카메라롤/갤러리에 저장하고 싶음[ch5]
+Native Module Patching
 ```shell
 npm i patch-package
 ```
@@ -759,14 +763,14 @@ npx patch-package react-native-image-crop-picker
 - My Project - 프로젝트 생성 - TMap API 신청(무료)
 - [sdk](https://openapi.sk.com/resource/sdk/indexView)
 - [안드로이드 연동](http://tmapapi.sktelecom.com/main.html#android/guide/androidGuide.sample1)
-- [iOS 연동](http://tmapapi.sktelecom.com/main.html#ios/guide/iosGuide.sample1)
-- iOS 연동시 Header 파일들이 project.pbxproj에 등록되었나 확인(다른 것도 당연히)
+- [ios][iOS 연동](http://tmapapi.sktelecom.com/main.html#ios/guide/iosGuide.sample1)
+- [ios]iOS 연동시 Header 파일들이 project.pbxproj에 등록되었나 확인(다른 것도 당연히)
 - android/app/src/java/com/zerocho/fooddeliveryapp/TMapModule.java 생성
 - android/app/src/java/com/zerocho/fooddeliveryapp/TMapPackage.java 생성
 - android/app/src/java/com/zerocho/fooddeliveryapp/MainApplication에 TMapPackage 연결
-- ios/FoodDeliveryApp/RCTTMap.h
-- ios/FoodDeliveryApp/RCTTMap.m
-- ios/FoodDeliveryApp-Bridging-Header.h
+- [ios]ios/FoodDeliveryApp/RCTTMap.h
+- [ios]ios/FoodDeliveryApp/RCTTMap.m
+- [ios]ios/FoodDeliveryApp-Bridging-Header.h
 - src/modules/TMap.ts
 src/pages/Ing.tsx
 ```typescript jsx
@@ -819,7 +823,8 @@ npm i react-native-fast-image react-native-vector-icons
 - [ios]Xcode에서 New Group으로 메뉴를 생성하고 Fonts 그룹에 node_modules/react-native-vector-icons/Fonts 폰트들을 추가
 
 ## FCM
-- 푸쉬알림 보내기
+푸쉬알림 보내기
+- 배송 완료시 push 알림이 올 것임
 ```shell
 npm i @react-native-firebase/analytics @react-native-firebase/app @react-native-firebase/messaging
 npm i react-native-push-notification
@@ -898,6 +903,8 @@ export default codePush(codePushOptions)(App);
 # 에러들
 ## Error: listen EADDRINUSE: address already in use :::8081
 이미 메트로 서버가 다른 데서 켜져 있는 것임. 메트로 서버를 실행하고 있는 터미널 종료하기
+## 완료처리 시 "유효하지 않은 주문입니다."
+axios@0.24 설치(axios@0.25.0에 문제 있음)
 ## java.lang.RuntimeException: Unable to load script. Make sure you're either running Metro (run 'npx react-native start') or that your bundle 'index.android.bundle' is packaged correctly for release.
 - android/app/src/main/assets 폴더 만들기
 ```shell
@@ -921,3 +928,7 @@ cd android && ./gradlew clean
 cd ..
 npx react-native run-android
 ```
+
+## 스스로 해보면 좋을 것
+- loading, disabled 처리 모두 다 하기
+- 내 위치 앱 시작하고 권한 있을 때 미리 받아놓기
