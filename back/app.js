@@ -9,14 +9,14 @@ const shortid = require("shortid");
 const multer = require("multer");
 const admin = require("firebase-admin");
 
-let phoneToken;
-process.env.GOOGLE_APPLICATION_CREDENTIALS =
-  "./fooddeliveryapp-6609a-firebase-adminsdk-nev9a-603a8b9ae6.json";
+// let phoneToken;
+// process.env.GOOGLE_APPLICATION_CREDENTIALS =
+//   "./fooddeliveryapp-6609a-firebase-adminsdk-nev9a-603a8b9ae6.json";
 
-admin.initializeApp({
-  credential: admin.credential.applicationDefault(),
-  databaseURL: "https://fooddeliveryapp-6609a.firebaseio.com",
-});
+// admin.initializeApp({
+//   credential: admin.credential.applicationDefault(),
+//   databaseURL: "https://fooddeliveryapp-6609a.firebaseio.com",
+// });
 const orders = [];
 const app = express();
 app.use("/", express.static(path.join(__dirname, "uploads")));
