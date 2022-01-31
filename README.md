@@ -741,8 +741,8 @@ npm i react-native-image-crop-picker
 npm i react-native-image-resizer
 npx pod-install # ios 전용
 ```
-- 이미지 업로드에는 multipart/formData를 사용함
-- 이미지는 { uri: 주소, filename: 파일명, type: 확장자 } 꼴
+- 이미지 업로드에는 multipart/form-data를 사용함
+- 이미지는 { uri: 주소, name: 파일명, type: 확장자 } 꼴
 - base64로 이미지를 텍스트꼴로 표현 가능(용량 33% 증가)
 - resizeMode: cover(꽉 차게), contain(딱 맞게), stretch(비율 무시하고 딱 맞게), repeat(반복되게), center(중앙 정렬)
 
