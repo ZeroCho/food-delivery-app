@@ -16,7 +16,7 @@ function Settings() {
 
   useEffect(() => {
     async function getMoney() {
-      const response = await axios.get<{data: {data: number}}>(
+      const response = await axios.get<{data: number}>(
         `${Config.API_URL}/showmethemoney`,
         {
           headers: {authorization: `Bearer ${accessToken}`},

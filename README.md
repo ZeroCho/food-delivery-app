@@ -334,7 +334,7 @@ const 값 = await EncryptedStorage.getItem('키');
 - 개발 환경별로 달라지는 값은 react-native-config에 저장하면 좋음(암호화 안 됨)
 - 그 외에 유지만 되면 데이터들은 async-storage에 저장(npm install @react-native-async-storage/async-storage)
 
-src/pages/SignUp.tsx, src/pages/SignIn.tsx, src/pages/Settings.tsx
+src/pages/SignUp.tsx, src/pages/SignIn.tsx
 ```
 ```
 android에서 http 요청이 안 보내지면
@@ -402,7 +402,7 @@ AppInner.tsx
 - login을 emit하면 그때부터 서버가 hello로 데이터를 보내줌
 *로그아웃 시에 disconnect해주는 것 잊지 말기
 
-## 수익금 확인하기
+## 로그아웃
 src/pages/Settings.tsx
 ```
 
@@ -471,10 +471,19 @@ AppInner.tsx
 ```
 - 잠깐 로그인 화면이 보이는 것은 SplashScreen으로 숨김
 
+## 주문 데이터 리덕스에 저장하기
 src/slices/order.ts
 ```typescript
 
 ```
+
+## 수익금 확인하기
+src/pages/Settings.tsx
+```
+
+```
+
+## 주문 화면 만들기(수락/거절)
 src/pages/Orders.tsx
 ```typescript jsx
 
@@ -482,12 +491,13 @@ src/pages/Orders.tsx
 - ScrollView + map 조합은 좋지 않음
 - 반복되는 것은 컴포넌트로 빼는 것이 좋음
 - keyExtractor 반드시 설정하기
+
 src/components/EachOrder.tsx
 ```typescript jsx
 
 ```
-## 주문 수락/거절
-accessToken 만료시 자동으로 refresh되게 axios.interceptor 설정
+## accessToken 만료시 자동으로 refresh되게
+axios.interceptor 설정하기
 ```typescript
   useEffect(() => {
     axios.interceptors.response.use(
