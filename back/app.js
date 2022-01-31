@@ -1,5 +1,6 @@
 // **절대 실무용으로 사용하지 마세요. 강좌를 위한 백엔드 더미 구현입니다.** //
 const fs = require("fs");
+const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
 const jwt = require("jsonwebtoken");
@@ -9,6 +10,7 @@ const multer = require("multer");
 
 const orders = [];
 const app = express();
+app.use("/", express.static(path.join(__dirname, "uploads")));
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -165,6 +167,7 @@ const upload = multer({
   }),
   limits: { fileSize: 5 * 1024 * 1024 },
 });
+
 app.post("/complete", verifyToken, upload.single("image"), (req, res, next) => {
   const order = orders.find(
     (v) => v.orderId === req.body.orderId && v.rider === res.locals.email
@@ -172,15 +175,26 @@ app.post("/complete", verifyToken, upload.single("image"), (req, res, next) => {
   if (!order) {
     return res.status(400).json({ message: "유효하지 않은 주문입니다." });
   }
+  order.image = req.file.path;
   order.completedAt = new Date();
   res.send("ok");
 });
+
 app.get("/showmethemoney", verifyToken, (req, res, next) => {
   const order = orders.filter(
     (v) => v.rider === res.locals.email && !!v.completedAt
   );
   res.json({
     data: order.reduce((a, c) => a + c.price, 0) || 0,
+  });
+});
+
+app.get("/completes", verifyToken, (req, res, next) => {
+  const order = orders.filter(
+    (v) => v.rider === res.locals.email && !!v.completedAt
+  );
+  res.json({
+    data: order,
   });
 });
 
