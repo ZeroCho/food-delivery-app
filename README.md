@@ -817,7 +817,7 @@ AppInner.tsx
 
 ## 앱 icon 변경
 - [Android](http://romannurik.github.io/AndroidAssetStudio/icons-launcher.html#foreground.type=image&foreground.space.trim=1&foreground.space.pad=0.25&foreColor=rgba(96%2C%20125%2C%20139%2C%200)&backColor=rgb(255%2C%20255%2C%20255)&crop=0&backgroundShape=square&effects=none&name=ic_launcher) 다운받은 후 android/app/src/main 아래에 넣기
-- [ios](https://appicon.co/)에서 다운로드된 Assets.xcassets를 ios/FoodDeliveryApp 내부에 넣기
+- [ios] [링크](https://appicon.co/) 에서 다운로드된 Assets.xcassets를 ios/FoodDeliveryApp 내부에 넣기
 - [ios]Xcode에서 아이콘 연결 필요
 
 ## 앱 하단 메뉴 아이콘
