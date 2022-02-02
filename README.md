@@ -778,6 +778,15 @@ npx patch-package react-native-image-crop-picker
 - [ios]ios/FoodDeliveryApp/RCTTMap.m
 - [ios]ios/FoodDeliveryApp-Bridging-Header.h
 - src/modules/TMap.ts
+
+android/app/src/main/AndroidManifest.xml
+```
+...
+  <queries>
+    <package android:name="com.skt.tmap.ku" />
+  </queries>
+</manifest>
+```
 src/pages/Ing.tsx
 ```typescript jsx
 TMap.openNavi(
@@ -950,6 +959,9 @@ export default codePush(codePushOptions)(App);
 # 에러들
 ## Error: listen EADDRINUSE: address already in use :::8081
 이미 메트로 서버가 다른 데서 켜져 있는 것임. 메트로 서버를 실행하고 있는 터미널 종료하기
+## npm run android 시 jetifier쪽에서 안 넘어가는 경우
+메트로 서버 꺼볼 것
+
 ## 완료처리 시 "유효하지 않은 주문입니다."
 axios@0.24 설치(axios@0.25.0에 문제 있음)
 [링크](https://github.com/axios/axios/issues/4406)
