@@ -11,28 +11,15 @@ messaging().setBackgroundMessageHandler(async remoteMessage => {
   console.log('Message handled in the background!', remoteMessage);
 });
 PushNotification.configure({
-  // (optional) Called when Token is generated (iOS and Android)
+  // (optional) 토큰이 생성될 때 실행됨(토큰을 서버에 등록할 때 쓸 수 있음)
   onRegister: function (token: any) {
     console.log('TOKEN:', token);
   },
 
-  // (required) Called when a remote is received or opened, or local notification is opened
+  // (required) 리모트 노티를 수신하거나, 열었거나 로컬 노티를 열었을 때 실행
   onNotification: function (notification: any) {
     console.log('NOTIFICATION:', notification);
-    if (
-      notification.channelId === 'noti' ||
-      notification.data.type === 'noti'
-    ) {
-      // store.dispatch(
-      //   userSlice.actions.goToPage({
-      //     page: ROUTE_MENU_NOTICE,
-      //     boardKey: notification.data.boardKey,
-      //   }),
-      // );
-    } else if (
-      notification.channelId === 'riders' ||
-      notification.data.type === 'riders'
-    ) {
+    if (notification.channelId === 'riders') {
       // if (notification.message || notification.data.message) {
       //   store.dispatch(
       //     userSlice.actions.showPushPopup(
@@ -43,11 +30,11 @@ PushNotification.configure({
     }
     // process the notification
 
-    // (required) Called when a remote is received or opened, or local notification is opened
+    // (required) 리모트 노티를 수신하거나, 열었거나 로컬 노티를 열었을 때 실행
     notification.finish(PushNotificationIOS.FetchResult.NoData);
   },
 
-  // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
+  // (optional) 등록한 액션을 누렀고 invokeApp이 false 상태일 때 실행됨, true면 onNotification이 실행됨 (Android)
   onAction: function (notification: any) {
     console.log('ACTION:', notification.action);
     console.log('NOTIFICATION:', notification);
