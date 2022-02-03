@@ -110,7 +110,7 @@ function Complete() {
   return (
     <View>
       <View style={styles.orderId}>
-        <Text>주문번호: {orderId}</Text>
+        <Text style={{color: 'black'}}>주문번호: {orderId}</Text>
       </View>
       <View style={styles.preview}>
         {preview && <Image style={styles.previewImage} source={preview} />}

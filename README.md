@@ -894,7 +894,7 @@ adb -s <기기이름> reverse tcp:8081 tcp:8081
 ```
 여러 문제 발견 가능
 - 폰트가 흰색: style에 color 주기
-- vector-icons 안 뜸: 역시 style에 color 주기
+- vector-icons 안 뜸: 역시 style에 color 주기(ch6 AppInner.tsx 참고)
 
 ## 배포 관련
 ### Android
@@ -927,10 +927,17 @@ iOS 개발자 멤버쉽 가입 필요
 
 ### CodePush
 - 실시간으로 앱 수정 가능(JS코드, 이미지, 비디오만)
-- 노드모듈, 네이티브쪽은 앱 배포 필요
+- 노드모듈, 네이티브쪽 수정은 앱 배포 필요
+
+[앱센터 가입](https://appcenter.ms/)
+- [여기서](https://appcenter.ms/apps/create) 앱 만들기(iOS, Android 따로)
 ```shell
 npm i react-native-code-push
+npm install appcenter appcenter-analytics appcenter-crashes
 ```
+- android/app/src/main/assets/appcenter-config.json
+- android/app/src/main/res/values/strings.xml 수정
+
 App.tsx
 ```typescript jsx
 import codePush from "react-native-code-push";
@@ -949,6 +956,13 @@ function App() {
 
 export default codePush(codePushOptions)(App);
 ```
+```package.json
+"codepush:android": "appcenter codepush release-react -a 아이디/앱이름 -d 배포이름 --sourcemap-output --output-dir ./build -m -t 타겟버전",
+"codepush:ios": "appcenter codepush release-react -a 아이디/앱이름 -d 배포이름 --sourcemap-output --output-dir ./build -m -t 타겟버전",
+"bundle:android": "react-native bundle --assets-dest build/CodePush --bundle-output build/CodePush/index.android.bundle --dev false --entry-file index.js --platform android --sourcemap-output build/CodePush/index.android.bundle.map",
+"bundle:ios": "react-native bundle --assets-dest build/CodePush --bundle-output build/CodePush/main.jsbundle --dev false --entry-file index.js --platform ios --sourcemap-output build/CodePush/main.jsbundle.map",
+```
+- 실제 예시는 package.json 참조
 
 ## iOS Pod 관련
 [맥 전용]ios 폴더 안에서 pod 명령어 수행 가능, but npx pod-install은 프로젝트 폴더 어디서나 가능
