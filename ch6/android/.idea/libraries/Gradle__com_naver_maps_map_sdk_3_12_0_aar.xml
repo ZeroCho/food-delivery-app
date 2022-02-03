@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="Gradle: com.naver.maps:map-sdk:3.12.0@aar">
+    <ANNOTATIONS>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/f795b272004c9a29f555027cbdd0edd2/transformed/jetified-map-sdk-3.12.0/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/f795b272004c9a29f555027cbdd0edd2/transformed/jetified-map-sdk-3.12.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/f795b272004c9a29f555027cbdd0edd2/transformed/jetified-map-sdk-3.12.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/f795b272004c9a29f555027cbdd0edd2/transformed/jetified-map-sdk-3.12.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.naver.maps/map-sdk/3.12.0/bb99ca711071628592b8df088c91b8055ecdd374/map-sdk-3.12.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>

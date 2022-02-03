@@ -10,13 +10,13 @@ const multer = require("multer");
 const admin = require("firebase-admin");
 
 let phoneToken;
-// process.env.GOOGLE_APPLICATION_CREDENTIALS =
-//   "./fooddeliveryapp-6609a-firebase-adminsdk-nev9a-603a8b9ae6.json";
+process.env.GOOGLE_APPLICATION_CREDENTIALS =
+  "./fooddeliveryapp-6609a-firebase-adminsdk-nev9a-603a8b9ae6.json";
 
-// admin.initializeApp({
-//   credential: admin.credential.applicationDefault(),
-//   databaseURL: "https://fooddeliveryapp-6609a.firebaseio.com",
-// });
+admin.initializeApp({
+  credential: admin.credential.applicationDefault(),
+  databaseURL: "https://fooddeliveryapp-6609a.firebaseio.com",
+});
 const orders = [];
 const app = express();
 app.use("/", express.static(path.join(__dirname, "uploads")));
@@ -75,6 +75,9 @@ const verifyRefreshToken = (req, res, next) => {
   next();
 };
 
+app.get("/", (req, res) => {
+  res.send("ok");
+});
 app.post("/refreshToken", verifyRefreshToken, (req, res, next) => {
   const accessToken = jwt.sign(
     { sub: "access", email: res.locals.email },
@@ -191,8 +194,8 @@ app.post("/complete", verifyToken, upload.single("image"), (req, res, next) => {
       .send({
         token: phoneToken,
         notification: {
-          title: "channelId",
-          body: "local test test local test test local test test local test test local test test local test test local test test local test test local test test",
+          title: "배송 완료!",
+          body: "배송이 성공적으로 완료되었습니다.",
         },
         android: {
           notification: {
