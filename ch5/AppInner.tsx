@@ -1,4 +1,3 @@
-import messaging from '@react-native-firebase/messaging';
 import SignIn from './src/pages/SignIn';
 import SignUp from './src/pages/SignUp';
 import Orders from './src/pages/Orders';
@@ -135,24 +134,6 @@ function AppInner() {
         return Promise.reject(error);
       },
     );
-  }, [dispatch]);
-
-  // 토큰 설정
-  useEffect(() => {
-    async function getToken() {
-      try {
-        if (!messaging().isDeviceRegisteredForRemoteMessages) {
-          await messaging().registerDeviceForRemoteMessages();
-        }
-        const token = await messaging().getToken();
-        console.log('phone token', token);
-        dispatch(userSlice.actions.setPhoneToken(token));
-        return axios.post(`${Config.API_URL}/phonetoken`, {token});
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getToken();
   }, [dispatch]);
 
   return isLoggedIn ? (

@@ -13,9 +13,6 @@
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.17",
     "@react-native-community/geolocation": "^2.0.2",
-    "@react-native-firebase/analytics": "^14.3.0",
-    "@react-native-firebase/app": "^14.3.0",
-    "@react-native-firebase/messaging": "^14.3.0",
     "@react-navigation/bottom-tabs": "^6.0.9",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
@@ -50,7 +47,6 @@
     "@types/jest": "^26.0.23",
     "@types/react-native": "^0.66.4",
     "@types/react-test-renderer": "^17.0.1",
-    "@types/react-native-push-notification": "^7.3.3",
     "@types/react-native-vector-icons": "^6.4.10",
     "@typescript-eslint/eslint-plugin": "^5.7.0",
     "@typescript-eslint/parser": "^5.7.0",
