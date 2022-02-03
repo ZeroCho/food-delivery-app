@@ -62,7 +62,8 @@ npx pod-install # 아이폰 전용
 ## 앱 이름 변경
 \android\app\src\main\res\values\strings.xml
 app.json의 displayName
-\ios\FoodDeliveryApp\Info.plist의 CFBundleDisplayName
+\ios\FoodDeliveryApp\Info.plist의 CF
+BundleDisplayName
 
 ## 리액트 네이티브 폴더 구조
 - src 폴더 생성(지금 바로 생성 안 하고 폴더 안에 파일이 들 때 생성해도 됨)
@@ -887,6 +888,7 @@ App.tsx
 ## 실기기 사용하기[ch6]
 [링크](https://reactnative.dev/docs/running-on-device)
 - samsung dex같은 건 끄기
+- 핸드폰 usb 연결 시 usb 디버깅 허용하기
 - .env에서 ip주소 바꾸기
 ```shell
 adb devices
@@ -1021,6 +1023,11 @@ npx react-native run-android
 ```
 ### ERR_OSSL_DSO_COULD_NOT_LOAD_THE_SHARED_LIBRARY
 윈도에서 발생하는 에러인데 choco로 openssl 다시 설치하기
+
+### Error: spawn ./gradlew EACCES
+```shell
+chmod 755 android/gradlew
+```
 
 ## 스스로 해보면 좋을 것
 - loading, disabled 처리 모두 다 하기
