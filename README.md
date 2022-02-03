@@ -934,9 +934,15 @@ iOS 개발자 멤버쉽 가입 필요
 ```shell
 npm i react-native-code-push
 npm install appcenter appcenter-analytics appcenter-crashes
+npm i -g appcenter-cli
+appcenter login
+appcenter codepush deployment list -a zerohch0/food-delivery-app-android -k
 ```
 - android/app/src/main/assets/appcenter-config.json
 - android/app/src/main/res/values/strings.xml 수정
+- [추가 작업](https://github.com/microsoft/react-native-code-push/blob/master/docs/setup-android.md)
+- [ios] ios/AppCenter-Config.plist
+- [ios] [추가 작업](https://github.com/microsoft/react-native-code-push/blob/master/docs/setup-ios.md)
 
 App.tsx
 ```typescript jsx
