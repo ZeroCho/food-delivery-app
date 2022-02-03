@@ -863,7 +863,7 @@ src/pages/Settings.tsx
 ```typescript jsx
 ```
 
-## FCM[ch6]
+## FCM
 푸쉬알림 보내기
 - [링크](https://console.firebase.google.com/)에서 앱 만들기
 ```shell
@@ -873,18 +873,29 @@ npm i -D @types/react-native-push-notification
 npx pod-install
 ```
 [ios] [따라할 것](https://github.com/react-native-push-notification/ios)
-- 프로젝트 설정 - Admin SDK - Node.js - 새 비공개키 생성 - back 폴더 안에 넣고 app.js 소스 수정
+- firebase 프로젝트 설정 - Admin SDK - Node.js - 새 비공개키 생성 - back 폴더 안에 넣고 app.js 소스 수정
 - 안드로이드 앱 설정 후 google-services.json을 android/app에 넣기
-- [ios]
-- 배송 완료시 push 알림이 올 것임
+- [ios] 아이폰 앱 설정 후 ios/GoogleService-Info.plist 생성
+- 배송 완료시 push 알림이 올 것임(에뮬레이터에서는 안 올 수 있음)
+
+[리액트 내비게이션과 연동](https://reactnavigation.org/docs/navigation-container/#linkinggetinitialurl)
 
 App.tsx
 ```
 ```
-AppInner.tsx
-```typescript jsx
 
+## 실기기 사용하기[ch6]
+[링크](https://reactnative.dev/docs/running-on-device)
+- samsung dex같은 건 끄기
+- .env에서 ip주소 바꾸기
+```shell
+adb devices
+adb -s <기기이름> reverse tcp:8081 tcp:8081
 ```
+여러 문제 발견 가능
+- 폰트가 흰색: style에 color 주기
+- vector-icons 안 뜸: 역시 style에 color 주기
+
 ## 배포 관련
 ### Android
 android/app/build.gradle
@@ -956,16 +967,16 @@ export default codePush(codePushOptions)(App);
 - [Sentry](https://sentry.io/): 배포 시 React Native용으로 붙여서 에러 모니터링하면 좋음(무료 지원)
 - [react-native-upgrade helper](https://react-native-community.github.io/upgrade-helper/): 버전 업그레이드 방법 나옴
 
-# 에러들
-## Error: listen EADDRINUSE: address already in use :::8081
+## 에러들
+### Error: listen EADDRINUSE: address already in use :::8081
 이미 메트로 서버가 다른 데서 켜져 있는 것임. 메트로 서버를 실행하고 있는 터미널 종료하기
-## npm run android 시 jetifier쪽에서 안 넘어가는 경우
+### npm run android 시 Running jetifier to migrate libraries to AndroidX.쪽에서 안 넘어가는 경우
 메트로 서버 꺼볼 것
 
-## 완료처리 시 "유효하지 않은 주문입니다."
+### 완료처리 시 "유효하지 않은 주문입니다."
 axios@0.24 설치(axios@0.25.0에 문제 있음)
 [링크](https://github.com/axios/axios/issues/4406)
-## java.lang.RuntimeException: Unable to load script. Make sure you're either running Metro (run 'npx react-native start') or that your bundle 'index.android.bundle' is packaged correctly for release.
+### java.lang.RuntimeException: Unable to load script. Make sure you're either running Metro (run 'npx react-native start') or that your bundle 'index.android.bundle' is packaged correctly for release.
 - android/app/src/main/assets 폴더 만들기
 ```shell
 cd android
@@ -973,7 +984,7 @@ cd android
 cd ..
 npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle
 ```
-## Execution failed for task ':app:packageDebug'. > java.lang.OutOfMemoryError (no error message)
+### Execution failed for task ':app:packageDebug'. > java.lang.OutOfMemoryError (no error message)
 android/gradle.properties에 다음 줄 추가
 ```
 org.gradle.jvmargs=-XX\:MaxHeapSize\=1024m -Xmx1024m
@@ -981,13 +992,15 @@ org.gradle.jvmargs=-XX\:MaxHeapSize\=1024m -Xmx1024m
 또는
 
 android/app/src/main/AndroidManifest.xml 에서 <application> 태그에 android:largeHeap="true" 추가
-## warn No apps connected. Sending "reload" to all React Native apps failed. Make sure your app is running in the simulator or on a phone connected via USB.
+### warn No apps connected. Sending "reload" to all React Native apps failed. Make sure your app is running in the simulator or on a phone connected via USB.
 ```
 npx react-native start --reset-cache
 cd android && ./gradlew clean
 cd ..
 npx react-native run-android
 ```
+### ERR_OSSL_DSO_COULD_NOT_LOAD_THE_SHARED_LIBRARY
+윈도에서 발생하는 에러인데 choco로 openssl 다시 설치하기
 
 ## 스스로 해보면 좋을 것
 - loading, disabled 처리 모두 다 하기
