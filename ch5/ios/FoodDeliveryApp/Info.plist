@@ -38,19 +38,38 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-    <string>배송완료 사진 촬영을 위해 카메라 권한이 필요합니다.</string>
-    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>배송중 위치 확인을 위해서 위치 권한이 필요합니다.</string>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>배송중 위치 확인을 위해서 위치 권한이 필요합니다.</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>배송중 위치 확인을 위해서 위치 권한이 필요합니다.</string>
-    <key>NSMotionUsageDescription</key>
-    <string>배송중 위치 확인을 위해서 위치 권한이 필요합니다.</string>
-    <key>NSPhotoLibraryAddUsageDescription</key>
-    <string>배송완료 사진 선택을 위해 라이브러리 접근 권한이 필요합니다.</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>배송완료 사진 선택을 위해 라이브러리 접근 권한이 필요합니다.</string>
+	<string>배송완료 사진 촬영을 위해 카메라 권한이 필요합니다.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>배송중 위치 확인을 위해서 위치 권한이 필요합니다.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>배송중 위치 확인을 위해서 위치 권한이 필요합니다.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>배송중 위치 확인을 위해서 위치 권한이 필요합니다.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>배송중 위치 확인을 위해서 위치 권한이 필요합니다.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>배송완료 사진 선택을 위해 라이브러리 접근 권한이 필요합니다.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>배송완료 사진 선택을 위해 라이브러리 접근 권한이 필요합니다.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>AntDesign.ttf</string>
+		<string>Entypo.ttf</string>
+		<string>EvilIcons.ttf</string>
+		<string>Feather.ttf</string>
+		<string>FontAwesome.ttf</string>
+		<string>FontAwesome5_Brands.ttf</string>
+		<string>FontAwesome5_Regular.ttf</string>
+		<string>FontAwesome5_Solid.ttf</string>
+		<string>Foundation.ttf</string>
+		<string>Ionicons.ttf</string>
+		<string>MaterialIcons.ttf</string>
+		<string>MaterialCommunityIcons.ttf</string>
+		<string>SimpleLineIcons.ttf</string>
+		<string>Octicons.ttf</string>
+		<string>Zocial.ttf</string>
+		<string>Fontisto.ttf</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -65,24 +84,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>UIAppFonts</key>
-    <array>
-      <string>AntDesign.ttf</string>
-      <string>Entypo.ttf</string>
-      <string>EvilIcons.ttf</string>
-      <string>Feather.ttf</string>
-      <string>FontAwesome.ttf</string>
-      <string>FontAwesome5_Brands.ttf</string>
-      <string>FontAwesome5_Regular.ttf</string>
-      <string>FontAwesome5_Solid.ttf</string>
-      <string>Foundation.ttf</string>
-      <string>Ionicons.ttf</string>
-      <string>MaterialIcons.ttf</string>
-      <string>MaterialCommunityIcons.ttf</string>
-      <string>SimpleLineIcons.ttf</string>
-      <string>Octicons.ttf</string>
-      <string>Zocial.ttf</string>
-      <string>Fontisto.ttf</string>
-    </array>
 </dict>
 </plist>
