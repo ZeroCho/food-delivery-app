@@ -22,6 +22,8 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>CodePushDeploymentKey</key>
+	<string>K-R_ZZeD3Err0iPr_nYuSkk6kJEAxvvswcCxB</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NMFClientId</key>
@@ -88,7 +90,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>CodePushDeploymentKey</key>
-	<string>K-R_ZZeD3Err0iPr_nYuSkk6kJEAxvvswcCxB</string>
 </dict>
 </plist>
