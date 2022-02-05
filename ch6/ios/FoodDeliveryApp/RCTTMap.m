@@ -2,15 +2,21 @@
 #import "TMapTapi.h"
 
 @implementation RCTTMap
-
+- (instancetype)init
+{
+    // 모듈이 로딩될 때 실행되는 부분
+    self = [super init];
+    [TMapTapi setSKTMapAuthenticationWithDelegate:self apiKey:@"l7xx3fcf34960c684fb4ad18e23c7342c415"]; // 여기에 여러분의 키 넣기
+    return self;
+}
 - (dispatch_queue_t)methodQueue
 {
+    // 메인쓰레드만 쓰도록
     return dispatch_get_main_queue();
 }
 RCT_EXPORT_MODULE(TMap);
 
 RCT_EXPORT_METHOD(openNavi: (NSString *)name longitude:(NSString *)longitude latitude:(NSString *)latitude vehicle:(NSString *)vehicle resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
-    [TMapTapi setSKTMapAuthenticationWithDelegate:self apiKey:@"l7xx23d57d02cdef4970ad53c247b91f85c0"];
     NSLog(@"y,x %@, %@", latitude, longitude);
     BOOL installed = [TMapTapi isTmapApplicationInstalled];
     if (installed) {

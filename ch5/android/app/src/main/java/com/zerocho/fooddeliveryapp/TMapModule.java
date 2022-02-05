@@ -13,6 +13,9 @@ import java.util.HashMap;
 public class TMapModule extends ReactContextBaseJavaModule {
     TMapModule(ReactApplicationContext context) {
         super(context);
+        // 모듈 로딩 시 실행되는 부분
+        TMapTapi tMapTapi = new TMapTapi(context);
+        tMapTapi.setSKTMapAuthentication("l7xx3fcf34960c684fb4ad18e23c7342c415"); // 여기에 여러분의 키 넣을 것
     }
 
     @NotNull
@@ -24,44 +27,21 @@ public class TMapModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void openNavi(String name, String longitude, String latitude, String vehicle, Promise promise) {
         TMapTapi tMapTapi = new TMapTapi(getReactApplicationContext());
-        tMapTapi.setOnAuthenticationListener(new TMapTapi.OnAuthenticationListenerCallback() {
-            @Override
-            public void SKTMapApikeySucceed() {
-                boolean isTmapApp = tMapTapi.isTmapApplicationInstalled();
-                Log.i("TMap", isTmapApp ? "설치됨" : "미설치");
-                if (isTmapApp) {
-                    HashMap pathInfo = new HashMap();
-                    pathInfo.put("rGoName", name);
-                    pathInfo.put("rGoX", longitude);
-                    pathInfo.put("rGoY", latitude);
-                    pathInfo.put("rSOpt", vehicle.equals("MOTORCYCLE") ? 6 : 0);
-
-                    boolean result = tMapTapi.invokeRoute(pathInfo);
-                    if (result) {
-                        promise.resolve(true);
-                    } else {
-                        promise.resolve(true);
-                    }
-                } else {
-                    promise.resolve(false);
-                }
-            }
-
-            @Override
-            public void SKTMapApikeyFailed(String errorMsg) {
-                Log.e("TMap", errorMsg);
-                promise.resolve(false);
-            }
-        });
-        tMapTapi.setSKTMapAuthentication("l7xx23d57d02cdef4970ad53c247b91f85c0");
-        boolean isTmapApp = tMapTapi.isTmapApplicationInstalled();
-        if (isTmapApp) {
-            boolean result = tMapTapi.invokeNavigate(name, Float.parseFloat(longitude), Float.parseFloat(latitude), 0, false, vehicle.equals("MOTORCYCLE") ? 6 : 0);
+        boolean isTMapApp = tMapTapi.isTmapApplicationInstalled();
+        if (isTMapApp) {
+            HashMap pathInfo = new HashMap();
+            pathInfo.put("rGoName", name);
+            pathInfo.put("rGoX", longitude);
+            pathInfo.put("rGoY", latitude);
+            pathInfo.put("rSOpt", vehicle.equals("MOTORCYCLE") ? "6" : "0");
+            boolean result = tMapTapi.invokeRoute(pathInfo);
             if (result) {
                 promise.resolve(true);
             } else {
                 promise.resolve(true);
             }
+        } else {
+            promise.resolve(false);
         }
     }
 }
