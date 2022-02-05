@@ -2,11 +2,11 @@
   package = load_json(json_path: "../package.json")
   private_lane :inc_ver_and do
     increment_version_code(
-      gradle_file_path: "./android/app/build.gradle",
+      gradle_file_path: "../android/app/build.gradle",
     )
 
     increment_version_name(
-      gradle_file_path: "./android/app/build.gradle",
+      gradle_file_path: "../android/app/build.gradle",
       version_name: package['version']
     )
   end
@@ -17,10 +17,10 @@
   package = load_json(json_path: "../package.json")
 
     increment_build_number(
-      xcodeproj: './ios/' + package['name'] + '.xcodeproj'
+      xcodeproj: './' + package['name'] + '.xcodeproj'
     )
     increment_version_number(
-      xcodeproj: './ios/' + package['name'] + '.xcodeproj',
+      xcodeproj: './' + package['name'] + '.xcodeproj',
       version_number: package['version']
     )
   end
