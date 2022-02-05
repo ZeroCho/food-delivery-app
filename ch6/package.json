@@ -17,9 +17,9 @@
     "apk:android": "npm ci && cd android && ./gradlew assembleRelease && cd .. && open android/app/build/outputs/apk/release",
     "appcenter-android-key": "appcenter codepush deployment list -a zerohch0/food-delivery-app-android -k",
     "appcenter-ios-key": "appcenter codepush deployment list -a zerohch0/food-delivery-app-ios -k",
-    "bump-patch": "npm version patch --no-git-tag-version && bundle exec fastlane bump",
-    "bump-minor": "npm version minor --no-git-tag-version && bundle exec fastlane bump",
-    "bump-major": "npm version major --no-git-tag-version && bundle exec fastlane bump"
+    "bump-patch": "npm version patch --no-git-tag-version && cd ios && bundle exec fastlane bump",
+    "bump-minor": "npm version minor --no-git-tag-version && cd ios && bundle exec fastlane bump",
+    "bump-major": "npm version major --no-git-tag-version && cd ios && bundle exec fastlane bump"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.17",
