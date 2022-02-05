@@ -1,5 +1,5 @@
   desc 'Android: Increment versionCode and set versionName to package.json version.'
-  package = load_json(json_path: "./package.json")
+  package = load_json(json_path: "../package.json")
   private_lane :inc_ver_and do
     increment_version_code(
       gradle_file_path: "./android/app/build.gradle",
