@@ -17,15 +17,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Image" translatesAutoresizingMaskIntoConstraints="NO" id="K8h-aT-gT0">
-                                <rect key="frame" x="81" y="153.5" width="213" height="360"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Image" translatesAutoresizingMaskIntoConstraints="NO" id="K8h-aT-gT0">
+                                <rect key="frame" x="54" y="130" width="266" height="406"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="K8h-aT-gT0" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="3Gs-2E-OCi"/>
-                            <constraint firstItem="K8h-aT-gT0" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="g8U-Hd-Rl4"/>
+                            <constraint firstItem="K8h-aT-gT0" firstAttribute="centerX" secondItem="Bcu-3y-fUS" secondAttribute="centerX" id="7F1-Cx-zfN"/>
+                            <constraint firstItem="K8h-aT-gT0" firstAttribute="centerY" secondItem="Bcu-3y-fUS" secondAttribute="centerY" id="8gd-uE-Dll"/>
                         </constraints>
                     </view>
                 </viewController>
