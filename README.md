@@ -6,6 +6,7 @@
 - java 17 버전 설치하면 안 됨(11버전 설치할 것), 환경 변수 설정도 잘 해 놓을 것(JAVA_HOME)
 - Android SDK 30이 있어야 함. 가상기기는 Nexus 5로 받을 것
 - [adb](https://developer.android.com/studio/releases/platform-tools) 설치 필요, ANDROID_HOME 환경변수도
+- [m1 mac용 설정](https://qnrjs42.blog/react-native/m1-arm64-setting)
 ```shell
 npx react-native init FoodDeliveryApp --template react-native-template-typescript
 ```
