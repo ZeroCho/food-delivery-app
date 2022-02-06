@@ -17,11 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.1</string>
+	<string>1.0.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>2</string>
+	<string>1</string>
 	<key>CodePushDeploymentKey</key>
 	<string>K-R_ZZeD3Err0iPr_nYuSkk6kJEAxvvswcCxB</string>
 	<key>LSRequiresIPhoneOS</key>
