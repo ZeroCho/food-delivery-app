@@ -979,6 +979,7 @@ export default codePush(codePushOptions)(App);
 - pod deintegrate: 기존 pod들 제거
 - pod update: 기존 pod 버전 업그레이드(pod install 시)
 - pod install: npx pod-install 역할 Podfile.lock에 따라 설치
+- pod install --repo-update: pod들 설치하면서 최신으로 유지
 
 ## Hermes 켜기
 시작 성능 빨라지고, 메모리 사용량 적고, 앱 사이즈 작아짐
