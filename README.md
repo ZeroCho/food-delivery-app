@@ -7,6 +7,8 @@
 - Android SDK 30이 있어야 함. 가상기기는 Nexus 5로 받을 것
 - [adb](https://developer.android.com/studio/releases/platform-tools) 설치 필요, ANDROID_HOME 환경변수도
 - [m1 mac용 설정](https://qnrjs42.blog/react-native/m1-arm64-setting)
+- [읽어보면 좋은 벨로퍼트님의 글](https://ridicorp.com/story/react-native-1year-review/)
+
 ```shell
 npx react-native init FoodDeliveryApp --template react-native-template-typescript
 ```
