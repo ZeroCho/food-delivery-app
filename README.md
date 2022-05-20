@@ -1033,6 +1033,9 @@ npx react-native run-android
 chmod 755 android/gradlew
 ```
 
+### error: bundling failed: TypeError: Cannot read property 'transformFile' of undefined
+node.js 16버전으로 할 것, node 17버전부터 해당 에러 발생함.
+
 ## 스스로 해보면 좋을 것
 - loading, disabled 처리 모두 다 하기
 - 내 위치 앱 시작하고 권한 있을 때 미리 받아놓기
