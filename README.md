@@ -68,9 +68,13 @@ npx pod-install # 아이폰 전용
 
 ## 앱 이름 변경
 \android\app\src\main\res\values\strings.xml
+
 app.json의 displayName
-\ios\FoodDeliveryApp\Info.plist의 CF
-BundleDisplayName
+
+\ios\FoodDeliveryApp\Info.plist의 CFBundleDisplayName
+
+**단!** 0.68버전부터는 CFBundleDisplayName을 한글로하면 튕기는 문제 발생. 그럴때는 CFBundleDisplayName은 건들지말고
+[링크](https://thddudco.tistory.com/16) 따라서 다국어 설정으로 한국어 설정할 것.
 
 ## 리액트 네이티브 폴더 구조
 - src 폴더 생성(지금 바로 생성 안 하고 폴더 안에 파일이 들 때 생성해도 됨)
