@@ -73,8 +73,9 @@ app.json의 displayName
 
 \ios\FoodDeliveryApp\Info.plist의 CFBundleDisplayName
 
-**단!** 0.68버전부터는 CFBundleDisplayName을 한글로하면 튕기는 문제 발생. 그럴때는 CFBundleDisplayName은 건들지말고
-[링크](https://thddudco.tistory.com/16) 따라서 다국어 설정으로 한국어 설정할 것.
+**단!** 0.68버전부터는 app.json, strings.xml, CFBundleDisplayName을 한글로하면 튕기는 문제 발생. 그럴때는 전부 영어로 되돌리고
+ios에서는 [링크](https://thddudco.tistory.com/16) 따라서 다국어 설정으로 한국어 설정할 것.
+또한 안드로이드에서는 \android\app\src\main\res\values\strings.xml은 영어로 두고 \android\app\src\main\res\values-ko\strings.xml 을 새로 만들어 여기서 한글로 변경할 것
 
 ## 리액트 네이티브 폴더 구조
 - src 폴더 생성(지금 바로 생성 안 하고 폴더 안에 파일이 들 때 생성해도 됨)
@@ -112,6 +113,17 @@ import android.os.Bundle;
 protected void onCreate(Bundle savedInstanceState) {
   super.onCreate(null);
 }
+```
+android/build.gradle
+```
+buildscript {
+    ext {
+        ...
+        kotlin_version = '1.6.10'
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
 ```
 App.tsx 교체
 ```typescript jsx
