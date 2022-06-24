@@ -59,7 +59,7 @@ react-native@0.66 버전, 한 달에 0.1씩 올라가는데 요즘 개발 속도
 [Flipper](https://fbflipper.com/) 페이스북이 만든 모바일앱 디버거도 좋음(다만 연결 시 에러나는 사람 다수 발견)
 - setup doctor 문제 해결할 것
 ```shell
-npm i react-native-flipper redux-flipper rn-async-storage-flipper @react-native-async-storage/async-storage
+npm i react-native-flipper redux-flipper rn-async-storage-flipper @react-native-async-storage/async-storage --force
 npx pod-install # 아이폰 전용
 ```
 - flipper-plugin-async-storage
