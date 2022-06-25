@@ -77,6 +77,12 @@ app.json의 displayName
 ios에서는 [링크](https://thddudco.tistory.com/16) 따라서 다국어 설정으로 한국어 설정할 것.
 또한 안드로이드에서는 \android\app\src\main\res\values\strings.xml은 영어로 두고 \android\app\src\main\res\values-ko\strings.xml 을 새로 만들어 여기서 한글로 변경할 것
 
+android/gradle.properties
+```
+FLIPPER_VERSION=0.145.0
+```
+플리퍼 버전을 0.145.0으로 높일 것.
+
 ## 리액트 네이티브 폴더 구조
 - src 폴더 생성(지금 바로 생성 안 하고 폴더 안에 파일이 들 때 생성해도 됨)
 - src/assets: 이미지, 폰트 등
