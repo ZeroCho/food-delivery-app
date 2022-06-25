@@ -13,7 +13,7 @@
 npx react-native init FoodDeliveryApp --template react-native-template-typescript
 ```
 **잠깐!!** 이 명령어를 입력하면 항상 최신 버전의 react를 받아오므로 강좌의 버전(0.66)과 일치하지 않게 됨. 현재 최신 버전은 0.69라서 상당히 차이가 남.
-강좌랑 동일한 버전으로 하지 않으면 많은 스트레스를 받을 수 있음. 강좌랑 동일한 버전으로 하려면 이미 초반 세팅이 다 되어 있는 settings 폴더에서 시작하는 것이 좋음.
+강좌랑 동일한 버전으로 하지 않으면 많은 스트레스를 받을 수 있음. 강좌랑 동일한 버전으로 하려면 이미 초반 세팅이 다 되어 있는 setting 폴더에서 시작하는 것이 좋음.
 
 보통은 강의용으로 자동생성 안 좋아하는데 RN은 자동생성하지 않으면 네이티브단까지 처리하기 어려움 
 
@@ -127,9 +127,13 @@ buildscript {
         ...
         kotlin_version = '1.6.10'
     }
+    ...
     dependencies {
+        ...
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
+    ...
+}
 ```
 App.tsx 교체
 ```typescript jsx
