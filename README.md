@@ -10,7 +10,8 @@
 - [읽어보면 좋은 벨로퍼트님의 글](https://ridicorp.com/story/react-native-1year-review/)
 
 ```shell
-npm i react-native (안 해도 됨)
+(프로젝트를 만들고자 하는 폴더로 이동)
+npm i -g react-native (안 해도 됨)
 npx react-native init FoodDeliveryApp --template react-native-template-typescript
 ```
 
