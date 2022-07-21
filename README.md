@@ -10,10 +10,18 @@
 - [읽어보면 좋은 벨로퍼트님의 글](https://ridicorp.com/story/react-native-1year-review/)
 
 ```shell
+npm i react-native (안 해도 됨)
 npx react-native init FoodDeliveryApp --template react-native-template-typescript
 ```
+
+설치 시 마지막에 다음 에러가 나오면 cd ./FoodDeliveryApp/ios && pod install 입력할 것
+```
+error Error: Failed to install CocoaPods dependencies for iOS project, which is required by this template.
+Please try again manually: "cd ./FoodDeliveryApp/ios && pod install".
+```
+
 **잠깐!!** 이 명령어를 입력하면 항상 최신 버전의 react를 받아오므로 강좌의 버전(0.66)과 일치하지 않게 됨. 현재 최신 버전은 0.69라서 상당히 차이가 남.
-강좌랑 동일한 버전으로 하지 않으면 많은 스트레스를 받을 수 있음. 강좌랑 동일한 버전으로 하려면 이미 초반 세팅이 다 되어 있는 setting 폴더에서 시작하는 것이 좋음.
+강좌랑 동일한 버전으로 하지 않으면 많은 스트레스를 받을 수 있음. 강좌랑 동일한 버전으로 하려면 이미 초반 세팅이 다 되어 있는 setting 폴더를 git clone받아 시작하는 것이 좋음(클론 후 npm i && npx pod-install 수행 필요).
 
 보통은 강의용으로 자동생성 안 좋아하는데 RN은 자동생성하지 않으면 네이티브단까지 처리하기 어려움 
 
