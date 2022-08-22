@@ -612,6 +612,7 @@ npx pod-install # ios 전용
 
 - [ios]Xcode로는 xcworkspace 파일을 열어야함(xcodeproj 열면 안됨, xcworkspace가 없다면 ios 폴더에서 pod install 한 번 입력해볼 것)
 - [ios]iOS Bundle ID: com.[원하는이름].fooddeliveryapp(ex: com.zerocho.fooddeliveryapp)로 수정
+- [ios]실제 기기에서 네이버 지도 하는 법 [링크](https://www.inflearn.com/questions/605689)
 
 src/components/EachOrder.tsx
 ```typescript jsx
@@ -1098,6 +1099,9 @@ node.js 16버전으로 할 것, node 17버전부터 해당 에러 발생함.
 
 ### ERROR Invariant Violation: Module AppRegistry is not a registered callable module (calling runApplication)
 보통 App.tsx 부분이 여러번 실행되어서 발생함. Metro 서버를 껐다가 켜고, 에뮬레이터에서 앱을 지웠다가 다시 설치하면 해결 됨
+
+### Manifest merger failed : android:exported needs to be explicitly specified for element <receiver#com.dieam.reactnativepushnotification.modules.RNPushNotificationBootEventReceiver>. Apps targeting Android 12 and higher are required to specify an explicit value for `android:exported` when the corresponding component has an intent filter defined
+[링크](https://www.inflearn.com/questions/630107)
 
 ## 스스로 해보면 좋을 것
 - loading, disabled 처리 모두 다 하기
