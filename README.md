@@ -347,7 +347,7 @@ npm i react-native-config
 ```typescript jsx
 import Config from 'react-native-config';
 ```
--Config가 적용이 안 되면 다음 추가해야함
+-Android에서 Config가 적용이 안 되면 다음 추가해야함
 
 android/app/proguard-rules.pro
 ```
@@ -368,7 +368,12 @@ apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.grad
 ```
 API_URL=http://10.0.2.2:3105
 ```
--10.0.2.2로 해야 함(localhost로 하면 안드로이드에서 안 됨)
+- 아이피는 10.0.2.2로 해야 함(localhost로 하면 안드로이드에서 안 됨)
+- 10.0.2.2가 안 되면 네이버에 내 아이피 쳐서 외부IP도 입력해보고, ipconfig 터미널에 입력할 때 나오는 내부IP도 입력해서 되는 것 찾기
+- 에뮬레이터/시뮬레이터/실제 기기에서 브라우저를 켜서 아이피:3105 입력했을 때 페이지가 제대로 뜨는 IP가 실제로 작동하는 IP
+- [ios]에서 안 될 때는 Podfile에 pod 'react-native-config', :path => '../node_modules/react-native-config/react-native-config.podspec' 추가해보기
+
+
 암호화해서 저장할 데이터는 다음 패키지에
 ```
 import EncryptedStorage from 'react-native-encrypted-storage';
