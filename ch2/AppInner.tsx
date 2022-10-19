@@ -24,7 +24,7 @@ export type RootStackParamList = {
 };
 
 const Tab = createBottomTabNavigator();
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function AppInner() {
   const isLoggedIn = useSelector((state: RootState) => !!state.user.email);
