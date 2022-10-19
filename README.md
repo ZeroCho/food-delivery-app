@@ -6,9 +6,24 @@
 - java 17 버전 설치하면 안 됨(11버전 설치할 것), 환경 변수 설정도 잘 해 놓을 것(JAVA_HOME)
 - Android SDK 30이 있어야 함. 가상기기는 Nexus 5로 받을 것
 - [adb](https://developer.android.com/studio/releases/platform-tools) 설치 필요, ANDROID_HOME 환경변수도
+- [m1 mac용 설정](https://qnrjs42.blog/react-native/m1-arm64-setting)
+- [읽어보면 좋은 벨로퍼트님의 글](https://ridicorp.com/story/react-native-1year-review/)
+
 ```shell
+(프로젝트를 만들고자 하는 폴더로 이동)
+npm i -g react-native (안 해도 됨)
 npx react-native init FoodDeliveryApp --template react-native-template-typescript
 ```
+
+설치 시 마지막에 다음 에러가 나오면 cd ./FoodDeliveryApp/ios && pod install 입력할 것
+```
+error Error: Failed to install CocoaPods dependencies for iOS project, which is required by this template.
+Please try again manually: "cd ./FoodDeliveryApp/ios && pod install".
+```
+
+**잠깐!!** 이 명령어를 입력하면 항상 최신 버전의 react를 받아오므로 강좌의 버전(0.66)과 일치하지 않게 됨. 현재 최신 버전은 0.69라서 상당히 차이가 남.
+강좌랑 동일한 버전으로 하지 않으면 많은 스트레스를 받을 수 있음. 강좌랑 동일한 버전으로 하려면 이미 초반 세팅이 다 되어 있는 setting 폴더를 git clone받아 시작하는 것이 좋음(클론 후 npm i && npx pod-install 수행 필요).
+
 보통은 강의용으로 자동생성 안 좋아하는데 RN은 자동생성하지 않으면 네이티브단까지 처리하기 어려움 
 
 ```shell
@@ -17,7 +32,8 @@ npm run android # 안드로이드 실행 명령어
 npm run ios # 아이폰 실행 명령어
 ```
 
-서버가 하나 뜰 것임. Metro 서버. 여기서 소스 코드를 컴파일하고 앱으로 전송해줌. 기본 8081포트.
+서버가 하나 뜰 것임. Metro 서버. 여기서 서버가 안 뜨고 No device 등의 에러 메시지가 뜬다면 에뮬레이터 실행한 채로 다시 명령어 입력할 것.
+Metro 서버에서 소스 코드를 컴파일하고 앱으로 전송해줌. 기본 8081포트.
 메트로 서버가 꺼져있다면 터미널을 하나 더 열어
 ```shell
 npm start
@@ -52,7 +68,7 @@ react-native@0.66 버전, 한 달에 0.1씩 올라가는데 요즘 개발 속도
 [Flipper](https://fbflipper.com/) 페이스북이 만든 모바일앱 디버거도 좋음(다만 연결 시 에러나는 사람 다수 발견)
 - setup doctor 문제 해결할 것
 ```shell
-npm i react-native-flipper redux-flipper rn-async-storage-flipper @react-native-async-storage/async-storage
+npm i react-native-flipper redux-flipper rn-async-storage-flipper @react-native-async-storage/async-storage --force
 npx pod-install # 아이폰 전용
 ```
 - flipper-plugin-async-storage
@@ -61,9 +77,20 @@ npx pod-install # 아이폰 전용
 
 ## 앱 이름 변경
 \android\app\src\main\res\values\strings.xml
+
 app.json의 displayName
-\ios\FoodDeliveryApp\Info.plist의 CF
-BundleDisplayName
+
+\ios\FoodDeliveryApp\Info.plist의 CFBundleDisplayName
+
+**단!** 0.68버전부터는 app.json, strings.xml, CFBundleDisplayName을 한글로하면 튕기는 문제 발생. 그럴때는 전부 영어로 되돌리고
+ios에서는 [링크](https://thddudco.tistory.com/16) 따라서 다국어 설정으로 한국어 설정할 것.
+또한 안드로이드에서는 \android\app\src\main\res\values\strings.xml은 영어로 두고 \android\app\src\main\res\values-ko\strings.xml 을 새로 만들어 여기서 한글로 변경할 것
+
+android/gradle.properties
+```
+FLIPPER_VERSION=0.145.0
+```
+플리퍼 버전을 0.145.0으로 높일 것.
 
 ## 리액트 네이티브 폴더 구조
 - src 폴더 생성(지금 바로 생성 안 하고 폴더 안에 파일이 들 때 생성해도 됨)
@@ -100,6 +127,21 @@ import android.os.Bundle;
 @Override
 protected void onCreate(Bundle savedInstanceState) {
   super.onCreate(null);
+}
+```
+android/build.gradle
+```
+buildscript {
+    ext {
+        ...
+        kotlin_version = '1.6.10'
+    }
+    ...
+    dependencies {
+        ...
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+    ...
 }
 ```
 App.tsx 교체
@@ -305,7 +347,7 @@ npm i react-native-config
 ```typescript jsx
 import Config from 'react-native-config';
 ```
--Config가 적용이 안 되면 다음 추가해야함
+-Android에서 Config가 적용이 안 되면 다음 추가해야함
 
 android/app/proguard-rules.pro
 ```
@@ -326,7 +368,12 @@ apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.grad
 ```
 API_URL=http://10.0.2.2:3105
 ```
--10.0.2.2로 해야 함(localhost로 하면 안드로이드에서 안 됨)
+- 아이피는 10.0.2.2로 해야 함(localhost로 하면 안드로이드에서 안 됨)
+- 10.0.2.2가 안 되면 네이버에 내 아이피 쳐서 외부IP도 입력해보고, ipconfig 터미널에 입력할 때 나오는 내부IP도 입력해서 되는 것 찾기
+- 에뮬레이터/시뮬레이터/실제 기기에서 브라우저를 켜서 아이피:3105 입력했을 때 페이지가 제대로 뜨는 IP가 실제로 작동하는 IP
+- [ios]에서 안 될 때는 Podfile에 pod 'react-native-config', :path => '../node_modules/react-native-config/react-native-config.podspec' 추가해보기
+
+
 암호화해서 저장할 데이터는 다음 패키지에
 ```
 import EncryptedStorage from 'react-native-encrypted-storage';
@@ -543,13 +590,35 @@ axios.interceptor 설정하기
 ## 네이버 지도 사용하기[ch4]
 ```shell
 npm i react-native-nmap --force
+```
+
+[ios]git-lfs로 추가 설치 필요 [참고](https://github.com/navermaps/ios-map-sdk#%EB%8C%80%EC%9A%A9%EB%9F%89-%ED%8C%8C%EC%9D%BC%EC%9D%84-%EB%B0%9B%EA%B8%B0-%EC%9C%84%ED%95%B4-git-lfs-%EC%84%A4%EC%B9%98%EA%B0%80-%ED%95%84%EC%9A%94%ED%95%A9%EB%8B%88%EB%8B%A4)
+
+네이버 맵 버전 명시(**3.10.1보다 더 최신버전 잘 돌아가는 거 있으면 알려주세요!**)
+
+Podfile
+```
+...
+  use_flipper!()
+  pod 'NMapsMap', '3.10.1'
+  
+  post_install do |installer|
+...
+```
+```shell
 npx pod-install # ios 전용
 ```
-[ios]git-lfs로 추가 설치 필요 [참고](https://github.com/navermaps/ios-map-sdk#%EB%8C%80%EC%9A%A9%EB%9F%89-%ED%8C%8C%EC%9D%BC%EC%9D%84-%EB%B0%9B%EA%B8%B0-%EC%9C%84%ED%95%B4-git-lfs-%EC%84%A4%EC%B9%98%EA%B0%80-%ED%95%84%EC%9A%94%ED%95%A9%EB%8B%88%EB%8B%A4)
+
 - 안드로이드 앱 패키지 이름: com.[원하는이름].fooddeliveryapp (ex: com.zerocho.fooddeliveryapp)
 - [커밋 참조](https://github.com/ZeroCho/food-delivery-app/commit/36295cabf2cdab4ed68fa3b907c7b467101a02a5) (폴더 등 변경할 게 많음)
-- [ios]Xcode로는 xcworkspace 파일을 열어야함(xcodeproj 열면 안됨)
+*0.68 버전 이상부터는*
+[링크](https://www.inflearn.com/questions/583155) 참고해서 newarchitecture 부분의 이름도 수정해야 합니다.
+
+
+- [ios]Xcode로는 xcworkspace 파일을 열어야함(xcodeproj 열면 안됨, xcworkspace가 없다면 ios 폴더에서 pod install 한 번 입력해볼 것)
 - [ios]iOS Bundle ID: com.[원하는이름].fooddeliveryapp(ex: com.zerocho.fooddeliveryapp)로 수정
+- [ios]실제 기기에서 네이버 지도 하는 법 [링크](https://www.inflearn.com/questions/605689)
+
 src/components/EachOrder.tsx
 ```typescript jsx
 <View
@@ -978,6 +1047,7 @@ export default codePush(codePushOptions)(App);
 - pod deintegrate: 기존 pod들 제거
 - pod update: 기존 pod 버전 업그레이드(pod install 시)
 - pod install: npx pod-install 역할 Podfile.lock에 따라 설치
+- pod install --repo-update: pod들 설치하면서 최신으로 유지
 
 ## Hermes 켜기
 시작 성능 빨라지고, 메모리 사용량 적고, 앱 사이즈 작아짐
@@ -1028,6 +1098,15 @@ npx react-native run-android
 ```shell
 chmod 755 android/gradlew
 ```
+
+### error: bundling failed: TypeError: Cannot read property 'transformFile' of undefined
+node.js 16버전으로 할 것, node 17버전부터 해당 에러 발생함.
+
+### ERROR Invariant Violation: Module AppRegistry is not a registered callable module (calling runApplication)
+보통 App.tsx 부분이 여러번 실행되어서 발생함. Metro 서버를 껐다가 켜고, 에뮬레이터에서 앱을 지웠다가 다시 설치하면 해결 됨
+
+### Manifest merger failed : android:exported needs to be explicitly specified for element <receiver#com.dieam.reactnativepushnotification.modules.RNPushNotificationBootEventReceiver>. Apps targeting Android 12 and higher are required to specify an explicit value for `android:exported` when the corresponding component has an intent filter defined
+[링크](https://www.inflearn.com/questions/630107)
 
 ## 스스로 해보면 좋을 것
 - loading, disabled 처리 모두 다 하기
