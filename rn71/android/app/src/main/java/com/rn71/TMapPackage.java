@@ -1,4 +1,4 @@
-package com.zerocho.fooddeliveryapp;
+package com.rn71;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;

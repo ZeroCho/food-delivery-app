@@ -1,4 +1,4 @@
-package com.zerocho.fooddeliveryapp;
+package com.rn71;
 
 import android.util.Log;
 
