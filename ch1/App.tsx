@@ -22,7 +22,7 @@ export type RootStackParamList = {
 };
 
 const Tab = createBottomTabNavigator();
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);

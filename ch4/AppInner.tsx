@@ -31,7 +31,7 @@ export type RootStackParamList = {
 };
 
 const Tab = createBottomTabNavigator();
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function AppInner() {
   const dispatch = useAppDispatch();
