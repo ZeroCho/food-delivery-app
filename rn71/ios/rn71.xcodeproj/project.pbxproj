@@ -517,6 +517,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = rn71/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = NO;
+				INFOPLIST_KEY_UILaunchScreen_Generation = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -548,6 +550,8 @@
 				CODE_SIGN_ENTITLEMENTS = rn71/rn71.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = rn71/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = NO;
+				INFOPLIST_KEY_UILaunchScreen_Generation = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
