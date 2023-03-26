@@ -792,6 +792,7 @@ function usePermissions() {
 
 export default usePermissions;
 ```
+- [ios]혹시나 앱 설정 화면에 위치 권한이 없을 경우 Delivey 페이지까지 한 번 들어갔다 나오기. 그럼 생겨있음.
 - Platform으로 운영체제 구별
 - Linking으로 다른 서비스 열기 가능
 위치 정보 가져오기
