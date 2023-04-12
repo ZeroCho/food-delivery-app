@@ -21,7 +21,7 @@ error Error: Failed to install CocoaPods dependencies for iOS project, which is 
 Please try again manually: "cd ./FoodDeliveryApp/ios && pod install".
 ```
 
-**잠깐!!** 이 명령어를 입력하면 항상 최신 버전의 react를 받아오므로 강좌의 버전(0.66)과 일치하지 않게 됨. 현재 최신 버전은 0.69라서 상당히 차이가 남.
+**잠깐!!** 이 명령어를 입력하면 항상 최신 버전의 react를 받아오므로 강좌의 버전(0.66)과 일치하지 않게 됨. 현재 최신 버전은 0.71이라서 상당히 차이가 남.
 강좌랑 동일한 버전으로 하지 않으면 많은 스트레스를 받을 수 있음. 강좌랑 동일한 버전으로 하려면 이미 초반 세팅이 다 되어 있는 setting 폴더를 git clone받아 시작하는 것이 좋음(클론 후 npm i && npx pod-install 수행 필요).
 
 보통은 강의용으로 자동생성 안 좋아하는데 RN은 자동생성하지 않으면 네이티브단까지 처리하기 어려움 
@@ -190,7 +190,7 @@ function DetailsScreen({navigation}: DetailsScreenProps) {
   );
 }
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 function App() {
   return (
           <NavigationContainer>
@@ -792,6 +792,7 @@ function usePermissions() {
 
 export default usePermissions;
 ```
+- [ios]혹시나 앱 설정 화면에 위치 권한이 없을 경우 Delivey 페이지까지 한 번 들어갔다 나오기. 그럼 생겨있음.
 - Platform으로 운영체제 구별
 - Linking으로 다른 서비스 열기 가능
 위치 정보 가져오기
@@ -999,6 +1000,7 @@ iOS 개발자 멤버쉽 가입 필요
 ### CodePush
 - 실시간으로 앱 수정 가능(JS코드, 이미지, 비디오만)
 - 노드모듈, 네이티브쪽 수정은 앱 배포 필요
+- 0.71버전에서 호환 안 되는 이슈 있었으니 조심할 것
 
 [앱센터 가입](https://appcenter.ms/)
 - [여기서](https://appcenter.ms/apps/create) 앱 만들기(iOS, Android 따로)

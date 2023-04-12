@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* FoodDeliveryAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* FoodDeliveryAppTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2A088FBA5F09519664B768DD /* libPods-FoodDeliveryApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF44F3AFEE1C1BB84EA4E2CC /* libPods-FoodDeliveryApp.a */; };
+		3E3279162850683B00B74477 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		54B3BEFF526BBF0E72CA6244 /* libPods-FoodDeliveryApp-FoodDeliveryAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E5C7488EC565F2385B7D40D /* libPods-FoodDeliveryApp-FoodDeliveryAppTests.a */; };
 		7731DA0927ABDEA000A0CC63 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7731DA0827ABDEA000A0CC63 /* GoogleService-Info.plist */; };
 		7731DA0B27ABEFB900A0CC63 /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7731DA0A27ABEFB800A0CC63 /* AppCenter-Config.plist */; };
@@ -347,8 +347,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				3E3279162850683B00B74477 /* Images.xcassets in Resources */,
 				7731DA0B27ABEFB900A0CC63 /* AppCenter-Config.plist in Resources */,
-				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				7731DA0927ABDEA000A0CC63 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -607,7 +607,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = FoodDeliveryApp/FoodDeliveryApp.entitlements;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = H29XXCQYYS;
+				DEVELOPMENT_TEAM = 2GQ2QC6L86;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -644,7 +644,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = FoodDeliveryApp/FoodDeliveryApp.entitlements;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = H29XXCQYYS;
+				DEVELOPMENT_TEAM = KL28KQ7NU7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/NMapsMap/framework",

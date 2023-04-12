@@ -27,7 +27,6 @@
             <option value="$PROJECT_DIR$/../node_modules/react-native-screens/android" />
           </set>
         </option>
-        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>
