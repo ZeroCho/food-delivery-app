@@ -1017,7 +1017,7 @@ iOS 개발자 멤버쉽 가입 필요
 ```shell
 npm i react-native-code-push
 npm install appcenter appcenter-analytics appcenter-crashes
-npm i -g appcenter-cli
+npm i -g appcenter-cli (맥에서는 sudo 필요)
 appcenter login
 appcenter codepush deployment list -a zerohch0/food-delivery-app-android -k
 ```
