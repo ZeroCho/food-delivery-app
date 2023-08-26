@@ -596,19 +596,20 @@ axios.interceptor 설정하기
 
 ## 네이버 지도 사용하기[ch4]
 ```shell
-npm i react-native-nmap --force
+npm i https://github.com/ZeroCho/react-native-naver-map
 ```
+npm i react-native-nmap을 하면 유지보수가 안 되는 패키지가 설치되므로 강의를 위해 제작된 패키지를 대신 설치
 
 [ios]git-lfs로 추가 설치 필요 [참고](https://github.com/navermaps/ios-map-sdk#%EB%8C%80%EC%9A%A9%EB%9F%89-%ED%8C%8C%EC%9D%BC%EC%9D%84-%EB%B0%9B%EA%B8%B0-%EC%9C%84%ED%95%B4-git-lfs-%EC%84%A4%EC%B9%98%EA%B0%80-%ED%95%84%EC%9A%94%ED%95%A9%EB%8B%88%EB%8B%A4)
 
-네이버 맵 버전 명시(**3.10.1보다 더 최신버전 잘 돌아가는 거 있으면 알려주세요!**)
+네이버 맵 버전 명시(**3.16.0보다 더 최신버전 잘 돌아가는 거 있으면 알려주세요!**)
 
 Podfile
 ```
 ...
-  use_flipper!()
-  pod 'NMapsMap', '3.10.1'
-  
+  config = use_native_modules!
+  pod 'NMapsMap', '3.16.0'
+  ...
   post_install do |installer|
 ...
 ```
