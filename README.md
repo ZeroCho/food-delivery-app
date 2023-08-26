@@ -619,20 +619,17 @@ npx pod-install # ios 전용
 android/build.gradle
 ```
 buildscript {
-    ext {
-        ...
-    }
-    subprojects { subproject ->
-        afterEvaluate{
-            if((subproject.plugins.hasPlugin('android') || subproject.plugins.hasPlugin('android-library'))) {
-                android {
-                    compileSdkVersion rootProject.ext.compileSdkVersion
-                    buildToolsVersion rootProject.ext.buildToolsVersion
-                }
-            }
+    ...
+}
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        // 네이버 지도 저장소
+        maven {
+            url 'https://naver.jfrog.io/artifactory/maven/'
         }
     }
-    ...
 }
 ```
 
