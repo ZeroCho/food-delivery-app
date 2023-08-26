@@ -19,7 +19,7 @@ Ok to proceed? (y)
 
 # mac이면 다음 코드도 입력(맥 비밀번호 입력 필요)
 sudo gem install cocoapods
-# cocoapods 설치시 ruby 오류가 나면 터미널에 나오는 명령어 입력 후 coocapods 재설치(아래 버전은 달라질 수 있으니 주의)
+# cocoapods 설치시 ruby 오류가 나면 터미널에 나오는 명령어 입력 후 cocoapods 재설치(아래 버전은 달라질 수 있으니 주의)
 sudo gem install activesupport -v 6.1.7.6
 
 # 마지막으로 pod 설치
@@ -950,6 +950,8 @@ npm i react-native-push-notification @react-native-community/push-notification-i
 npm i -D @types/react-native-push-notification
 npx pod-install
 ```
+[ios] pod install 시 에러 발생 시 [참고](https://github.com/invertase/react-native-firebase/issues/6403#issuecomment-1542666480)
+
 [ios] [따라할 것](https://github.com/react-native-push-notification/ios)
 - firebase 프로젝트 설정 - Admin SDK - Node.js - 새 비공개키 생성 - back 폴더 안에 넣고 app.js 소스 수정
 - 안드로이드 앱 설정 후 google-services.json을 android/app에 넣기
