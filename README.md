@@ -1023,7 +1023,6 @@ iOS 개발자 멤버쉽 가입 필요
 ### CodePush
 - 실시간으로 앱 수정 가능(JS코드, 이미지, 비디오만)
 - 노드모듈, 네이티브쪽 수정은 앱 배포 필요
-- 0.71버전에서 호환 안 되는 이슈 있었으니 조심할 것
 
 [앱센터 가입](https://appcenter.ms/)
 - [여기서](https://appcenter.ms/apps/create) 앱 만들기(iOS, Android 따로)
