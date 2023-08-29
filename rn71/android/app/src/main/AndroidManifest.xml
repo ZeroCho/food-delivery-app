@@ -1,11 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
@@ -18,24 +18,27 @@
             android:allowBackup="false"
             android:theme="@style/AppTheme">
         <meta-data android:name="com.dieam.reactnativepushnotification.notification_foreground" android:value="true"/>
-        <meta-data android:name="com.dieam.reactnativepushnotification.notification_color" android:resource="@android:color/white"/>
+        <meta-data android:name="com.dieam.reactnativepushnotification.notification_color"
+                   android:resource="@android:color/white"/>
         <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationActions"/>
         <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationPublisher"/>
-        <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationBootEventReceiver" android:exported="true">
+        <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationBootEventReceiver"
+                  android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
                 <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
                 <action android:name="com.htc.intent.action.QUICKBOOT_POWERON"/>
             </intent-filter>
         </receiver>
-        <service android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationListenerService" android:exported="false">
+        <service android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationListenerService"
+                 android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
         <meta-data
                 android:name="com.naver.maps.map.CLIENT_ID"
-                android:value="c5i0qvf959" />
+                android:value="c5i0qvf959"/>
         <activity
                 android:name=".MainActivity"
                 android:label="@string/app_name"
@@ -44,12 +47,12 @@
                 android:windowSoftInputMode="adjustResize"
                 android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
     </application>
     <queries>
-        <package android:name="com.skt.tmap.ku" />
+        <package android:name="com.skt.tmap.ku"/>
     </queries>
 </manifest>

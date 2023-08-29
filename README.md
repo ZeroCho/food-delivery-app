@@ -74,7 +74,7 @@ react-native@0.66 버전, 한 달에 0.1씩 올라가는데 요즘 개발 속도
 - [ios]설치 시 환경설정 -> 개인정보 및 보안 메뉴에서 Flipper를 허용해주어야 함
 - troubleshoot -> setup doctor 문제 해결할 것
 ```shell
-npm i react-native-flipper redux-flipper rn-async-storage-flipper-advanced @react-native-async-storage/async-storage
+npm i react-native-flipper redux-flipper rn-flipper-async-storage-advanced @react-native-async-storage/async-storage
 npx pod-install # 아이폰 전용
 ```
 - flipper-plugin-async-storage-advanced
@@ -600,17 +600,18 @@ npm i https://github.com/ZeroCho/react-native-naver-map
 ```
 npm i react-native-nmap을 하면 유지보수가 안 되는 패키지가 설치되므로 강의를 위해 제작된 패키지를 대신 설치
 
-[ios]git-lfs로 추가 설치 필요 [참고](https://github.com/navermaps/ios-map-sdk#%EB%8C%80%EC%9A%A9%EB%9F%89-%ED%8C%8C%EC%9D%BC%EC%9D%84-%EB%B0%9B%EA%B8%B0-%EC%9C%84%ED%95%B4-git-lfs-%EC%84%A4%EC%B9%98%EA%B0%80-%ED%95%84%EC%9A%94%ED%95%A9%EB%8B%88%EB%8B%A4)
-
-네이버 맵 버전 명시(**3.16.0보다 더 최신버전 잘 돌아가는 거 있으면 알려주세요!**)
-
+- [ios]git-lfs로 추가 설치 필요 [참고](https://github.com/navermaps/ios-map-sdk#%EB%8C%80%EC%9A%A9%EB%9F%89-%ED%8C%8C%EC%9D%BC%EC%9D%84-%EB%B0%9B%EA%B8%B0-%EC%9C%84%ED%95%B4-git-lfs-%EC%84%A4%EC%B9%98%EA%B0%80-%ED%95%84%EC%9A%94%ED%95%A9%EB%8B%88%EB%8B%A4)
+- [ios] [Xcode 빌드하는 법](https://github.com/QuadFlask/react-native-naver-map/issues/132#issuecomment-1066495510), Rosetta로 돌리기
+- [ios]실제 기기에서 네이버 지도 하는 법 [링크](https://www.inflearn.com/questions/605689)
 Podfile
 ```
 ...
-  config = use_native_modules!
-  pod 'NMapsMap', '3.16.0'
+    :app_path => "#{Pod::Config.instance.installation_root}/.."
+  )
   ...
-  post_install do |installer|
+  pod 'NMapsMap'
+  ...
+  target 'FoodDeliveryAppTests' do
 ...
 ```
 ```shell
@@ -637,7 +638,6 @@ allprojects {
 - [커밋 참조](https://github.com/ZeroCho/food-delivery-app/commit/36295cabf2cdab4ed68fa3b907c7b467101a02a5) (폴더 등 변경할 게 많음)
 - [ios]Xcode로는 xcworkspace 파일을 열어야함(xcodeproj 열면 안됨, xcworkspace가 없다면 ios 폴더에서 pod install 한 번 입력해볼 것)
 - [ios]iOS Bundle ID: com.[원하는이름].fooddeliveryapp(ex: com.zerocho.fooddeliveryapp)로 수정
-- [ios]실제 기기에서 네이버 지도 하는 법 [링크](https://www.inflearn.com/questions/605689)
 
 src/components/EachOrder.tsx
 ```typescript jsx
@@ -684,7 +684,8 @@ src/components/EachOrder.tsx
 npm i react-native-permissions
 ```
 ios/Podfile
-```1
+```
+pod 'NMapsMap', '3.16.0'
 permissions_path = '../node_modules/react-native-permissions/ios'
 pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
 pod 'Permission-LocationAccuracy', :path => "#{permissions_path}/LocationAccuracy"
