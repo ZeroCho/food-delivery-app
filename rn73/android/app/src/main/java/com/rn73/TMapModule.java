@@ -1,4 +1,4 @@
-package com.rn72;
+package com.rn73;
 
 import android.util.Log;
 

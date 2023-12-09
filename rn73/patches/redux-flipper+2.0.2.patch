@@ -1,0 +1,12 @@
+diff --git a/node_modules/redux-flipper/LICENSE b/node_modules/redux-flipper/LICENSE
+old mode 100644
+new mode 100755
+diff --git a/node_modules/redux-flipper/README.md b/node_modules/redux-flipper/README.md
+old mode 100644
+new mode 100755
+diff --git a/node_modules/redux-flipper/lib/index.d.ts b/node_modules/redux-flipper/lib/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/redux-flipper/lib/index.js b/node_modules/redux-flipper/lib/index.js
+old mode 100644
+new mode 100755

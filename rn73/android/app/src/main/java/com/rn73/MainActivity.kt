@@ -13,7 +13,7 @@ class MainActivity : ReactActivity() {
    * rendering of the component.
    */
   override fun getMainComponentName(): String = "rn73"
-  override fun onCreate(savedInstanceSate: Bundle?): void {
+  override fun onCreate(savedInstanceSate: Bundle?) {
     super.onCreate(null);
   }
 

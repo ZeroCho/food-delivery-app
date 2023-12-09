@@ -1,4 +1,4 @@
-package com.rn72;
+package com.rn73;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;

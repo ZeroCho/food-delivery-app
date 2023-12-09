@@ -12,7 +12,8 @@ import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.facebook.react.defaults.DefaultReactNativeHost
 import com.facebook.react.flipper.ReactNativeFlipper
 import com.facebook.soloader.SoLoader
-import com.rn72.TMapPackage;
+import com.rn73.TMapPackage
+import java.util.Arrays
 
 class MainApplication : Application(), ReactApplication {
 
@@ -20,8 +21,7 @@ class MainApplication : Application(), ReactApplication {
       object : DefaultReactNativeHost(this) {
         override fun getPackages(): List<ReactPackage> {
           // Packages that cannot be autolinked yet can be added manually here, for example:
-          packages.add(new TMapPackage());
-          return PackageList(this).packages
+          return Arrays.asList(TMapPackage());
         }
 
         override fun getJSMainModuleName(): String = "index"
