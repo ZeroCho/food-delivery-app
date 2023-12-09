@@ -8,4 +8,4 @@
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
 # Add any project specific keep options here:
--keep class com.rn71.BuildConfig { *; }
+-keep class com.rn72.BuildConfig { *; }
