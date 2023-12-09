@@ -1,0 +1,137 @@
+diff --git a/node_modules/react-native-image-crop-picker/android/src/main/java/com/reactnative/ivpusic/imagepicker/PickerModule.java b/node_modules/react-native-image-crop-picker/android/src/main/java/com/reactnative/ivpusic/imagepicker/PickerModule.java
+index 248f06b..7dda0dd 100644
+--- a/node_modules/react-native-image-crop-picker/android/src/main/java/com/reactnative/ivpusic/imagepicker/PickerModule.java
++++ b/node_modules/react-native-image-crop-picker/android/src/main/java/com/reactnative/ivpusic/imagepicker/PickerModule.java
+@@ -5,6 +5,7 @@ import android.app.Activity;
+ import android.content.ClipData;
+ import android.content.Context;
+ import android.content.ContentResolver;
++import android.content.ContentValues;
+ import android.content.Intent;
+ import android.content.pm.PackageManager;
+ import android.graphics.Bitmap;
+@@ -88,6 +89,7 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
+     private boolean hideBottomControls = false;
+     private boolean enableRotationGesture = false;
+     private boolean disableCropperColorSetters = false;
++    private boolean saveToPhotos = false;
+     private boolean useFrontCamera = false;
+     private ReadableMap options;
+ 
+@@ -145,6 +147,7 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
+         enableRotationGesture = options.hasKey("enableRotationGesture") && options.getBoolean("enableRotationGesture");
+         disableCropperColorSetters = options.hasKey("disableCropperColorSetters") && options.getBoolean("disableCropperColorSetters");
+         useFrontCamera = options.hasKey("useFrontCamera") && options.getBoolean("useFrontCamera");
++        saveToPhotos = options.hasKey("saveToPhotos") && options.getBoolean("saveToPhotos");
+         this.options = options;
+     }
+ 
+@@ -876,12 +879,50 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
+         if (requestCode == IMAGE_PICKER_REQUEST) {
+             imagePickerResult(activity, requestCode, resultCode, data);
+         } else if (requestCode == CAMERA_PICKER_REQUEST) {
++            if (saveToPhotos) {
++                saveToPublicDirectory(mCameraCaptureURI, reactContext, "photo");
++            }
+             cameraPickerResult(activity, requestCode, resultCode, data);
+         } else if (requestCode == UCrop.REQUEST_CROP) {
+             croppingResult(activity, requestCode, resultCode, data);
+         }
+     }
+ 
++    public static void saveToPublicDirectory(Uri uri, ReactApplicationContext context, String mediaType) {
++        ContentResolver resolver = context.getContentResolver();
++        Uri mediaStoreUri;
++        ContentValues fileDetails = new ContentValues();
++
++        if (mediaType.equals("video")) {
++            fileDetails.put(MediaStore.Video.Media.DISPLAY_NAME, UUID.randomUUID().toString());
++            fileDetails.put(MediaStore.Video.Media.MIME_TYPE, resolver.getType(uri));
++            mediaStoreUri = resolver.insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, fileDetails);
++        } else {
++            fileDetails.put(MediaStore.Images.Media.DISPLAY_NAME, UUID.randomUUID().toString());
++            fileDetails.put(MediaStore.Video.Media.MIME_TYPE, resolver.getType(uri));
++            mediaStoreUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, fileDetails);
++        }
++
++        copyUri(uri, mediaStoreUri, resolver);
++    }
++
++    public static void copyUri(Uri fromUri, Uri toUri, ContentResolver resolver) {
++        try {
++            OutputStream os = resolver.openOutputStream(toUri);
++            InputStream is = resolver.openInputStream(fromUri);
++
++            byte[] buffer = new byte[8192];
++            int bytesRead;
++
++            while ((bytesRead = is.read(buffer)) != -1) {
++                os.write(buffer, 0, bytesRead);
++            }
++
++        } catch (IOException e) {
++            e.printStackTrace();
++        }
++    }
++
+     @Override
+     public void onNewIntent(Intent intent) {
+     }
+diff --git a/node_modules/react-native-image-crop-picker/index.d.ts b/node_modules/react-native-image-crop-picker/index.d.ts
+index b1fcef9..24d1e74 100644
+--- a/node_modules/react-native-image-crop-picker/index.d.ts
++++ b/node_modules/react-native-image-crop-picker/index.d.ts
+@@ -161,6 +161,14 @@ declare module "react-native-image-crop-picker" {
+          */
+         includeBase64?: boolean;
+ 
++        /**
++         * When set to true, the image file content will be saved to your file system
++         *
++         * @default false
++        */
++        saveToPhotos?: boolean;
++
++
+         /**
+          * Include image exif data in the response.
+          *
+diff --git a/node_modules/react-native-image-crop-picker/ios/src/ImageCropPicker.m b/node_modules/react-native-image-crop-picker/ios/src/ImageCropPicker.m
+index 7101410..c0c39e0 100644
+--- a/node_modules/react-native-image-crop-picker/ios/src/ImageCropPicker.m
++++ b/node_modules/react-native-image-crop-picker/ios/src/ImageCropPicker.m
+@@ -68,6 +68,7 @@ - (instancetype)init
+             @"loadingLabelText": @"Processing assets...",
+             @"mediaType": @"any",
+             @"showsSelectedCount": @YES,
++            @"saveToPhotos": @NO,
+             @"forceJpg": @NO,
+             @"sortOrder": @"none",
+             @"cropperCancelText": @"Cancel",
+@@ -188,8 +189,15 @@ - (void)imagePickerController:(UIImagePickerController *)picker didFinishPicking
+     if (CFStringCompare ((__bridge CFStringRef) mediaType, kUTTypeMovie, 0) == kCFCompareEqualTo) {
+         NSURL *url = [info objectForKey:UIImagePickerControllerMediaURL];
+         AVURLAsset *asset = [AVURLAsset assetWithURL:url];
++        NSString *moviePath = [url path];
+         NSString *fileName = [[asset.URL path] lastPathComponent];
+ 
++        if ([[self.options objectForKey:@"saveToPhotos"] boolValue]) {
++            if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(moviePath)) {
++                UISaveVideoAtPathToSavedPhotosAlbum(moviePath, nil, nil, nil);
++            }
++        }
++
+         [self handleVideo:asset
+              withFileName:fileName
+       withLocalIdentifier:nil
+@@ -216,6 +224,10 @@ - (void)imagePickerController:(UIImagePickerController *)picker didFinishPicking
+             exif = [info objectForKey:UIImagePickerControllerMediaMetadata];
+         }
+ 
++        if ([[self.options objectForKey:@"saveToPhotos"] boolValue]) {
++            UIImageWriteToSavedPhotosAlbum(chosenImage, nil, nil, nil);
++        }
++        
+         [self processSingleImagePick:chosenImage withExif:exif withViewController:picker withSourceURL:self.croppingFile[@"sourceURL"] withLocalIdentifier:self.croppingFile[@"localIdentifier"] withFilename:self.croppingFile[@"filename"] withCreationDate:self.croppingFile[@"creationDate"] withModificationDate:self.croppingFile[@"modificationDate"]];
+     }
+ }

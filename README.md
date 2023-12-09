@@ -17,7 +17,8 @@ Need to install the following packages:
   react-native@0.72.4
 Ok to proceed? (y)
 
-# mac이면 다음 코드도 입력(맥 비밀번호 입력 필요)
+# Do you want to install CocoaPods now? 뜨면 y 입력
+# 실수로 y 안 눌러서 CocoaPods 수동설치하려면
 sudo gem install cocoapods
 # cocoapods 설치시 ruby 오류가 나면 터미널에 나오는 명령어 입력 후 cocoapods 재설치(아래 버전은 달라질 수 있으니 주의)
 sudo gem install activesupport -v 6.1.7.6
@@ -1132,6 +1133,12 @@ node.js 16버전으로 할 것, node 17버전부터 해당 에러 발생함.
 
 ### Manifest merger failed : android:exported needs to be explicitly specified for element <receiver#com.dieam.reactnativepushnotification.modules.RNPushNotificationBootEventReceiver>. Apps targeting Android 12 and higher are required to specify an explicit value for `android:exported` when the corresponding component has an intent filter defined
 [링크](https://www.inflearn.com/questions/630107)
+
+### Invariant Violation: "FoodDeliveryApp" has not been registered. This can happen if
+서버 실행 시 JS단에서 에러가 발생해서 발생함. JS단 에러부터 해결할 것. 애러가 없다면 index.js의 appName이 일치하는지 확인할 것
+
+### Error: No Firebase App '[DEFAULT]' has been created - call firebase.initializeApp()
+파이어베이스 앱 만들어둘 것
 
 ## 스스로 해보면 좋을 것
 - loading, disabled 처리 모두 다 하기
