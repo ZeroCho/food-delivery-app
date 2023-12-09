@@ -8,6 +8,7 @@ import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import CodePush, {CodePushOptions} from 'react-native-code-push';
 import {useEffect} from 'react';
+import firebase from '@react-native-firebase/app';
 
 messaging().setBackgroundMessageHandler(async remoteMessage => {
   console.log('Message handled in the background!', remoteMessage);
