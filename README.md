@@ -14,7 +14,7 @@ npx react-native init FoodDeliveryApp
 
 # 다음 말이 뜨면 y 입력
 Need to install the following packages:
-  react-native@0.72.4
+  react-native@0.72.7
 Ok to proceed? (y)
 
 # Do you want to install CocoaPods now? 뜨면 y 입력
@@ -28,7 +28,10 @@ cd ./FoodDeliveryApp/ios && pod install
 ```
 
 **잠깐!!** 이 명령어를 입력하면 항상 최신 버전의 react를 받아오므로 강좌의 버전(0.66)과 일치하지 않게 됨. 현재 최신 버전은 0.72이라서 상당히 차이가 남.
-강좌랑 동일한 버전으로 하지 않으면 많은 스트레스를 받을 수 있음. 강좌랑 동일한 버전으로 하려면 이미 초반 세팅이 다 되어 있는 setting 폴더를 git clone받아 시작하는 것이 좋음(클론 후 npm i && npx pod-install 수행 필요). 0.71이나 0.72, 0.73 버전 소스코드도 깃헙에 존재하니 각각의 폴더 참고. 0.72버전으로 해도 잘 돌아가긴 함. 0.73은 아직 불안정
+강좌랑 동일한 버전으로 하지 않으면 많은 스트레스를 받을 수 있음.
+- 강좌랑 동일한 버전으로 하려면 이미 초반 세팅이 다 되어 있는 setting 폴더를 git clone받아 시작하는 것이 좋음(클론 후 npm i && npx pod-install 수행 필요).
+- 0.72버전으로 시작하려면 setting72 폴더에서 시작하면 됨.
+- 0.72, 0.73 버전 최종 소스코드도 깃헙에 존재하니 각각의 폴더 참고. 0.72버전으로 해도 잘 돌아가긴 함. 0.73은 아직 불안정
 
 보통은 강의용으로 자동생성 안 좋아하는데 RN은 자동생성하지 않으면 네이티브단까지 처리하기 어려움 
 
@@ -38,15 +41,18 @@ npm run android # 안드로이드 실행 명령어
 npm run ios # 아이폰 실행 명령어
 ```
 
+![img.png](img.png)
 서버가 하나 뜰 것임. Metro 서버. 여기서 서버가 안 뜨고 No device 등의 에러 메시지가 뜬다면 안드로이드 에뮬레이터 실행한 채로 다시 명령어 입력할 것.
 Metro 서버에서 소스 코드를 컴파일하고 앱으로 전송해줌. 기본 8081포트.
+
 메트로 서버가 꺼져있다면 터미널을 하나 더 열어
 ```shell
 npm start
 ```
+
 개발은 iOS 기준으로 하는 게 좋다(개인 경험). 그러나 강좌는 어쩔 수 없이 Windows로 한다.
 
-react-native@0.66 버전, 한 달에 0.1씩 올라가는데 요즘 개발 속도가 느려져서 규칙이 깨짐. 거의 완성 단계라 신규 기능은 npm에서 @react-native-community로부터 받아야 함. 버전 업그레이드 함부로 하지 말 것!
+react-native@0.72 버전, 한 달에 0.1씩 올라가는데 요즘 개발 속도가 느려져서 규칙이 깨짐. 거의 완성 단계라 신규 기능은 npm에서 @react-native-community로부터 받아야 함. 버전 업그레이드 함부로 하지 말 것!
 
 [맥 전용]npx pod-install도 미리 한 번, iOS 라이브러리(pod) 받는 용도
 
@@ -55,7 +61,7 @@ react-native@0.66 버전, 한 달에 0.1씩 올라가는데 요즘 개발 속도
 - ios: ios 네이티브 폴더
 - node_modules: 노드 라이브러리
 - app.json: name은 앱 컴포넌트 이름이니 함부로 바꾸면 안 됨, 이거 바꾸면 네이티브 컴포넌트 이름도 다 바꿔야함, displayName은 앱 이름 변경용
-  - ios/FoodDeliveryApp/AppDelegate.m 의 moduleName
+  - ios/FoodDeliveryApp/AppDelegate.mm 의 moduleName
   - android/app/src/main/java/com/fooddeliveryapp/MainActivity.java 의 getMainComponentName
 - babel.config.js: 바벨 설정
 - index.js: 메인 파일
