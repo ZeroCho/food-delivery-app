@@ -21,6 +21,7 @@
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="c5i0qvf959" />
       <activity
+        android:exported="true"
         android:name=".MainActivity"
         android:label="@string/app_name"
         android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"

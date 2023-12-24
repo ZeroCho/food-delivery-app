@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "./node_modules/.bin/react-native run-android",
-    "ios": "./node_modules/.bin/react-native run-ios",
-    "start": "./node_modules/.bin/react-native start",
+    "android": "NODE_OPTIONS=--openssl-legacy-provider ./node_modules/.bin/react-native run-android",
+    "ios": "NODE_OPTIONS=--openssl-legacy-provider ./node_modules/.bin/react-native run-ios",
+    "start": "NODE_OPTIONS=--openssl-legacy-provider ./node_modules/.bin/react-native start",
     "test": "./node_modules/.bin/jest",
     "lint": "./node_modules/.bin/eslint . --ext .js,.jsx,.ts,.tsx"
   },
@@ -23,7 +23,7 @@
     "react-native-flipper": "^0.128.4",
     "react-native-keyboard-aware-scrollview": "^2.1.0",
     "react-native-safe-area-context": "^3.3.2",
-    "react-native-screens": "^3.10.1",
+    "react-native-screens": "3.22.1",
     "react-redux": "^7.2.6",
     "redux-flipper": "^2.0.1",
     "socket.io-client": "^4.4.1"

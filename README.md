@@ -130,7 +130,7 @@ react-router-native도 대안임(웹에서 넘어온 개발자들에게 친숙, 
 ```shell
 npm i @react-navigation/native
 npm i @react-navigation/native-stack
-npm i react-native-screens react-native-safe-area-context
+npm i react-native-screens@3.22.1 react-native-safe-area-context
 npx pod-install # 맥 전용
 ```
 android/app/src/main/java/FoodDeliveryApp/MainActivity.java
