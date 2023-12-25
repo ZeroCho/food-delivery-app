@@ -1146,7 +1146,7 @@ node.js 16버전으로 할 것, node 17버전부터 해당 에러 발생함.
 보통 App.tsx 부분이 여러번 실행되어서 발생함. Metro 서버를 껐다가 켜고, 에뮬레이터에서 앱을 지웠다가 다시 설치하면 해결 됨
 
 ### Manifest merger failed : android:exported needs to be explicitly specified for element <receiver#com.dieam.reactnativepushnotification.modules.RNPushNotificationBootEventReceiver>. Apps targeting Android 12 and higher are required to specify an explicit value for `android:exported` when the corresponding component has an intent filter defined
-[링크](https://www.inflearn.com/questions/630107)
+[링크](https://www.inflearn.com/questions/630107/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-%ED%91%B8%EC%8B%9C-%EB%85%B8%ED%8B%B0-%EC%84%A4%EC%A0%95-%EC%8B%9C-quot-android-exported-needs-to-be-explicitly-specified-quot)
 
 ### Invariant Violation: "FoodDeliveryApp" has not been registered. This can happen if
 서버 실행 시 JS단에서 에러가 발생해서 발생함. JS단 에러부터 해결할 것. 애러가 없다면 index.js의 appName이 일치하는지 확인할 것
