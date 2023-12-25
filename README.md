@@ -1109,13 +1109,14 @@ cd ..
 npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle
 ```
 ### Execution failed for task ':app:packageDebug'. > java.lang.OutOfMemoryError (no error message)
-android/gradle.properties에 다음 줄 추가
+android/gradle.properties에 다음 줄 주석 해제
 ```
-org.gradle.jvmargs=-XX\:MaxHeapSize\=1024m -Xmx1024m
+org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
 ```
 또는
 
 android/app/src/main/AndroidManifest.xml 에서 <application> 태그에 android:largeHeap="true" 추가
+
 ### Installed Build Tools revision 33.0.0 is corrupted. Remove and install again using the SDK Manager.
 안드로이드 스튜디오의 SDK Tools에서 33.0.0 제거한 후 다시 설치. show package details 눌러보면 33.0.0 보임
 
