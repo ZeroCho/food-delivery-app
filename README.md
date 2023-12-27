@@ -1109,13 +1109,22 @@ cd ..
 npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle
 ```
 ### Execution failed for task ':app:packageDebug'. > java.lang.OutOfMemoryError (no error message)
-android/gradle.properties에 다음 줄 추가
+android/gradle.properties에 다음 줄 주석 해제
 ```
-org.gradle.jvmargs=-XX\:MaxHeapSize\=1024m -Xmx1024m
+org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
 ```
 또는
 
 android/app/src/main/AndroidManifest.xml 에서 <application> 태그에 android:largeHeap="true" 추가
+
+### Installed Build Tools revision 33.0.0 is corrupted. Remove and install again using the SDK Manager.
+안드로이드 스튜디오의 SDK Tools에서 33.0.0 제거한 후 다시 설치. show package details 눌러보면 33.0.0 보임
+
+### Failed to transform react-native-0.71.0-rc.0-debug.aar
+0.71 미만 버전들에서 발생
+[여기](https://github.com/facebook/react-native/issues/35210)에 나오는 최신버전으로 업데이트
+[업그레이드 헬퍼](https://react-native-community.github.io/upgrade-helper/)사용하면 편리
+
 ### warn No apps connected. Sending "reload" to all React Native apps failed. Make sure your app is running in the simulator or on a phone connected via USB.
 ```
 npx react-native start --reset-cache
@@ -1138,7 +1147,7 @@ node.js 16버전으로 할 것, node 17버전부터 해당 에러 발생함.
 보통 App.tsx 부분이 여러번 실행되어서 발생함. Metro 서버를 껐다가 켜고, 에뮬레이터에서 앱을 지웠다가 다시 설치하면 해결 됨
 
 ### Manifest merger failed : android:exported needs to be explicitly specified for element <receiver#com.dieam.reactnativepushnotification.modules.RNPushNotificationBootEventReceiver>. Apps targeting Android 12 and higher are required to specify an explicit value for `android:exported` when the corresponding component has an intent filter defined
-[링크](https://www.inflearn.com/questions/630107)
+[링크](https://www.inflearn.com/questions/630107/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-%ED%91%B8%EC%8B%9C-%EB%85%B8%ED%8B%B0-%EC%84%A4%EC%A0%95-%EC%8B%9C-quot-android-exported-needs-to-be-explicitly-specified-quot)
 
 ### Invariant Violation: "FoodDeliveryApp" has not been registered. This can happen if
 서버 실행 시 JS단에서 에러가 발생해서 발생함. JS단 에러부터 해결할 것. 애러가 없다면 index.js의 appName이 일치하는지 확인할 것
