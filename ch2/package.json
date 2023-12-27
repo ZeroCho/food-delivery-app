@@ -3,11 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "NODE_OPTIONS=--openssl-legacy-provider ./node_modules/.bin/react-native run-android",
-    "ios": "NODE_OPTIONS=--openssl-legacy-provider ./node_modules/.bin/react-native run-ios",
-    "start": "NODE_OPTIONS=--openssl-legacy-provider ./node_modules/.bin/react-native start",
-    "test": "./node_modules/.bin/jest",
-    "lint": "./node_modules/.bin/eslint . --ext .js,.jsx,.ts,.tsx"
+    "postinstall": "patch-package",
+    "android": "NODE_OPTIONS=--openssl-legacy-provider react-native run-android",
+    "ios": "NODE_OPTIONS=--openssl-legacy-provider react-native run-ios",
+    "start": "NODE_OPTIONS=--openssl-legacy-provider react-native start",
+    "test": "jest",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.17",
