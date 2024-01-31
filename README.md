@@ -966,7 +966,7 @@ src/pages/Settings.tsx
 ```typescript jsx
 ```
 
-## FCM
+## FCM[ch6]
 푸쉬알림 보내기
 - [링크](https://console.firebase.google.com/)에서 앱 만들기
 ```shell
@@ -989,7 +989,7 @@ App.tsx
 ```
 ```
 
-## 실기기 사용하기[ch6]
+## 실기기 사용하기
 [링크](https://reactnative.dev/docs/running-on-device)
 - samsung dex같은 건 끄기
 - 핸드폰 usb 연결 시 usb 디버깅 허용하기
