@@ -1,0 +1,421 @@
+diff --git a/node_modules/react-native-image-crop-picker/.github/FUNDING.yml b/node_modules/react-native-image-crop-picker/.github/FUNDING.yml
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/CODE_OF_CONDUCT.md b/node_modules/react-native-image-crop-picker/CODE_OF_CONDUCT.md
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/CONTRIBUTING.md b/node_modules/react-native-image-crop-picker/CONTRIBUTING.md
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ISSUE_TEMPLATE.md b/node_modules/react-native-image-crop-picker/ISSUE_TEMPLATE.md
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/LICENSE b/node_modules/react-native-image-crop-picker/LICENSE
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/README.md b/node_modules/react-native-image-crop-picker/README.md
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/RNImageCropPicker.podspec b/node_modules/react-native-image-crop-picker/RNImageCropPicker.podspec
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/android/build.gradle b/node_modules/react-native-image-crop-picker/android/build.gradle
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/android/gradle/wrapper/gradle-wrapper.jar b/node_modules/react-native-image-crop-picker/android/gradle/wrapper/gradle-wrapper.jar
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/android/gradle/wrapper/gradle-wrapper.properties b/node_modules/react-native-image-crop-picker/android/gradle/wrapper/gradle-wrapper.properties
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/android/gradlew b/node_modules/react-native-image-crop-picker/android/gradlew
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/android/gradlew.bat b/node_modules/react-native-image-crop-picker/android/gradlew.bat
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/android/src/main/AndroidManifest.xml b/node_modules/react-native-image-crop-picker/android/src/main/AndroidManifest.xml
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/android/src/main/java/com/reactnative/ivpusic/imagepicker/Compression.java b/node_modules/react-native-image-crop-picker/android/src/main/java/com/reactnative/ivpusic/imagepicker/Compression.java
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/android/src/main/java/com/reactnative/ivpusic/imagepicker/ExifExtractor.java b/node_modules/react-native-image-crop-picker/android/src/main/java/com/reactnative/ivpusic/imagepicker/ExifExtractor.java
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/android/src/main/java/com/reactnative/ivpusic/imagepicker/GeoDegree.java b/node_modules/react-native-image-crop-picker/android/src/main/java/com/reactnative/ivpusic/imagepicker/GeoDegree.java
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/android/src/main/java/com/reactnative/ivpusic/imagepicker/IvpusicImagePickerFileProvider.java b/node_modules/react-native-image-crop-picker/android/src/main/java/com/reactnative/ivpusic/imagepicker/IvpusicImagePickerFileProvider.java
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/android/src/main/java/com/reactnative/ivpusic/imagepicker/PickerModule.java b/node_modules/react-native-image-crop-picker/android/src/main/java/com/reactnative/ivpusic/imagepicker/PickerModule.java
+old mode 100644
+new mode 100755
+index 5de0845..36cee5e
+--- a/node_modules/react-native-image-crop-picker/android/src/main/java/com/reactnative/ivpusic/imagepicker/PickerModule.java
++++ b/node_modules/react-native-image-crop-picker/android/src/main/java/com/reactnative/ivpusic/imagepicker/PickerModule.java
+@@ -5,6 +5,7 @@ import android.app.Activity;
+ import android.content.ClipData;
+ import android.content.Context;
+ import android.content.ContentResolver;
++import android.content.ContentValues;
+ import android.content.Intent;
+ import android.content.pm.PackageManager;
+ import android.graphics.Bitmap;
+@@ -88,6 +89,7 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
+     private boolean hideBottomControls = false;
+     private boolean enableRotationGesture = false;
+     private boolean disableCropperColorSetters = false;
++    private boolean saveToPhotos = false;
+     private boolean useFrontCamera = false;
+     private ReadableMap options;
+ 
+@@ -144,6 +146,7 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
+         hideBottomControls = options.hasKey("hideBottomControls") && options.getBoolean("hideBottomControls");
+         enableRotationGesture = options.hasKey("enableRotationGesture") && options.getBoolean("enableRotationGesture");
+         disableCropperColorSetters = options.hasKey("disableCropperColorSetters") && options.getBoolean("disableCropperColorSetters");
++        saveToPhotos = options.hasKey("saveToPhotos") && options.getBoolean("saveToPhotos");
+         useFrontCamera = options.hasKey("useFrontCamera") && options.getBoolean("useFrontCamera");
+         this.options = options;
+     }
+@@ -876,12 +879,50 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
+         if (requestCode == IMAGE_PICKER_REQUEST) {
+             imagePickerResult(activity, requestCode, resultCode, data);
+         } else if (requestCode == CAMERA_PICKER_REQUEST) {
++            if (saveToPhotos) {
++                saveToPublicDirectory(mCameraCaptureURI, reactContext, "photo");
++            }
+             cameraPickerResult(activity, requestCode, resultCode, data);
+         } else if (requestCode == UCrop.REQUEST_CROP) {
+             croppingResult(activity, requestCode, resultCode, data);
+         }
+     }
+ 
++    public static void saveToPublicDirectory(Uri uri, ReactApplicationContext context, String mediaType) {
++        ContentResolver resolver = context.getContentResolver();
++        Uri mediaStoreUri;
++        ContentValues fileDetails = new ContentValues();
++
++        if (mediaType.equals("video")) {
++            fileDetails.put(MediaStore.Video.Media.DISPLAY_NAME, UUID.randomUUID().toString());
++            fileDetails.put(MediaStore.Video.Media.MIME_TYPE, resolver.getType(uri));
++            mediaStoreUri = resolver.insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, fileDetails);
++        } else {
++            fileDetails.put(MediaStore.Images.Media.DISPLAY_NAME, UUID.randomUUID().toString());
++            fileDetails.put(MediaStore.Video.Media.MIME_TYPE, resolver.getType(uri));
++            mediaStoreUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, fileDetails);
++        }
++
++        copyUri(uri, mediaStoreUri, resolver);
++    }
++
++    public static void copyUri(Uri fromUri, Uri toUri, ContentResolver resolver) {
++        try {
++            OutputStream os = resolver.openOutputStream(toUri);
++            InputStream is = resolver.openInputStream(fromUri);
++
++            byte[] buffer = new byte[8192];
++            int bytesRead;
++
++            while ((bytesRead = is.read(buffer)) != -1) {
++                os.write(buffer, 0, bytesRead);
++            }
++
++        } catch (IOException e) {
++            e.printStackTrace();
++        }
++    }
++
+     @Override
+     public void onNewIntent(Intent intent) {
+     }
+diff --git a/node_modules/react-native-image-crop-picker/android/src/main/java/com/reactnative/ivpusic/imagepicker/PickerPackage.java b/node_modules/react-native-image-crop-picker/android/src/main/java/com/reactnative/ivpusic/imagepicker/PickerPackage.java
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/android/src/main/java/com/reactnative/ivpusic/imagepicker/RealPathUtil.java b/node_modules/react-native-image-crop-picker/android/src/main/java/com/reactnative/ivpusic/imagepicker/RealPathUtil.java
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/android/src/main/java/com/reactnative/ivpusic/imagepicker/ResultCollector.java b/node_modules/react-native-image-crop-picker/android/src/main/java/com/reactnative/ivpusic/imagepicker/ResultCollector.java
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/android/src/main/res/xml/ivpusic_imagepicker_provider_paths.xml b/node_modules/react-native-image-crop-picker/android/src/main/res/xml/ivpusic_imagepicker_provider_paths.xml
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/index.d.ts b/node_modules/react-native-image-crop-picker/index.d.ts
+old mode 100644
+new mode 100755
+index d3e1fd4..aa84417
+--- a/node_modules/react-native-image-crop-picker/index.d.ts
++++ b/node_modules/react-native-image-crop-picker/index.d.ts
+@@ -161,6 +161,13 @@ declare module "react-native-image-crop-picker" {
+          */
+         includeBase64?: boolean;
+ 
++        /**
++        * When set to true, the image file content will be saved to your file system
++        *
++        * @default false
++        */
++        saveToPhotos?: boolean;
++
+         /**
+          * Include image exif data in the response.
+          *
+diff --git a/node_modules/react-native-image-crop-picker/index.js b/node_modules/react-native-image-crop-picker/index.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/Headers/QBImagePicker.h b/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/Headers/QBImagePicker.h
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/Headers/QBImagePickerController.h b/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/Headers/QBImagePickerController.h
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/Info.plist b/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/Info.plist
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/Modules/module.modulemap b/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/Modules/module.modulemap
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/QBImagePicker.storyboardc/Info.plist b/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/QBImagePicker.storyboardc/Info.plist
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/QBImagePicker.storyboardc/QBAlbumsNavigationController.nib b/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/QBImagePicker.storyboardc/QBAlbumsNavigationController.nib
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/QBImagePicker.storyboardc/QBAlbumsViewController.nib b/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/QBImagePicker.storyboardc/QBAlbumsViewController.nib
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/QBImagePicker.storyboardc/QBAssetsViewController.nib b/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/QBImagePicker.storyboardc/QBAssetsViewController.nib
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/QBImagePicker.storyboardc/QL5-wR-LYt-view-66K-TS-Yoc.nib b/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/QBImagePicker.storyboardc/QL5-wR-LYt-view-66K-TS-Yoc.nib
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/QBImagePicker.storyboardc/QiH-NZ-ZGN-view-sD2-zK-ryo.nib b/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/QBImagePicker.storyboardc/QiH-NZ-ZGN-view-sD2-zK-ryo.nib
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/_CodeSignature/CodeResources b/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/_CodeSignature/CodeResources
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/de.lproj/QBImagePicker.strings b/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/de.lproj/QBImagePicker.strings
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/en.lproj/QBImagePicker.strings b/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/en.lproj/QBImagePicker.strings
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/es.lproj/QBImagePicker.strings b/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/es.lproj/QBImagePicker.strings
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/ja.lproj/QBImagePicker.strings b/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/ja.lproj/QBImagePicker.strings
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/pl.lproj/QBImagePicker.strings b/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/pl.lproj/QBImagePicker.strings
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/zh-Hans.lproj/QBImagePicker.strings b/node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework/zh-Hans.lproj/QBImagePicker.strings
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/LICENSE b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/LICENSE
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker.xcodeproj/project.pbxproj b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker.xcodeproj/project.pbxproj
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker.xcodeproj/xcshareddata/xcschemes/QBImagePicker.xcscheme b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker.xcodeproj/xcshareddata/xcschemes/QBImagePicker.xcscheme
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/Info.plist b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/Info.plist
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBAlbumCell.h b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBAlbumCell.h
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBAlbumCell.m b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBAlbumCell.m
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBAlbumsViewController.h b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBAlbumsViewController.h
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBAlbumsViewController.m b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBAlbumsViewController.m
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBAssetCell.h b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBAssetCell.h
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBAssetCell.m b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBAssetCell.m
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBAssetsViewController.h b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBAssetsViewController.h
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBAssetsViewController.m b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBAssetsViewController.m
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBCheckmarkView.h b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBCheckmarkView.h
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBCheckmarkView.m b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBCheckmarkView.m
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBImagePicker.h b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBImagePicker.h
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBImagePicker.storyboard b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBImagePicker.storyboard
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBImagePickerController.h b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBImagePickerController.h
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBImagePickerController.m b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBImagePickerController.m
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBSlomoIconView.h b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBSlomoIconView.h
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBSlomoIconView.m b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBSlomoIconView.m
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBVideoIconView.h b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBVideoIconView.h
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBVideoIconView.m b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBVideoIconView.m
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBVideoIndicatorView.h b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBVideoIndicatorView.h
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBVideoIndicatorView.m b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBVideoIndicatorView.m
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/da.lproj/QBImagePicker.strings b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/da.lproj/QBImagePicker.strings
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/de.lproj/QBImagePicker.strings b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/de.lproj/QBImagePicker.strings
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/en.lproj/QBImagePicker.strings b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/en.lproj/QBImagePicker.strings
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/es.lproj/QBImagePicker.strings b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/es.lproj/QBImagePicker.strings
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/fi.lproj/QBImagePicker.strings b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/fi.lproj/QBImagePicker.strings
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/fr.lproj/QBImagePicker.strings b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/fr.lproj/QBImagePicker.strings
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/it.lproj/QBImagePicker.strings b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/it.lproj/QBImagePicker.strings
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/ja.lproj/QBImagePicker.strings b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/ja.lproj/QBImagePicker.strings
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/ko.lproj/QBImagePicker.strings b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/ko.lproj/QBImagePicker.strings
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/nb.lproj/QBImagePicker.strings b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/nb.lproj/QBImagePicker.strings
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/pl.lproj/QBImagePicker.strings b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/pl.lproj/QBImagePicker.strings
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/pt.lproj/QBImagePicker.strings b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/pt.lproj/QBImagePicker.strings
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/ro.lproj/QBImagePicker.strings b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/ro.lproj/QBImagePicker.strings
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/ru.lproj/QBImagePicker.strings b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/ru.lproj/QBImagePicker.strings
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/sv.lproj/QBImagePicker.strings b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/sv.lproj/QBImagePicker.strings
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/tr.lproj/QBImagePicker.strings b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/tr.lproj/QBImagePicker.strings
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/uk.lproj/QBImagePicker.strings b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/uk.lproj/QBImagePicker.strings
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/vi.lproj/QBImagePicker.strings b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/vi.lproj/QBImagePicker.strings
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/zh-Hans.lproj/QBImagePicker.strings b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/zh-Hans.lproj/QBImagePicker.strings
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/zh-Hant.lproj/QBImagePicker.strings b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/zh-Hant.lproj/QBImagePicker.strings
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePickerController.podspec b/node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePickerController.podspec
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj/project.pbxproj b/node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj/project.pbxproj
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/src/Compression.h b/node_modules/react-native-image-crop-picker/ios/src/Compression.h
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/src/Compression.m b/node_modules/react-native-image-crop-picker/ios/src/Compression.m
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/src/ImageCropPicker.h b/node_modules/react-native-image-crop-picker/ios/src/ImageCropPicker.h
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/src/ImageCropPicker.m b/node_modules/react-native-image-crop-picker/ios/src/ImageCropPicker.m
+old mode 100644
+new mode 100755
+index 9f20973..669f08d
+--- a/node_modules/react-native-image-crop-picker/ios/src/ImageCropPicker.m
++++ b/node_modules/react-native-image-crop-picker/ios/src/ImageCropPicker.m
+@@ -68,6 +68,7 @@ - (instancetype)init
+             @"loadingLabelText": @"Processing assets...",
+             @"mediaType": @"any",
+             @"showsSelectedCount": @YES,
++            @"saveToPhotos": @NO,
+             @"forceJpg": @NO,
+             @"sortOrder": @"none",
+             @"cropperCancelText": @"Cancel",
+@@ -188,8 +189,15 @@ - (void)imagePickerController:(UIImagePickerController *)picker didFinishPicking
+     if (CFStringCompare ((__bridge CFStringRef) mediaType, kUTTypeMovie, 0) == kCFCompareEqualTo) {
+         NSURL *url = [info objectForKey:UIImagePickerControllerMediaURL];
+         AVURLAsset *asset = [AVURLAsset assetWithURL:url];
++        NSString *moviePath = [url path];
+         NSString *fileName = [[asset.URL path] lastPathComponent];
+ 
++        if ([[self.options objectForKey:@"saveToPhotos"] boolValue]) {
++            if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(moviePath)) {
++                UISaveVideoAtPathToSavedPhotosAlbum(moviePath, nil, nil, nil);
++            }
++        }
++
+         [self handleVideo:asset
+              withFileName:fileName
+       withLocalIdentifier:nil
+@@ -216,6 +224,10 @@ - (void)imagePickerController:(UIImagePickerController *)picker didFinishPicking
+             exif = [info objectForKey:UIImagePickerControllerMediaMetadata];
+         }
+ 
++        if ([[self.options objectForKey:@"saveToPhotos"] boolValue]) {
++            UIImageWriteToSavedPhotosAlbum(chosenImage, nil, nil, nil);
++        }
++
+         [self processSingleImagePick:chosenImage withExif:exif withViewController:picker withSourceURL:self.croppingFile[@"sourceURL"] withLocalIdentifier:self.croppingFile[@"localIdentifier"] withFilename:self.croppingFile[@"filename"] withCreationDate:self.croppingFile[@"creationDate"] withModificationDate:self.croppingFile[@"modificationDate"]];
+     }
+ }
+diff --git a/node_modules/react-native-image-crop-picker/ios/src/UIImage+Extension.h b/node_modules/react-native-image-crop-picker/ios/src/UIImage+Extension.h
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/src/UIImage+Extension.m b/node_modules/react-native-image-crop-picker/ios/src/UIImage+Extension.m
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/src/UIImage+Resize.h b/node_modules/react-native-image-crop-picker/ios/src/UIImage+Resize.h
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/ios/src/UIImage+Resize.m b/node_modules/react-native-image-crop-picker/ios/src/UIImage+Resize.m
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-image-crop-picker/svg.svg b/node_modules/react-native-image-crop-picker/svg.svg
+old mode 100644
+new mode 100755

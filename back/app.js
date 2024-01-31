@@ -247,7 +247,7 @@ app.use((err, req, res, next) => {
 });
 
 const server = app.listen(3105, () => {
-  console.log("연결되었습니다.");
+  console.log("3105 포트에 연결되었습니다.");
 });
 
 const io = SocketIO(server, {

@@ -1,0 +1,11 @@
+framework module TMapSDK {
+  umbrella header "TMapSDK.h"
+
+  export *
+  module * { export * }
+}
+
+module TMapSDK.Swift {
+    header "TMapSDK-Swift.h"
+    requires objc
+}

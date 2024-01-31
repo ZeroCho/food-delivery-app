@@ -37,6 +37,9 @@ cd ./FoodDeliveryApp/ios && pod install
 
 프로젝트 폴더에서 다음 명령어로 앱 실행 가능
 ```shell
+npm start # rn 73 버전에서는 npm start 후 뜨는 화면에서 i나 a를 눌러 아이폰/안드로이드 실행
+
+# rn72까지는
 npm run android # 안드로이드 실행 명령어
 npm run ios # 아이폰 실행 명령어
 ```
@@ -1154,6 +1157,9 @@ node.js 16버전으로 할 것, node 17버전부터 해당 에러 발생함.
 
 ### Error: No Firebase App '[DEFAULT]' has been created - call firebase.initializeApp()
 파이어베이스 앱 만들어둘 것
+
+### error Cannot start server in new window because no terminal app was specified.
+rn73부터는 앱 실행을 위해 npm start 실행 후 i나 a를 눌러 아이폰/안드로이드 실행하면 됩니다.
 
 ## 스스로 해보면 좋을 것
 - loading, disabled 처리 모두 다 하기
