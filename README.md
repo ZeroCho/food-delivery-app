@@ -638,7 +638,7 @@ allprojects {
         jcenter()
         // 네이버 지도 저장소
         maven {
-            url 'https://naver.jfrog.io/artifactory/maven/'
+            url 'https://repository.map.naver.com/archive/maven'
         }
     }
 }
