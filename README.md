@@ -2,7 +2,8 @@
 
 # 첫 시작(setting)
 [공식문서](https://reactnative.dev/)
-- 초기 세팅(Expo말고 React Native CLI Quickstart): [반드시 따라하기](https://reactnative.dev/docs/environment-setup) 
+- 초기 세팅(Expo말고 React Native CLI Quickstart): [반드시 따라하기](https://reactnative.dev/docs/environment-setup)
+- 시간이 흘러서 이제는 Expo가 권장됨(리뉴얼 강의에서는 Expo로 할 예정)
 - java 17 버전 설치하면 안 됨(11버전 설치할 것), JAVA_HOME 환경 변수 설정도 잘 해 놓을 것([macOS JAVA_HOME 세팅법](https://stackoverflow.com/a/59151321))
 - Android 13(티라미수)이 있어야 함. 가상기기는 Nexus 5로 받을 것
 - 터미널에 adb 입력해서 안 뜨면 [adb](https://developer.android.com/studio/releases/platform-tools) 설치 필요, ANDROID_HOME 환경변수도
@@ -10,11 +11,11 @@
 
 ```shell
 # 프로젝트를 만들고자 하는 폴더로 이동
-npx react-native init FoodDeliveryApp
+npx @react-native-community/cli@latest init FoodDeliveryApp
 
 # 다음 말이 뜨면 y 입력
 Need to install the following packages:
-  react-native@0.72.7
+  @react-native-community/cli@14.1.1
 Ok to proceed? (y)
 
 # Do you want to install CocoaPods now? 뜨면 y 입력
@@ -27,17 +28,17 @@ sudo gem install activesupport -v 6.1.7.6
 cd ./FoodDeliveryApp/ios && pod install
 ```
 
-**잠깐!!** 이 명령어를 입력하면 항상 최신 버전의 react를 받아오므로 강좌의 버전(0.66)과 일치하지 않게 됨. 현재 최신 버전은 0.72이라서 상당히 차이가 남.
+**잠깐!!** 이 명령어를 입력하면 항상 최신 버전의 react를 받아오므로 강좌의 버전(0.66)과 일치하지 않게 됨. 현재 최신 버전은 0.75이라서 상당히 차이가 남.
 강좌랑 동일한 버전으로 하지 않으면 많은 스트레스를 받을 수 있음.
 - 강좌랑 동일한 버전으로 하려면 이미 초반 세팅이 다 되어 있는 setting 폴더를 git clone받아 시작하는 것이 좋음(클론 후 npm i && npx pod-install 수행 필요).
 - 0.72버전으로 시작하려면 setting72 폴더에서 시작하면 됨.
-- 0.72, 0.73 버전 최종 소스코드도 깃헙에 존재하니 각각의 폴더 참고. 0.72버전으로 해도 잘 돌아가긴 함. 0.73은 아직 불안정
+- 0.72, 0.73, 0.75 버전 최종 소스코드도 깃헙에 존재하니 각각의 폴더 참고. 0.75 버전으로 해도 잘 돌아감.
 
 보통은 강의용으로 자동생성 안 좋아하는데 RN은 자동생성하지 않으면 네이티브단까지 처리하기 어려움 
 
 프로젝트 폴더에서 다음 명령어로 앱 실행 가능
 ```shell
-npm start # rn 73 버전에서는 npm start 후 뜨는 화면에서 i나 a를 눌러 아이폰/안드로이드 실행
+npm start # rn75 버전에서는 npm start 후 뜨는 화면에서 i나 a를 눌러 아이폰/안드로이드 실행
 
 # rn72까지는
 npm run android # 안드로이드 실행 명령어
@@ -45,17 +46,24 @@ npm run ios # 아이폰 실행 명령어
 ```
 
 ![img.png](img.png)
-서버가 하나 뜰 것임. Metro 서버. 여기서 서버가 안 뜨고 No device 등의 에러 메시지가 뜬다면 안드로이드 에뮬레이터 실행한 채로 다시 명령어 입력할 것.
+터미널이 뜨면서 그 안에서 서버가 하나 뜰 것임. Metro 서버. 여기서 서버가 안 뜨고 No device 등의 에러 메시지가 뜬다면 안드로이드 에뮬레이터 실행한 채로 다시 명령어 입력할 것.
 Metro 서버에서 소스 코드를 컴파일하고 앱으로 전송해줌. 기본 8081포트.
+
+다음 에러가 뜨면서 시뮬레이터에 앱이 켜지지 않는다면 터미널 종료 후 새로 하나 띄워 npm run android를 입력하고 다시 npm start를 입력한다
+```
+* What went wrong:
+Error resolving plugin [id: 'com.facebook.react.settings']
+> java.io.UncheckedIOException: Could not move temporary workspace
+```
 
 메트로 서버가 꺼져있다면 터미널을 하나 더 열어
 ```shell
 npm start
 ```
 
-개발은 iOS 기준으로 하는 게 좋다(개인 경험). 그러나 강좌는 어쩔 수 없이 Windows로 한다.
+개발은 iOS 기준으로 하는 게 좋다(개인 경험). 그러나 강좌는 어쩔 수 없이 Windows로 한다(Windows 사용자가 많기 때문).
 
-react-native@0.72 버전, 한 달에 0.1씩 올라가는데 요즘 개발 속도가 느려져서 규칙이 깨짐. 거의 완성 단계라 신규 기능은 npm에서 @react-native-community로부터 받아야 함. 버전 업그레이드 함부로 하지 말 것!
+react-native@0.75 버전, 한 달에 0.1씩 올라가는데 요즘 개발 속도가 느려져서 규칙이 깨짐. 버전 업그레이드 함부로 하지 말 것!
 
 [맥 전용]npx pod-install도 미리 한 번, iOS 라이브러리(pod) 받는 용도
 
@@ -81,6 +89,7 @@ react-native@0.72 버전, 한 달에 0.1씩 올라가는데 요즘 개발 속도
 - Show Perf Monitor로 프레임 측정 가능
 
 [Flipper](https://fbflipper.com/) 페이스북이 만든 모바일앱 디버거도 좋음(다만 연결 시 에러나는 사람 다수 발견)
+- [Windows] 홈페이지에서 다운로드 시 tgz 파일이 다운로드 된다면 [링크](https://github.com/facebook/flipper/releases/tag/v0.239.0)에서 대신 Flipper-win.zip을 다운로드
 - [ios]설치 시 환경설정 -> 개인정보 및 보안 메뉴에서 Flipper를 허용해주어야 함
 - troubleshoot -> setup doctor 문제 해결할 것
 ```shell
