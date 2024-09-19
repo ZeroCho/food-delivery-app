@@ -9,9 +9,10 @@
 - 터미널에 adb 입력해서 안 뜨면 [adb](https://developer.android.com/studio/releases/platform-tools) 설치 필요, ANDROID_HOME 환경변수도
 - [읽어보면 좋은 벨로퍼트님의 글](https://ridicorp.com/story/react-native-1year-review/)
 
+[RN@0.75로 할 때의 문서 링크](https://github.com/ZeroCho/food-delivery-app/blob/master/rn75.md)
 ```shell
 # 프로젝트를 만들고자 하는 폴더로 이동
-npx @react-native-community/cli@latest init FoodDeliveryApp
+npx react-native@0.72 init FoodDeliveryApp
 
 # 다음 말이 뜨면 y 입력
 Need to install the following packages:
@@ -38,7 +39,7 @@ cd ./FoodDeliveryApp/ios && pod install
 
 프로젝트 폴더에서 다음 명령어로 앱 실행 가능
 ```shell
-npm start # rn75 버전에서는 npm start 후 뜨는 화면에서 i나 a를 눌러 아이폰/안드로이드 실행
+npm start # rn72 버전에서는 npm start 후 뜨는 화면에서 i나 a를 눌러 아이폰/안드로이드 실행
 
 # rn72까지는
 npm run android # 안드로이드 실행 명령어
@@ -113,9 +114,9 @@ ios에서는 [링크](https://thddudco.tistory.com/16) 따라서 다국어 설�
 
 android/gradle.properties
 ```
-FLIPPER_VERSION=0.145.0
+FLIPPER_VERSION=0.239.0
 ```
-플리퍼 버전이 0.145.0보다 낮다면 0.145.0으로 높일 것. RN 0.72버전에서는 이미 0.182.0임
+플리퍼 버전 추가
 
 ## 리액트 네이티브 폴더 구조
 - src 폴더 생성(지금 바로 생성 안 하고 폴더 안에 파일이 들 때 생성해도 됨)
