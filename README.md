@@ -16,7 +16,7 @@ npx react-native@0.72 init FoodDeliveryApp
 
 # 다음 말이 뜨면 y 입력
 Need to install the following packages:
-  @react-native-community/cli@14.1.1
+  react-native@0.72.7
 Ok to proceed? (y)
 
 # Do you want to install CocoaPods now? 뜨면 y 입력
