@@ -19,13 +19,13 @@ Need to install the following packages:
   react-native@0.72.7
 Ok to proceed? (y)
 
-# Do you want to install CocoaPods now? 뜨면 y 입력
-# 실수로 y 안 눌러서 CocoaPods 수동설치하려면
+# [ios전용]Do you want to install CocoaPods now? 뜨면 y 입력
+# [ios전용]실수로 y 안 눌러서 CocoaPods 수동설치하려면
 sudo gem install cocoapods
-# cocoapods 설치시 ruby 오류가 나면 터미널에 나오는 명령어 입력 후 cocoapods 재설치(아래 버전은 달라질 수 있으니 주의)
+# [ios전용]cocoapods 설치시 ruby 오류가 나면 터미널에 나오는 명령어 입력 후 cocoapods 재설치(아래 버전은 달라질 수 있으니 주의)
 sudo gem install activesupport -v 6.1.7.6
 
-# 마지막으로 pod 설치
+# [ios전용]마지막으로 pod 설치
 cd ./FoodDeliveryApp/ios && pod install
 ```
 
