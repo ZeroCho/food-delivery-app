@@ -23,6 +23,9 @@ target 'rn75' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  pod 'FirebaseCore', :modular_headers => true
+  pod 'GoogleUtilities', :modular_headers => true
+
   target 'rn75Tests' do
     inherit! :complete
     # Pods for testing

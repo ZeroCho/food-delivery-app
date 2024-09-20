@@ -1,0 +1,569 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.10 (swiftlang-5.10.0.13 clang-1500.3.9.4)
+// swift-module-flags: -target x86_64-apple-ios12.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name TMapSDK
+import DeveloperToolsSupport
+import Foundation
+import Swift
+import SwiftUI
+@_exported import TMapSDK
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+public enum TMapPathType {
+  case CAR_PATH
+  case PEDESTRIAN_PATH
+  public static func == (a: TMapSDK.TMapPathType, b: TMapSDK.TMapPathType) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct BizCategory {
+  public var upperBizCode: Swift.String?
+  public var upperBizName: Swift.String?
+  public var middleBizCode: Swift.String?
+  public var middleBizName: Swift.String?
+}
+public struct TMapAutoCompleteV2 {
+  public var poiId: Swift.String?
+  public var pKey: Swift.String?
+  public var keyword: Swift.String?
+  public var fullAddress: Swift.String?
+  public var fullAddressJibun: Swift.String?
+  public var cateName: Swift.String?
+  public var lat: Swift.String?
+  public var lon: Swift.String?
+}
+public class TMapPathData {
+  public init()
+  public func requestFindAllPOI(_ keyword: Swift.String, completion: @escaping (Swift.Array<TMapSDK.TMapPoiItem>?, (any Swift.Error)?) -> Swift.Void)
+  public func requestFindAllPOI(_ keyword: Swift.String, count: Swift.Int, completion: @escaping (Swift.Array<TMapSDK.TMapPoiItem>?, (any Swift.Error)?) -> Swift.Void)
+  public func requestFindTitlePOI(_ keyword: Swift.String, completion: @escaping (Swift.Array<TMapSDK.TMapPoiItem>?, (any Swift.Error)?) -> Swift.Void)
+  public func requestFindAddressPOI(_ keyword: Swift.String, completion: @escaping (Swift.Array<TMapSDK.TMapPoiItem>?, (any Swift.Error)?) -> Swift.Void)
+  public func requestFindTitlePOI(_ keyword: Swift.String, count: Swift.Int, completion: @escaping (Swift.Array<TMapSDK.TMapPoiItem>?, (any Swift.Error)?) -> Swift.Void)
+  public func requestFindAddressPOI(_ keyword: Swift.String, count: Swift.Int, completion: @escaping (Swift.Array<TMapSDK.TMapPoiItem>?, (any Swift.Error)?) -> Swift.Void)
+  public func requestFindNameAroundPOI(_ point: CoreLocation.CLLocationCoordinate2D, categoryName: Swift.String, radius: Swift.Int, count: Swift.Int, completion: @escaping (Swift.Array<TMapSDK.TMapPoiItem>?, (any Swift.Error)?) -> Swift.Void)
+  public func requestFindAroundKeywordPOI(_ point: CoreLocation.CLLocationCoordinate2D, keywordName: Swift.String, radius: Swift.Int, count: Swift.Int, completion: @escaping (Swift.Array<TMapSDK.TMapPoiItem>?, (any Swift.Error)?) -> Swift.Void)
+  public func convertGpsToAddressAt(_ point: CoreLocation.CLLocationCoordinate2D, completion: @escaping (Swift.String?, (any Swift.Error)?) -> Swift.Void)
+  public func convertGpsToAddressInfo(_ point: CoreLocation.CLLocationCoordinate2D, completion: @escaping ([Swift.String : Any]?, (any Swift.Error)?) -> Swift.Void)
+  public func reverseGeocoding(_ point: CoreLocation.CLLocationCoordinate2D, addressType: Swift.String, completion: @escaping ([Swift.String : Any]?, (any Swift.Error)?) -> Swift.Void)
+  public func geoCodingWidthAddressType(_ addressType: Swift.String, city_do: Swift.String, gu_gun: Swift.String, dong_roadName: Swift.String, bunji_buildingNo: Swift.String?, detailAddress: Swift.String?, completion: @escaping ([Swift.String : Any]?, (any Swift.Error)?) -> Swift.Void)
+  public func findPathData(startPoint: CoreLocation.CLLocationCoordinate2D, endPoint: CoreLocation.CLLocationCoordinate2D, completion: @escaping (TMapSDK.TMapPolyline?, (any Swift.Error)?) -> Swift.Void)
+  public func findPathDataWithType(_ type: TMapSDK.TMapPathType, startPoint: CoreLocation.CLLocationCoordinate2D, endPoint: CoreLocation.CLLocationCoordinate2D, completion: @escaping (TMapSDK.TMapPolyline?, (any Swift.Error)?) -> Swift.Void)
+  public func findPathDataAll(startPoint: CoreLocation.CLLocationCoordinate2D, endPoint: CoreLocation.CLLocationCoordinate2D, completion: @escaping ([Swift.String : Any]?, (any Swift.Error)?) -> Swift.Void)
+  public func findPathDataAllWithType(_ type: TMapSDK.TMapPathType, startPoint: CoreLocation.CLLocationCoordinate2D, endPoint: CoreLocation.CLLocationCoordinate2D, completion: @escaping ([Swift.String : Any]?, (any Swift.Error)?) -> Swift.Void)
+  public func findPathDataWithType(_ type: TMapSDK.TMapPathType, startPoint: CoreLocation.CLLocationCoordinate2D, endPoint: CoreLocation.CLLocationCoordinate2D, passPoints: Swift.Array<CoreLocation.CLLocationCoordinate2D>, searchOption: Swift.Int, completion: @escaping (TMapSDK.TMapPolyline?, (any Swift.Error)?) -> Swift.Void)
+  public func findMultiPathData(startPoint: CoreLocation.CLLocationCoordinate2D, endPoint: CoreLocation.CLLocationCoordinate2D, passPoints: Swift.Array<CoreLocation.CLLocationCoordinate2D>, searchOption: Swift.Int, completion: @escaping (TMapSDK.TMapPolyline?, (any Swift.Error)?) -> Swift.Void)
+  public func findTimeMachineCar(startPoint: CoreLocation.CLLocationCoordinate2D, endPoint: CoreLocation.CLLocationCoordinate2D, isStartTime: Swift.Bool, time: Foundation.Date, wayPoints: Swift.Array<CoreLocation.CLLocationCoordinate2D>?, completion: @escaping ([Swift.String : Any]?, (any Swift.Error)?) -> Swift.Void)
+  public func findTimeMachineCarPath(startPoint: CoreLocation.CLLocationCoordinate2D, endPoint: CoreLocation.CLLocationCoordinate2D, isStartTime: Swift.Bool, time: Foundation.Date, wayPoints: Swift.Array<CoreLocation.CLLocationCoordinate2D>?, searchOption: Swift.String?, completion: @escaping ([Swift.String : Any]?, (any Swift.Error)?) -> Swift.Void)
+  public func autoComplete(_ text: Swift.String, completion: @escaping (Swift.Array<Swift.String>, (any Swift.Error)?) -> Swift.Void)
+  public func autoCompleteV2(_ text: Swift.String, centerLon: Swift.Double? = nil, centerLat: Swift.Double? = nil, radius: Swift.Int? = nil, count: Swift.Int? = nil, completion: @escaping (Swift.Array<TMapSDK.TMapAutoCompleteV2>, (any Swift.Error)?) -> Swift.Void)
+  @objc deinit
+}
+public class TMapOverlayImage {
+  public init(bounds: TMapSDK.MapBounds, image: UIKit.UIImage)
+  public var map: TMapSDK.TMapView? {
+    get
+    set(value)
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class TMapPolygon : TMapSDK.TMapShape {
+  @objc override dynamic public init()
+  public init(coordinates: [CoreLocation.CLLocationCoordinate2D])
+  public var path: [CoreLocation.CLLocationCoordinate2D] {
+    get
+  }
+  public var strokeColor: UIKit.UIColor? {
+    get
+    set(value)
+  }
+  public var strokeWidth: CoreFoundation.CGFloat? {
+    get
+    set(value)
+  }
+  public var fillColor: UIKit.UIColor? {
+    get
+    set(value)
+  }
+  public var opacity: CoreFoundation.CGFloat? {
+    get
+    set(value)
+  }
+  public var map: TMapSDK.TMapView? {
+    get
+    set(value)
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class CMarker {
+  @objc deinit
+}
+public class MarkerCluster {
+  public init(map: TMapSDK.TMapView?, count: Swift.Array<Swift.Int>?, icon: Swift.Array<UIKit.UIImage>?, radius: Swift.Int?, markers: Swift.Array<TMapSDK.TMapMarker>?)
+  public func addMarker(marker: TMapSDK.TMapMarker)
+  public func addMarkers(markers: Swift.Array<TMapSDK.TMapMarker>)
+  public func setTapCallback(callback: @escaping ((Swift.Array<TMapSDK.TMapMarker>) -> Swift.Void))
+  public func clear()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) public class TMapView : UIKit.UIView, TMapSDK.MGLMapViewDelegate {
+  @_Concurrency.MainActor(unsafe) weak public var delegate: (any TMapSDK.TMapViewDelegate)?
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public var frame: CoreFoundation.CGRect {
+    @objc get
+    @objc set
+  }
+  @_Concurrency.MainActor(unsafe) @objc public func mapView(_ mapView: TMapSDK.MGLMapView, regionDidChangeWith reason: TMapSDK.MGLCameraChangeReason, animated: Swift.Bool)
+  @_Concurrency.MainActor(unsafe) @objc public func mapView(_ mapView: TMapSDK.MGLMapView, shouldChangeFrom oldCamera: TMapSDK.MGLMapCamera, to newCamera: TMapSDK.MGLMapCamera) -> Swift.Bool
+  @_Concurrency.MainActor(unsafe) @objc public func mapViewDidFinishLoadingMap(_ mapView: TMapSDK.MGLMapView)
+  @_Concurrency.MainActor(unsafe) @objc public func mapView(_ mapView: TMapSDK.MGLMapView, viewFor annotation: any TMapSDK.MGLAnnotation) -> TMapSDK.MGLAnnotationView?
+  @_Concurrency.MainActor(unsafe) @objc public func mapView(_ mapView: TMapSDK.MGLMapView, imageFor annotation: any TMapSDK.MGLAnnotation) -> TMapSDK.MGLAnnotationImage?
+  @_Concurrency.MainActor(unsafe) @objc public func mapView(_ mapView: TMapSDK.MGLMapView, annotationCanShowCallout annotation: any TMapSDK.MGLAnnotation) -> Swift.Bool
+  @_Concurrency.MainActor(unsafe) @objc public func mapView(_ mapView: TMapSDK.MGLMapView, lineWidthForPolylineAnnotation annotation: TMapSDK.MGLPolyline) -> CoreFoundation.CGFloat
+  @_Concurrency.MainActor(unsafe) @objc public func mapView(_ mapView: TMapSDK.MGLMapView, strokeColorForShapeAnnotation annotation: TMapSDK.MGLShape) -> UIKit.UIColor
+  @_Concurrency.MainActor(unsafe) @objc public func mapView(_ mapView: TMapSDK.MGLMapView, fillColorForPolygonAnnotation annotation: TMapSDK.MGLPolygon) -> UIKit.UIColor
+  @_Concurrency.MainActor(unsafe) @objc public func mapView(_ mapView: TMapSDK.MGLMapView, alphaForShapeAnnotation annotation: TMapSDK.MGLShape) -> CoreFoundation.CGFloat
+  @_Concurrency.MainActor(unsafe) public var heading: CoreLocation.CLLocationDirection {
+    get
+    set(value)
+  }
+  @_Concurrency.MainActor(unsafe) public var isRotationEnable: Swift.Bool {
+    get
+    set(value)
+  }
+  @_Concurrency.MainActor(unsafe) public var isPanningEnable: Swift.Bool {
+    get
+    set(value)
+  }
+  @_Concurrency.MainActor(unsafe) public var isZoomEnable: Swift.Bool {
+    get
+    set(value)
+  }
+  @_Concurrency.MainActor(unsafe) public var trackingMode: TMapSDK.TrackingMode {
+    get
+    set(value)
+  }
+  @_Concurrency.MainActor(unsafe) public var isTrafficMode: Swift.Bool {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) public func setApiKey(_ appKey: Swift.String)
+  @_Concurrency.MainActor(unsafe) public func clear()
+  @_Concurrency.MainActor(unsafe) public func set(minZoom: CoreFoundation.CGFloat, maxZoom: CoreFoundation.CGFloat)
+  @_Concurrency.MainActor(unsafe) public func animateTo(location: CoreLocation.CLLocationCoordinate2D)
+  @_Concurrency.MainActor(unsafe) public func animateTo(zoom: Swift.Int)
+  @_Concurrency.MainActor(unsafe) public func getCenter() -> CoreLocation.CLLocationCoordinate2D?
+  @_Concurrency.MainActor(unsafe) public func setCenter(_ location: CoreLocation.CLLocationCoordinate2D)
+  @_Concurrency.MainActor(unsafe) public func getMapBounds() -> TMapSDK.MapBounds?
+  @_Concurrency.MainActor(unsafe) public func fitBounds(_ bounds: TMapSDK.MapBounds)
+  @_Concurrency.MainActor(unsafe) public func fitBounds(_ bounds: TMapSDK.MapBounds, padding: CoreFoundation.CGFloat)
+  @_Concurrency.MainActor(unsafe) public func getZoom() -> Swift.Int?
+  @_Concurrency.MainActor(unsafe) public func setZoom(_ zoom: Swift.Int)
+  @_Concurrency.MainActor(unsafe) public func convertPixelToMeter(_ pixel: Swift.Double) -> Swift.Double
+  @_Concurrency.MainActor(unsafe) public func convertMeterToPixel(_ meter: Swift.Double) -> Swift.Double
+  @_Concurrency.MainActor(unsafe) public func fitMapBoundsWithMarkers(_ markers: Swift.Array<TMapSDK.TMapMarker>)
+  @_Concurrency.MainActor(unsafe) public func fitMapBoundsWithCircles(_ circles: Swift.Array<TMapSDK.TMapCircle>)
+  @_Concurrency.MainActor(unsafe) public func fitMapBoundsWithRectangles(_ rectangles: Swift.Array<TMapSDK.TMapRectangle>)
+  @_Concurrency.MainActor(unsafe) public func fitMapBoundsWithPolylines(_ polylines: Swift.Array<TMapSDK.TMapPolyline>)
+  @_Concurrency.MainActor(unsafe) public func fitMapBoundsWithPolygons(_ polygons: Swift.Array<TMapSDK.TMapPolygon>)
+  @_Concurrency.MainActor(unsafe) public func captureMapView()
+  @_Concurrency.MainActor(unsafe) public func setTrafficMode(_ isOn: Swift.Bool)
+  @_Concurrency.MainActor(unsafe) public func getIsCompass() -> Swift.Bool
+  @_Concurrency.MainActor(unsafe) public func setCompassMode(_ isOn: Swift.Bool)
+  @_Concurrency.MainActor(unsafe) public func setCompassModeFix(_ isOn: Swift.Bool)
+  @objc deinit
+}
+extension TMapSDK.TMapView : UIKit.UIGestureRecognizerDelegate {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func gestureRecognizer(_ gestureRecognizer: UIKit.UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIKit.UIGestureRecognizer) -> Swift.Bool
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIKit.UIGestureRecognizer) -> Swift.Bool
+}
+extension TMapSDK.TMapView : CoreLocation.CLLocationManagerDelegate {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func locationManager(_ manager: CoreLocation.CLLocationManager, didUpdateHeading heading: CoreLocation.CLHeading)
+}
+@objc @_inheritsConvenienceInitializers public class TMapText : TMapSDK.TMapShape {
+  @objc override dynamic public init()
+  public init(position: CoreLocation.CLLocationCoordinate2D)
+  public init(position: CoreLocation.CLLocationCoordinate2D, text: Swift.String)
+  public var offset: CoreFoundation.CGSize? {
+    get
+    set(value)
+  }
+  public var fontSize: CoreFoundation.CGFloat {
+    get
+    set(value)
+  }
+  public var fontColor: UIKit.UIColor {
+    get
+    set(value)
+  }
+  public var fontWeight: Swift.Int {
+    get
+    set(value)
+  }
+  public var backgroundColor: UIKit.UIColor {
+    get
+    set(value)
+  }
+  public var borderWidth: CoreFoundation.CGFloat {
+    get
+    set(value)
+  }
+  public var borderColor: UIKit.UIColor {
+    get
+    set(value)
+  }
+  public var alignment: TMapSDK.TextAlignment {
+    get
+    set(value)
+  }
+  public var map: TMapSDK.TMapView? {
+    get
+    set(value)
+  }
+  @objc deinit
+}
+public struct TOPInfo {
+}
+@objc public protocol TMapViewDelegate {
+  @objc optional func mapView(_ mapView: TMapSDK.TMapView, shouldChangeFrom oldPosition: CoreLocation.CLLocationCoordinate2D, to newPosition: CoreLocation.CLLocationCoordinate2D) -> Swift.Bool
+  @objc optional func mapViewDidChangeBounds()
+  @objc optional func mapViewDidFinishLoadingMap()
+  @objc optional func mapView(_ mapView: TMapSDK.TMapView, singleTapOnMap location: CoreLocation.CLLocationCoordinate2D)
+  @objc optional func mapView(_ mapView: TMapSDK.TMapView, longTapOnMap location: CoreLocation.CLLocationCoordinate2D)
+  @objc optional func mapView(_ mapView: TMapSDK.TMapView, doubleTapOnMap location: CoreLocation.CLLocationCoordinate2D)
+  @objc optional func mapView(_ mapView: TMapSDK.TMapView, tapOnMarker marker: TMapSDK.TMapMarker)
+  @objc optional func SKTMapApikeySucceed()
+  @objc optional func SKTMapApikeyFailed(error: Foundation.NSError?)
+}
+@objc @_inheritsConvenienceInitializers public class TMapMarker : TMapSDK.TMapShape {
+  @objc override dynamic public init()
+  public init(position: CoreLocation.CLLocationCoordinate2D)
+  public var hidden: Swift.Bool? {
+    get
+    set(value)
+  }
+  public var position: CoreLocation.CLLocationCoordinate2D? {
+    get
+    set(value)
+  }
+  public var offset: CoreFoundation.CGSize? {
+    get
+    set(value)
+  }
+  public var icon: UIKit.UIImage? {
+    get
+    set(value)
+  }
+  public var title: Swift.String? {
+    get
+    set(value)
+  }
+  public var subTitle: Swift.String? {
+    get
+    set(value)
+  }
+  public var draggable: Swift.Bool {
+    get
+    set(value)
+  }
+  public var isUseImage: Swift.Bool {
+    get
+    set(value)
+  }
+  public var radius: Swift.Int {
+    get
+    set(value)
+  }
+  public var leftCalloutView: UIKit.UIView? {
+    get
+    set(value)
+  }
+  public var rightCalloutView: UIKit.UIView? {
+    get
+    set(value)
+  }
+  public var map: TMapSDK.TMapView? {
+    get
+    set(value)
+  }
+  public func setTapCallback(callback: @escaping ((TMapSDK.TMapMarker) -> Swift.Void))
+  public var setCanShowCallout: Swift.Bool {
+    get
+    set(value)
+  }
+  public var calloutView: UIKit.UIView? {
+    get
+    set(value)
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class TMapRectangle : TMapSDK.TMapShape {
+  @objc override dynamic public init()
+  public init(rectangle: TMapSDK.MapBounds)
+  public var bounds: TMapSDK.MapBounds? {
+    get
+  }
+  public var strokeColor: UIKit.UIColor? {
+    get
+    set(value)
+  }
+  public var strokeWidth: CoreFoundation.CGFloat? {
+    get
+    set(value)
+  }
+  public var fillColor: UIKit.UIColor? {
+    get
+    set(value)
+  }
+  public var opacity: CoreFoundation.CGFloat? {
+    get
+    set(value)
+  }
+  public var map: TMapSDK.TMapView? {
+    get
+    set(value)
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class TrafficInfoLayer {
+  public func addData(_ path: Swift.Array<CoreLocation.CLLocationCoordinate2D>, congestion: Swift.Int)
+  public func draw(_ mapView: TMapSDK.MGLMapView?)
+  public func clear(_ mapView: TMapSDK.MGLMapView?)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class HttpRequest {
+  public enum HttpRequestType {
+    case Literal
+    case JSon
+    public static func == (a: TMapSDK.HttpRequest.HttpRequestType, b: TMapSDK.HttpRequest.HttpRequestType) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public static func httpGetRequest(urlString: Swift.String, params: [Swift.String : Any?]?, completion: @escaping (Foundation.Data?, Foundation.URLResponse?, (any Swift.Error)?) -> Swift.Void)
+  public static func httpGetRequest(urlString: Swift.String, params: [Swift.String : Any?]?, headers: [Swift.String : Any?]?, completion: @escaping (Foundation.Data?, Foundation.URLResponse?, (any Swift.Error)?) -> Swift.Void)
+  public static func httpPostRequest(urlString: Swift.String, params: [Swift.String : Any?]?, completion: @escaping (Foundation.Data?, Foundation.URLResponse?, (any Swift.Error)?) -> Swift.Void)
+  public static func httpPostRequest(_ type: TMapSDK.HttpRequest.HttpRequestType, urlString: Swift.String, params: [Swift.String : Any?]?, headers: [Swift.String : Any?]?, completion: @escaping (Foundation.Data?, Foundation.URLResponse?, (any Swift.Error)?) -> Swift.Void)
+  public static func httpMultipartRequest(urlString: Swift.String, params: [Swift.String : Any?]?, completion: @escaping (Foundation.Data?, Foundation.URLResponse?, (any Swift.Error)?) -> Swift.Void)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class TMapCircle : TMapSDK.TMapShape {
+  @objc override dynamic public init()
+  public init(position: CoreLocation.CLLocationCoordinate2D, radius: Swift.Int)
+  public var position: CoreLocation.CLLocationCoordinate2D? {
+    get
+    set(value)
+  }
+  public var radius: Swift.Int {
+    get
+    set(value)
+  }
+  public var path: [CoreLocation.CLLocationCoordinate2D] {
+    get
+  }
+  public var strokeColor: UIKit.UIColor? {
+    get
+    set(value)
+  }
+  public var strokeWidth: CoreFoundation.CGFloat? {
+    get
+    set(value)
+  }
+  public var fillColor: UIKit.UIColor? {
+    get
+    set(value)
+  }
+  public var opacity: CoreFoundation.CGFloat? {
+    get
+    set(value)
+  }
+  public var map: TMapSDK.TMapView? {
+    get
+    set(value)
+  }
+  @objc deinit
+}
+@objc public protocol TMapTapiDelegate {
+  @objc optional func SKTMapApikeySucceed()
+  @objc optional func SKTMapApikeyFailed(error: Foundation.NSError?)
+}
+@objc @_inheritsConvenienceInitializers public class TMapPolyline : TMapSDK.TMapShape {
+  @objc override dynamic public init()
+  public init(coordinates: [CoreLocation.CLLocationCoordinate2D])
+  public var path: [CoreLocation.CLLocationCoordinate2D] {
+    get
+  }
+  public var strokeWidth: CoreFoundation.CGFloat? {
+    get
+    set(value)
+  }
+  public var strokeColor: UIKit.UIColor? {
+    get
+    set(value)
+  }
+  public var opacity: CoreFoundation.CGFloat? {
+    get
+    set(value)
+  }
+  public var lineStyle: TMapSDK.LineStyle {
+    get
+    set(value)
+  }
+  public var map: TMapSDK.TMapView? {
+    get
+    set(value)
+  }
+  @objc deinit
+}
+public class MapBounds {
+  public init()
+  public init(sw: CoreLocation.CLLocationCoordinate2D, ne: CoreLocation.CLLocationCoordinate2D)
+  public func getCenter() -> CoreLocation.CLLocationCoordinate2D?
+  public func getLeft() -> Swift.Double
+  public func getTop() -> Swift.Double
+  public func getRight() -> Swift.Double
+  public func getBottom() -> Swift.Double
+  public func setLeft(left: Swift.Double)
+  public func setTop(top: Swift.Double)
+  public func setRight(right: Swift.Double)
+  public func setBottom(bottom: Swift.Double)
+  public func extend(_ point: CoreLocation.CLLocationCoordinate2D)
+  public func extend(_ bounds: TMapSDK.MapBounds)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class TMapCustomMarker : TMapSDK.TMapShape {
+  @objc override dynamic public init()
+  public init(position: CoreLocation.CLLocationCoordinate2D)
+  public var position: CoreLocation.CLLocationCoordinate2D? {
+    get
+    set(value)
+  }
+  public var offset: CoreFoundation.CGSize? {
+    get
+    set(value)
+  }
+  public var view: UIKit.UIView? {
+    get
+    set(value)
+  }
+  public var hidden: Swift.Bool? {
+    get
+    set(value)
+  }
+  public var map: TMapSDK.TMapView? {
+    get
+    set(value)
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class TMapShape : ObjectiveC.NSObject {
+  public var tag: Swift.Int?
+  public var name: Swift.String?
+  @objc override dynamic public init()
+  @objc deinit
+}
+public class TMapPoiItem {
+  public var coordinate: CoreLocation.CLLocationCoordinate2D?
+  public var poiID: Swift.String?
+  public var poiName: Swift.String?
+  public var name: Swift.String?
+  public var telNO: Swift.String?
+  public var frontCoordinate: CoreLocation.CLLocationCoordinate2D?
+  public var noorCoordinate: CoreLocation.CLLocationCoordinate2D?
+  public var upperAddrName: Swift.String?
+  public var middleAddrName: Swift.String?
+  public var lowerAddrName: Swift.String?
+  public var detailAddrName: Swift.String?
+  public var firstNo: Swift.String?
+  public var secondNo: Swift.String?
+  public var roadName: Swift.String?
+  public var buildingNo1: Swift.String?
+  public var buildingNo2: Swift.String?
+  public var parkFlag: Swift.String?
+  public var merchanFlag: Swift.String?
+  public var address: Swift.String?
+  public var content: Swift.String?
+  public var bizName: Swift.String?
+  public var upperBizName: Swift.String?
+  public var middleBizName: Swift.String?
+  public var lowerBizName: Swift.String?
+  public var detailBizName: Swift.String?
+  public var detailInfoFlag: Swift.String?
+  public var radius: Swift.String?
+  public var rpFlag: Swift.String?
+  public var groupSubLists: [Swift.String : Any]?
+  public init(_ poi: [Swift.String : Any])
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class TMapApi {
+  public static func setSKTMapAuthenticationWithDelegate(_ delegate: (any TMapSDK.TMapTapiDelegate)?, apiKey: Swift.String)
+  public static func invokeRoute(_ destName: Swift.String, coordinate: CoreLocation.CLLocationCoordinate2D) -> Swift.Bool
+  public static func invokeRoute(_ routeInfo: Swift.Dictionary<Swift.String, Any>) -> Swift.Bool
+  public static func invokeSetLocation(_ destName: Swift.String, coordinate: CoreLocation.CLLocationCoordinate2D) -> Swift.Bool
+  public static func invokeSearchPortal(_ destName: Swift.String) -> Swift.Bool
+  public static func invokeGoHome() -> Swift.Bool
+  public static func invokeGoCompany() -> Swift.Bool
+  public static func invokeNearCafe(_ coordinate: CoreLocation.CLLocationCoordinate2D) -> Swift.Bool
+  public static func invokeNearFood(_ coordinate: CoreLocation.CLLocationCoordinate2D) -> Swift.Bool
+  public static func isTmapApplicationInstalled() -> Swift.Bool
+  public static func getTMapDownUrl() -> Swift.String
+  public static func scheme() -> Swift.String
+  @objc deinit
+}
+public enum TextAlignment {
+  case LeftTop
+  case CenterTop
+  case RightTop
+  case LeftMiddle
+  case Center
+  case RightMiddle
+  case LeftBottom
+  case CenterBottom
+  case RightBottom
+  public static func == (a: TMapSDK.TextAlignment, b: TMapSDK.TextAlignment) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum TrackingMode {
+  case follow
+  case followWithCourse
+  case followWithHeading
+  case none
+  public static func == (a: TMapSDK.TrackingMode, b: TMapSDK.TrackingMode) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum LineStyle {
+  case solid
+  case dot
+  case dash
+  public static func == (a: TMapSDK.LineStyle, b: TMapSDK.LineStyle) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public class TrafficInfo {
+  public init()
+  public func getTrafficInfo(_ bounds: TMapSDK.MapBounds, zoomLevel: Swift.Int, completion: @escaping (TMapSDK.TrafficInfo) -> Swift.Void)
+  public func draw(map: TMapSDK.TMapView)
+  public func clear()
+  @objc deinit
+}
+extension TMapSDK.TMapPathType : Swift.Equatable {}
+extension TMapSDK.TMapPathType : Swift.Hashable {}
+extension TMapSDK.HttpRequest.HttpRequestType : Swift.Equatable {}
+extension TMapSDK.HttpRequest.HttpRequestType : Swift.Hashable {}
+extension TMapSDK.TextAlignment : Swift.Equatable {}
+extension TMapSDK.TextAlignment : Swift.Hashable {}
+extension TMapSDK.TrackingMode : Swift.Equatable {}
+extension TMapSDK.TrackingMode : Swift.Hashable {}
+extension TMapSDK.LineStyle : Swift.Equatable {}
+extension TMapSDK.LineStyle : Swift.Hashable {}
