@@ -373,7 +373,7 @@ npm i react-native-config
 ```typescript jsx
 import Config from 'react-native-config';
 ```
--Android에서 Config가 적용이 안 되면 다음 추가해야함
+-Android에서 Config가 적용이 안 되면 다음 추가해야함(fooddeliveryapp 문자열은 당연히 여러분 걸로 교체해야겠죠?)
 
 android/app/proguard-rules.pro
 ```
